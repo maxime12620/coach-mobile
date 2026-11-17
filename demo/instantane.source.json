@@ -1,0 +1,4432 @@
+{
+ "schema": 1,
+ "generated_at": "2026-11-18T07:30:00+01:00",
+ "acks": [],
+ "athlete": {
+  "hr_max": 190,
+  "reference_paces": {
+   "easy": 335,
+   "marathon": 290,
+   "threshold": 266,
+   "interval": 244,
+   "repetition": 226
+  }
+ },
+ "today": {
+  "date": "2026-11-18",
+  "hrv": {
+   "value": 58,
+   "status": "balanced",
+   "baseline_low": 52,
+   "baseline_high": 66
+  },
+  "resting_hr": 47,
+  "sleep": {
+   "duration_s": 26820,
+   "score": 79
+  },
+  "body_battery": 71,
+  "acute_load": {
+   "value": 395,
+   "range_low": 290,
+   "range_high": 510
+  },
+  "mechanical_load": {
+   "load_7d": 286,
+   "max_tolerated": 360
+  }
+ },
+ "plan": {
+  "id": 1,
+  "name": "Plan de démonstration",
+  "start": "2026-10-19",
+  "end": "2027-02-07",
+  "phases": [
+   {
+    "name": "Foncier",
+    "start": "2026-10-19",
+    "end": "2026-11-29"
+   },
+   {
+    "name": "Développement",
+    "start": "2026-11-30",
+    "end": "2027-01-10"
+   },
+   {
+    "name": "Spécifique",
+    "start": "2027-01-11",
+    "end": "2027-02-07"
+   }
+  ],
+  "weeks": [
+   {
+    "week_start": "2026-10-19",
+    "phase": "Foncier",
+    "target_km": 30,
+    "is_light": false
+   },
+   {
+    "week_start": "2026-10-26",
+    "phase": "Foncier",
+    "target_km": 31,
+    "is_light": false
+   },
+   {
+    "week_start": "2026-11-02",
+    "phase": "Foncier",
+    "target_km": 32,
+    "is_light": false
+   },
+   {
+    "week_start": "2026-11-09",
+    "phase": "Foncier",
+    "target_km": 23,
+    "is_light": true
+   },
+   {
+    "week_start": "2026-11-16",
+    "phase": "Foncier",
+    "target_km": 34,
+    "is_light": false
+   },
+   {
+    "week_start": "2026-11-23",
+    "phase": "Foncier",
+    "target_km": 35,
+    "is_light": false
+   },
+   {
+    "week_start": "2026-11-30",
+    "phase": "Développement",
+    "target_km": 35,
+    "is_light": false
+   },
+   {
+    "week_start": "2026-12-07",
+    "phase": "Développement",
+    "target_km": 23,
+    "is_light": true
+   },
+   {
+    "week_start": "2026-12-14",
+    "phase": "Développement",
+    "target_km": 37,
+    "is_light": false
+   },
+   {
+    "week_start": "2026-12-21",
+    "phase": "Développement",
+    "target_km": 38,
+    "is_light": false
+   },
+   {
+    "week_start": "2026-12-28",
+    "phase": "Développement",
+    "target_km": 39,
+    "is_light": false
+   },
+   {
+    "week_start": "2027-01-04",
+    "phase": "Développement",
+    "target_km": 23,
+    "is_light": true
+   },
+   {
+    "week_start": "2027-01-11",
+    "phase": "Spécifique",
+    "target_km": 39,
+    "is_light": false
+   },
+   {
+    "week_start": "2027-01-18",
+    "phase": "Spécifique",
+    "target_km": 39,
+    "is_light": false
+   },
+   {
+    "week_start": "2027-01-25",
+    "phase": "Spécifique",
+    "target_km": 39,
+    "is_light": false
+   },
+   {
+    "week_start": "2027-02-01",
+    "phase": "Spécifique",
+    "target_km": 23,
+    "is_light": true
+   }
+  ]
+ },
+ "sessions": [
+  {
+   "id": 100,
+   "date": "2026-10-20",
+   "order": 1,
+   "sport": "running",
+   "type": "intervals_short",
+   "title": "VMA 10 × 400 m",
+   "est_duration_s": 3154,
+   "est_distance_m": 10780,
+   "intent": "Travailler la vitesse sans se mettre dans le rouge",
+   "status": "done",
+   "activity_id": 5000,
+   "structure": {
+    "steps": [
+     {
+      "kind": "warmup",
+      "label": "Échauffement",
+      "duration": {
+       "type": "time",
+       "seconds": 900
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     },
+     {
+      "kind": "repeat",
+      "count": 10,
+      "steps": [
+       {
+        "kind": "active",
+        "label": "400 m vite",
+        "duration": {
+         "type": "distance",
+         "meters": 400
+        },
+        "target": {
+         "type": "pace",
+         "min_s_per_km": 222,
+         "max_s_per_km": 230
+        }
+       },
+       {
+        "kind": "recovery",
+        "label": "trot",
+        "duration": {
+         "type": "time",
+         "seconds": 75
+        }
+       }
+      ]
+     },
+     {
+      "kind": "cooldown",
+      "label": "Retour au calme",
+      "duration": {
+       "type": "time",
+       "seconds": 600
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 101,
+   "date": "2026-10-20",
+   "order": 2,
+   "sport": "strength",
+   "type": "strength_upper",
+   "title": "Muscu pecs et épaules",
+   "est_duration_s": 3000,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "done",
+   "activity_id": 5001,
+   "structure": null
+  },
+  {
+   "id": 102,
+   "date": "2026-10-22",
+   "order": 1,
+   "sport": "running",
+   "type": "easy",
+   "title": "Footing 40 min",
+   "est_duration_s": 2400,
+   "est_distance_m": 7220,
+   "intent": "Aisance respiratoire",
+   "status": "done",
+   "activity_id": 5002,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Footing",
+      "duration": {
+       "type": "time",
+       "seconds": 2400
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 103,
+   "date": "2026-10-23",
+   "order": 1,
+   "sport": "strength",
+   "type": "strength_legs",
+   "title": "Muscu leg",
+   "est_duration_s": 3000,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "done",
+   "activity_id": 5003,
+   "structure": null
+  },
+  {
+   "id": 104,
+   "date": "2026-10-24",
+   "order": 1,
+   "sport": "running",
+   "type": "easy",
+   "title": "Footing 32 min + lignes droites",
+   "est_duration_s": 2220,
+   "est_distance_m": 6810,
+   "intent": null,
+   "status": "done",
+   "activity_id": 5004,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Footing",
+      "duration": {
+       "type": "time",
+       "seconds": 1920
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     },
+     {
+      "kind": "repeat",
+      "count": 5,
+      "steps": [
+       {
+        "kind": "active",
+        "label": "Ligne droite",
+        "duration": {
+         "type": "time",
+         "seconds": 20
+        },
+        "target": {
+         "type": "pace",
+         "min_s_per_km": 225,
+         "max_s_per_km": 240
+        }
+       },
+       {
+        "kind": "recovery",
+        "label": "marche",
+        "duration": {
+         "type": "time",
+         "seconds": 40
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": 105,
+   "date": "2026-10-25",
+   "order": 1,
+   "sport": "running",
+   "type": "long",
+   "title": "Sortie longue 75 min",
+   "est_duration_s": 4500,
+   "est_distance_m": 13330,
+   "intent": "Endurance, finir en contrôle",
+   "status": "done",
+   "activity_id": 5005,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Sortie longue",
+      "duration": {
+       "type": "time",
+       "seconds": 4500
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 325,
+       "max_s_per_km": 350
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 106,
+   "date": "2026-10-19",
+   "order": 1,
+   "sport": "strength",
+   "type": "mobility",
+   "title": "Gainage",
+   "est_duration_s": 1200,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "done",
+   "activity_id": 5006,
+   "structure": null
+  },
+  {
+   "id": 107,
+   "date": "2026-10-27",
+   "order": 1,
+   "sport": "running",
+   "type": "threshold",
+   "title": "Seuil 3 × 10 min",
+   "est_duration_s": 3660,
+   "est_distance_m": 12370,
+   "intent": "Tenir l’allure seuil sans dériver",
+   "status": "done",
+   "activity_id": 5007,
+   "structure": {
+    "steps": [
+     {
+      "kind": "warmup",
+      "label": "Échauffement",
+      "duration": {
+       "type": "time",
+       "seconds": 900
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     },
+     {
+      "kind": "repeat",
+      "count": 3,
+      "steps": [
+       {
+        "kind": "active",
+        "label": "Seuil",
+        "duration": {
+         "type": "time",
+         "seconds": 600
+        },
+        "target": {
+         "type": "pace",
+         "min_s_per_km": 262,
+         "max_s_per_km": 270
+        }
+       },
+       {
+        "kind": "recovery",
+        "label": "Récup",
+        "duration": {
+         "type": "time",
+         "seconds": 120
+        }
+       }
+      ]
+     },
+     {
+      "kind": "cooldown",
+      "label": "Retour au calme",
+      "duration": {
+       "type": "time",
+       "seconds": 600
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 108,
+   "date": "2026-10-27",
+   "order": 2,
+   "sport": "strength",
+   "type": "strength_upper",
+   "title": "Muscu dos et bras",
+   "est_duration_s": 3000,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "done",
+   "activity_id": 5008,
+   "structure": null
+  },
+  {
+   "id": 109,
+   "date": "2026-10-29",
+   "order": 1,
+   "sport": "running",
+   "type": "easy",
+   "title": "Footing 41 min",
+   "est_duration_s": 2460,
+   "est_distance_m": 7400,
+   "intent": "Aisance respiratoire",
+   "status": "done",
+   "activity_id": 5009,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Footing",
+      "duration": {
+       "type": "time",
+       "seconds": 2460
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 110,
+   "date": "2026-10-30",
+   "order": 1,
+   "sport": "strength",
+   "type": "strength_legs",
+   "title": "Muscu leg",
+   "est_duration_s": 3000,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "done",
+   "activity_id": 5010,
+   "structure": null
+  },
+  {
+   "id": 111,
+   "date": "2026-10-31",
+   "order": 1,
+   "sport": "running",
+   "type": "easy",
+   "title": "Footing 33 min + lignes droites",
+   "est_duration_s": 2280,
+   "est_distance_m": 6990,
+   "intent": null,
+   "status": "done",
+   "activity_id": 5011,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Footing",
+      "duration": {
+       "type": "time",
+       "seconds": 1980
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     },
+     {
+      "kind": "repeat",
+      "count": 5,
+      "steps": [
+       {
+        "kind": "active",
+        "label": "Ligne droite",
+        "duration": {
+         "type": "time",
+         "seconds": 20
+        },
+        "target": {
+         "type": "pace",
+         "min_s_per_km": 225,
+         "max_s_per_km": 240
+        }
+       },
+       {
+        "kind": "recovery",
+        "label": "marche",
+        "duration": {
+         "type": "time",
+         "seconds": 40
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": 112,
+   "date": "2026-11-01",
+   "order": 1,
+   "sport": "running",
+   "type": "long",
+   "title": "Sortie longue 79 min",
+   "est_duration_s": 4740,
+   "est_distance_m": 14040,
+   "intent": "Endurance, finir en contrôle",
+   "status": "done",
+   "activity_id": 5012,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Sortie longue",
+      "duration": {
+       "type": "time",
+       "seconds": 4740
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 325,
+       "max_s_per_km": 350
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 113,
+   "date": "2026-11-03",
+   "order": 1,
+   "sport": "running",
+   "type": "hills",
+   "title": "Côtes 8 × 45 s",
+   "est_duration_s": 2580,
+   "est_distance_m": 7780,
+   "intent": "Force et foulée en montée",
+   "status": "done",
+   "activity_id": 5013,
+   "structure": {
+    "steps": [
+     {
+      "kind": "warmup",
+      "label": "Échauffement",
+      "duration": {
+       "type": "time",
+       "seconds": 900
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     },
+     {
+      "kind": "repeat",
+      "count": 8,
+      "steps": [
+       {
+        "kind": "active",
+        "label": "Côte",
+        "notes": "pente 6 à 8 %",
+        "duration": {
+         "type": "time",
+         "seconds": 45
+        }
+       },
+       {
+        "kind": "recovery",
+        "label": "Descente trot",
+        "duration": {
+         "type": "time",
+         "seconds": 90
+        }
+       }
+      ]
+     },
+     {
+      "kind": "cooldown",
+      "label": "Retour au calme",
+      "duration": {
+       "type": "time",
+       "seconds": 600
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 114,
+   "date": "2026-11-03",
+   "order": 2,
+   "sport": "strength",
+   "type": "strength_upper",
+   "title": "Muscu pecs et épaules",
+   "est_duration_s": 3000,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "done",
+   "activity_id": 5014,
+   "structure": null
+  },
+  {
+   "id": 115,
+   "date": "2026-11-05",
+   "order": 1,
+   "sport": "running",
+   "type": "easy",
+   "title": "Footing 42 min",
+   "est_duration_s": 2520,
+   "est_distance_m": 7580,
+   "intent": "Aisance respiratoire",
+   "status": "done",
+   "activity_id": 5015,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Footing",
+      "duration": {
+       "type": "time",
+       "seconds": 2520
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 116,
+   "date": "2026-11-06",
+   "order": 1,
+   "sport": "strength",
+   "type": "strength_legs",
+   "title": "Muscu leg",
+   "est_duration_s": 3000,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "done",
+   "activity_id": 5016,
+   "structure": null
+  },
+  {
+   "id": 117,
+   "date": "2026-11-07",
+   "order": 1,
+   "sport": "running",
+   "type": "easy",
+   "title": "Footing 34 min + lignes droites",
+   "est_duration_s": 2340,
+   "est_distance_m": 7170,
+   "intent": null,
+   "status": "done",
+   "activity_id": 5017,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Footing",
+      "duration": {
+       "type": "time",
+       "seconds": 2040
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     },
+     {
+      "kind": "repeat",
+      "count": 5,
+      "steps": [
+       {
+        "kind": "active",
+        "label": "Ligne droite",
+        "duration": {
+         "type": "time",
+         "seconds": 20
+        },
+        "target": {
+         "type": "pace",
+         "min_s_per_km": 225,
+         "max_s_per_km": 240
+        }
+       },
+       {
+        "kind": "recovery",
+        "label": "marche",
+        "duration": {
+         "type": "time",
+         "seconds": 40
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": 118,
+   "date": "2026-11-08",
+   "order": 1,
+   "sport": "running",
+   "type": "long",
+   "title": "Sortie longue 83 min",
+   "est_duration_s": 4980,
+   "est_distance_m": 14760,
+   "intent": "Endurance, finir en contrôle",
+   "status": "done",
+   "activity_id": 5018,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Sortie longue",
+      "duration": {
+       "type": "time",
+       "seconds": 4980
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 325,
+       "max_s_per_km": 350
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 119,
+   "date": "2026-11-02",
+   "order": 1,
+   "sport": "strength",
+   "type": "mobility",
+   "title": "Gainage",
+   "est_duration_s": 1200,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "done",
+   "activity_id": 5019,
+   "structure": null
+  },
+  {
+   "id": 120,
+   "date": "2026-11-10",
+   "order": 1,
+   "sport": "running",
+   "type": "intervals_long",
+   "title": "Fractionné 5 × 1000 m",
+   "est_duration_s": 3320,
+   "est_distance_m": 11330,
+   "intent": "Allure 10 km, récupération courte",
+   "status": "done",
+   "activity_id": 5020,
+   "structure": {
+    "steps": [
+     {
+      "kind": "warmup",
+      "label": "Échauffement",
+      "duration": {
+       "type": "time",
+       "seconds": 900
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     },
+     {
+      "kind": "repeat",
+      "count": 5,
+      "steps": [
+       {
+        "kind": "active",
+        "label": "1000 m",
+        "duration": {
+         "type": "distance",
+         "meters": 1000
+        },
+        "target": {
+         "type": "pace",
+         "min_s_per_km": 240,
+         "max_s_per_km": 248
+        }
+       },
+       {
+        "kind": "recovery",
+        "label": "trot",
+        "duration": {
+         "type": "time",
+         "seconds": 120
+        }
+       }
+      ]
+     },
+     {
+      "kind": "cooldown",
+      "label": "Retour au calme",
+      "duration": {
+       "type": "time",
+       "seconds": 600
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 121,
+   "date": "2026-11-10",
+   "order": 2,
+   "sport": "strength",
+   "type": "strength_upper",
+   "title": "Muscu dos et bras",
+   "est_duration_s": 3000,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "done",
+   "activity_id": 5021,
+   "structure": null
+  },
+  {
+   "id": 122,
+   "date": "2026-11-12",
+   "order": 1,
+   "sport": "running",
+   "type": "easy",
+   "title": "Footing 30 min",
+   "est_duration_s": 1800,
+   "est_distance_m": 5410,
+   "intent": "Aisance respiratoire",
+   "status": "done",
+   "activity_id": 5022,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Footing",
+      "duration": {
+       "type": "time",
+       "seconds": 1800
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 123,
+   "date": "2026-11-13",
+   "order": 1,
+   "sport": "strength",
+   "type": "strength_legs",
+   "title": "Muscu leg",
+   "est_duration_s": 3000,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "done",
+   "activity_id": 5023,
+   "structure": null
+  },
+  {
+   "id": 124,
+   "date": "2026-11-14",
+   "order": 1,
+   "sport": "running",
+   "type": "easy",
+   "title": "Footing 24 min + lignes droites",
+   "est_duration_s": 1740,
+   "est_distance_m": 5370,
+   "intent": null,
+   "status": "done",
+   "activity_id": 5024,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Footing",
+      "duration": {
+       "type": "time",
+       "seconds": 1440
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     },
+     {
+      "kind": "repeat",
+      "count": 5,
+      "steps": [
+       {
+        "kind": "active",
+        "label": "Ligne droite",
+        "duration": {
+         "type": "time",
+         "seconds": 20
+        },
+        "target": {
+         "type": "pace",
+         "min_s_per_km": 225,
+         "max_s_per_km": 240
+        }
+       },
+       {
+        "kind": "recovery",
+        "label": "marche",
+        "duration": {
+         "type": "time",
+         "seconds": 40
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": 125,
+   "date": "2026-11-15",
+   "order": 1,
+   "sport": "running",
+   "type": "long",
+   "title": "Sortie longue 65 min",
+   "est_duration_s": 3900,
+   "est_distance_m": 11560,
+   "intent": "Endurance, finir en contrôle",
+   "status": "done",
+   "activity_id": 5025,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Sortie longue",
+      "duration": {
+       "type": "time",
+       "seconds": 3900
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 325,
+       "max_s_per_km": 350
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 126,
+   "date": "2026-11-17",
+   "order": 1,
+   "sport": "running",
+   "type": "intervals_short",
+   "title": "VMA 10 × 400 m",
+   "est_duration_s": 3154,
+   "est_distance_m": 10780,
+   "intent": "Travailler la vitesse sans se mettre dans le rouge",
+   "status": "done",
+   "activity_id": 5026,
+   "structure": {
+    "steps": [
+     {
+      "kind": "warmup",
+      "label": "Échauffement",
+      "duration": {
+       "type": "time",
+       "seconds": 900
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     },
+     {
+      "kind": "repeat",
+      "count": 10,
+      "steps": [
+       {
+        "kind": "active",
+        "label": "400 m vite",
+        "duration": {
+         "type": "distance",
+         "meters": 400
+        },
+        "target": {
+         "type": "pace",
+         "min_s_per_km": 222,
+         "max_s_per_km": 230
+        }
+       },
+       {
+        "kind": "recovery",
+        "label": "trot",
+        "duration": {
+         "type": "time",
+         "seconds": 75
+        }
+       }
+      ]
+     },
+     {
+      "kind": "cooldown",
+      "label": "Retour au calme",
+      "duration": {
+       "type": "time",
+       "seconds": 600
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 127,
+   "date": "2026-11-17",
+   "order": 2,
+   "sport": "strength",
+   "type": "strength_upper",
+   "title": "Muscu pecs et épaules",
+   "est_duration_s": 3000,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "done",
+   "activity_id": 5027,
+   "structure": null
+  },
+  {
+   "id": 128,
+   "date": "2026-11-19",
+   "order": 1,
+   "sport": "running",
+   "type": "easy",
+   "title": "Footing 45 min",
+   "est_duration_s": 2700,
+   "est_distance_m": 8120,
+   "intent": "Aisance respiratoire",
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Footing",
+      "duration": {
+       "type": "time",
+       "seconds": 2700
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 129,
+   "date": "2026-11-20",
+   "order": 1,
+   "sport": "strength",
+   "type": "strength_legs",
+   "title": "Muscu leg",
+   "est_duration_s": 3000,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": null
+  },
+  {
+   "id": 130,
+   "date": "2026-11-21",
+   "order": 1,
+   "sport": "running",
+   "type": "easy",
+   "title": "Footing 36 min + lignes droites",
+   "est_duration_s": 2460,
+   "est_distance_m": 7530,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Footing",
+      "duration": {
+       "type": "time",
+       "seconds": 2160
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     },
+     {
+      "kind": "repeat",
+      "count": 5,
+      "steps": [
+       {
+        "kind": "active",
+        "label": "Ligne droite",
+        "duration": {
+         "type": "time",
+         "seconds": 20
+        },
+        "target": {
+         "type": "pace",
+         "min_s_per_km": 225,
+         "max_s_per_km": 240
+        }
+       },
+       {
+        "kind": "recovery",
+        "label": "marche",
+        "duration": {
+         "type": "time",
+         "seconds": 40
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": 131,
+   "date": "2026-11-22",
+   "order": 1,
+   "sport": "running",
+   "type": "long",
+   "title": "Sortie longue 91 min",
+   "est_duration_s": 5460,
+   "est_distance_m": 16180,
+   "intent": "Endurance, finir en contrôle",
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Sortie longue",
+      "duration": {
+       "type": "time",
+       "seconds": 5460
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 325,
+       "max_s_per_km": 350
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 132,
+   "date": "2026-11-16",
+   "order": 1,
+   "sport": "strength",
+   "type": "mobility",
+   "title": "Gainage",
+   "est_duration_s": 1200,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "done",
+   "activity_id": 5028,
+   "structure": null
+  },
+  {
+   "id": 133,
+   "date": "2026-11-24",
+   "order": 1,
+   "sport": "running",
+   "type": "threshold",
+   "title": "Seuil 3 × 10 min",
+   "est_duration_s": 3660,
+   "est_distance_m": 12370,
+   "intent": "Tenir l’allure seuil sans dériver",
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "warmup",
+      "label": "Échauffement",
+      "duration": {
+       "type": "time",
+       "seconds": 900
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     },
+     {
+      "kind": "repeat",
+      "count": 3,
+      "steps": [
+       {
+        "kind": "active",
+        "label": "Seuil",
+        "duration": {
+         "type": "time",
+         "seconds": 600
+        },
+        "target": {
+         "type": "pace",
+         "min_s_per_km": 262,
+         "max_s_per_km": 270
+        }
+       },
+       {
+        "kind": "recovery",
+        "label": "Récup",
+        "duration": {
+         "type": "time",
+         "seconds": 120
+        }
+       }
+      ]
+     },
+     {
+      "kind": "cooldown",
+      "label": "Retour au calme",
+      "duration": {
+       "type": "time",
+       "seconds": 600
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 134,
+   "date": "2026-11-24",
+   "order": 2,
+   "sport": "strength",
+   "type": "strength_upper",
+   "title": "Muscu dos et bras",
+   "est_duration_s": 3000,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": null
+  },
+  {
+   "id": 135,
+   "date": "2026-11-26",
+   "order": 1,
+   "sport": "running",
+   "type": "easy",
+   "title": "Footing 46 min",
+   "est_duration_s": 2760,
+   "est_distance_m": 8300,
+   "intent": "Aisance respiratoire",
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Footing",
+      "duration": {
+       "type": "time",
+       "seconds": 2760
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 136,
+   "date": "2026-11-27",
+   "order": 1,
+   "sport": "strength",
+   "type": "strength_legs",
+   "title": "Muscu leg",
+   "est_duration_s": 3000,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": null
+  },
+  {
+   "id": 137,
+   "date": "2026-11-28",
+   "order": 1,
+   "sport": "running",
+   "type": "easy",
+   "title": "Footing 37 min + lignes droites",
+   "est_duration_s": 2520,
+   "est_distance_m": 7710,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Footing",
+      "duration": {
+       "type": "time",
+       "seconds": 2220
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     },
+     {
+      "kind": "repeat",
+      "count": 5,
+      "steps": [
+       {
+        "kind": "active",
+        "label": "Ligne droite",
+        "duration": {
+         "type": "time",
+         "seconds": 20
+        },
+        "target": {
+         "type": "pace",
+         "min_s_per_km": 225,
+         "max_s_per_km": 240
+        }
+       },
+       {
+        "kind": "recovery",
+        "label": "marche",
+        "duration": {
+         "type": "time",
+         "seconds": 40
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": 138,
+   "date": "2026-11-29",
+   "order": 1,
+   "sport": "running",
+   "type": "long",
+   "title": "Sortie longue 95 min",
+   "est_duration_s": 5700,
+   "est_distance_m": 16890,
+   "intent": "Endurance, finir en contrôle",
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Sortie longue",
+      "duration": {
+       "type": "time",
+       "seconds": 5700
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 325,
+       "max_s_per_km": 350
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 139,
+   "date": "2026-12-01",
+   "order": 1,
+   "sport": "running",
+   "type": "hills",
+   "title": "Côtes 8 × 45 s",
+   "est_duration_s": 2580,
+   "est_distance_m": 7780,
+   "intent": "Force et foulée en montée",
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "warmup",
+      "label": "Échauffement",
+      "duration": {
+       "type": "time",
+       "seconds": 900
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     },
+     {
+      "kind": "repeat",
+      "count": 8,
+      "steps": [
+       {
+        "kind": "active",
+        "label": "Côte",
+        "notes": "pente 6 à 8 %",
+        "duration": {
+         "type": "time",
+         "seconds": 45
+        }
+       },
+       {
+        "kind": "recovery",
+        "label": "Descente trot",
+        "duration": {
+         "type": "time",
+         "seconds": 90
+        }
+       }
+      ]
+     },
+     {
+      "kind": "cooldown",
+      "label": "Retour au calme",
+      "duration": {
+       "type": "time",
+       "seconds": 600
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 140,
+   "date": "2026-12-01",
+   "order": 2,
+   "sport": "strength",
+   "type": "strength_upper",
+   "title": "Muscu pecs et épaules",
+   "est_duration_s": 3000,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": null
+  },
+  {
+   "id": 141,
+   "date": "2026-12-03",
+   "order": 1,
+   "sport": "running",
+   "type": "easy",
+   "title": "Footing 47 min",
+   "est_duration_s": 2820,
+   "est_distance_m": 8480,
+   "intent": "Aisance respiratoire",
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Footing",
+      "duration": {
+       "type": "time",
+       "seconds": 2820
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 142,
+   "date": "2026-12-04",
+   "order": 1,
+   "sport": "strength",
+   "type": "strength_legs",
+   "title": "Muscu leg",
+   "est_duration_s": 3000,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": null
+  },
+  {
+   "id": 143,
+   "date": "2026-12-05",
+   "order": 1,
+   "sport": "running",
+   "type": "easy",
+   "title": "Footing 38 min + lignes droites",
+   "est_duration_s": 2580,
+   "est_distance_m": 7890,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Footing",
+      "duration": {
+       "type": "time",
+       "seconds": 2280
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     },
+     {
+      "kind": "repeat",
+      "count": 5,
+      "steps": [
+       {
+        "kind": "active",
+        "label": "Ligne droite",
+        "duration": {
+         "type": "time",
+         "seconds": 20
+        },
+        "target": {
+         "type": "pace",
+         "min_s_per_km": 225,
+         "max_s_per_km": 240
+        }
+       },
+       {
+        "kind": "recovery",
+        "label": "marche",
+        "duration": {
+         "type": "time",
+         "seconds": 40
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": 144,
+   "date": "2026-12-06",
+   "order": 1,
+   "sport": "running",
+   "type": "long",
+   "title": "Sortie longue 99 min",
+   "est_duration_s": 5940,
+   "est_distance_m": 17600,
+   "intent": "Endurance, finir en contrôle",
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Sortie longue",
+      "duration": {
+       "type": "time",
+       "seconds": 5940
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 325,
+       "max_s_per_km": 350
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 145,
+   "date": "2026-11-30",
+   "order": 1,
+   "sport": "strength",
+   "type": "mobility",
+   "title": "Gainage",
+   "est_duration_s": 1200,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": null
+  },
+  {
+   "id": 146,
+   "date": "2026-12-08",
+   "order": 1,
+   "sport": "running",
+   "type": "intervals_long",
+   "title": "Fractionné 5 × 1000 m",
+   "est_duration_s": 3320,
+   "est_distance_m": 11330,
+   "intent": "Allure 10 km, récupération courte",
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "warmup",
+      "label": "Échauffement",
+      "duration": {
+       "type": "time",
+       "seconds": 900
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     },
+     {
+      "kind": "repeat",
+      "count": 5,
+      "steps": [
+       {
+        "kind": "active",
+        "label": "1000 m",
+        "duration": {
+         "type": "distance",
+         "meters": 1000
+        },
+        "target": {
+         "type": "pace",
+         "min_s_per_km": 240,
+         "max_s_per_km": 248
+        }
+       },
+       {
+        "kind": "recovery",
+        "label": "trot",
+        "duration": {
+         "type": "time",
+         "seconds": 120
+        }
+       }
+      ]
+     },
+     {
+      "kind": "cooldown",
+      "label": "Retour au calme",
+      "duration": {
+       "type": "time",
+       "seconds": 600
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 147,
+   "date": "2026-12-08",
+   "order": 2,
+   "sport": "strength",
+   "type": "strength_upper",
+   "title": "Muscu dos et bras",
+   "est_duration_s": 3000,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": null
+  },
+  {
+   "id": 148,
+   "date": "2026-12-10",
+   "order": 1,
+   "sport": "running",
+   "type": "easy",
+   "title": "Footing 30 min",
+   "est_duration_s": 1800,
+   "est_distance_m": 5410,
+   "intent": "Aisance respiratoire",
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Footing",
+      "duration": {
+       "type": "time",
+       "seconds": 1800
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 149,
+   "date": "2026-12-11",
+   "order": 1,
+   "sport": "strength",
+   "type": "strength_legs",
+   "title": "Muscu leg",
+   "est_duration_s": 3000,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": null
+  },
+  {
+   "id": 150,
+   "date": "2026-12-12",
+   "order": 1,
+   "sport": "running",
+   "type": "easy",
+   "title": "Footing 24 min + lignes droites",
+   "est_duration_s": 1740,
+   "est_distance_m": 5370,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Footing",
+      "duration": {
+       "type": "time",
+       "seconds": 1440
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     },
+     {
+      "kind": "repeat",
+      "count": 5,
+      "steps": [
+       {
+        "kind": "active",
+        "label": "Ligne droite",
+        "duration": {
+         "type": "time",
+         "seconds": 20
+        },
+        "target": {
+         "type": "pace",
+         "min_s_per_km": 225,
+         "max_s_per_km": 240
+        }
+       },
+       {
+        "kind": "recovery",
+        "label": "marche",
+        "duration": {
+         "type": "time",
+         "seconds": 40
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": 151,
+   "date": "2026-12-13",
+   "order": 1,
+   "sport": "running",
+   "type": "long",
+   "title": "Sortie longue 77 min",
+   "est_duration_s": 4620,
+   "est_distance_m": 13690,
+   "intent": "Endurance, finir en contrôle",
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Sortie longue",
+      "duration": {
+       "type": "time",
+       "seconds": 4620
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 325,
+       "max_s_per_km": 350
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 152,
+   "date": "2026-12-15",
+   "order": 1,
+   "sport": "running",
+   "type": "intervals_short",
+   "title": "VMA 10 × 400 m",
+   "est_duration_s": 3154,
+   "est_distance_m": 10780,
+   "intent": "Travailler la vitesse sans se mettre dans le rouge",
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "warmup",
+      "label": "Échauffement",
+      "duration": {
+       "type": "time",
+       "seconds": 900
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     },
+     {
+      "kind": "repeat",
+      "count": 10,
+      "steps": [
+       {
+        "kind": "active",
+        "label": "400 m vite",
+        "duration": {
+         "type": "distance",
+         "meters": 400
+        },
+        "target": {
+         "type": "pace",
+         "min_s_per_km": 222,
+         "max_s_per_km": 230
+        }
+       },
+       {
+        "kind": "recovery",
+        "label": "trot",
+        "duration": {
+         "type": "time",
+         "seconds": 75
+        }
+       }
+      ]
+     },
+     {
+      "kind": "cooldown",
+      "label": "Retour au calme",
+      "duration": {
+       "type": "time",
+       "seconds": 600
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 153,
+   "date": "2026-12-15",
+   "order": 2,
+   "sport": "strength",
+   "type": "strength_upper",
+   "title": "Muscu pecs et épaules",
+   "est_duration_s": 3000,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": null
+  },
+  {
+   "id": 154,
+   "date": "2026-12-17",
+   "order": 1,
+   "sport": "running",
+   "type": "easy",
+   "title": "Footing 50 min",
+   "est_duration_s": 3000,
+   "est_distance_m": 9020,
+   "intent": "Aisance respiratoire",
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Footing",
+      "duration": {
+       "type": "time",
+       "seconds": 3000
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 155,
+   "date": "2026-12-18",
+   "order": 1,
+   "sport": "strength",
+   "type": "strength_legs",
+   "title": "Muscu leg",
+   "est_duration_s": 3000,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": null
+  },
+  {
+   "id": 156,
+   "date": "2026-12-19",
+   "order": 1,
+   "sport": "running",
+   "type": "easy",
+   "title": "Footing 40 min + lignes droites",
+   "est_duration_s": 2700,
+   "est_distance_m": 8250,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Footing",
+      "duration": {
+       "type": "time",
+       "seconds": 2400
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     },
+     {
+      "kind": "repeat",
+      "count": 5,
+      "steps": [
+       {
+        "kind": "active",
+        "label": "Ligne droite",
+        "duration": {
+         "type": "time",
+         "seconds": 20
+        },
+        "target": {
+         "type": "pace",
+         "min_s_per_km": 225,
+         "max_s_per_km": 240
+        }
+       },
+       {
+        "kind": "recovery",
+        "label": "marche",
+        "duration": {
+         "type": "time",
+         "seconds": 40
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": 157,
+   "date": "2026-12-20",
+   "order": 1,
+   "sport": "running",
+   "type": "long",
+   "title": "Sortie longue 107 min",
+   "est_duration_s": 6420,
+   "est_distance_m": 19020,
+   "intent": "Endurance, finir en contrôle",
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Sortie longue",
+      "duration": {
+       "type": "time",
+       "seconds": 6420
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 325,
+       "max_s_per_km": 350
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 158,
+   "date": "2026-12-14",
+   "order": 1,
+   "sport": "strength",
+   "type": "mobility",
+   "title": "Gainage",
+   "est_duration_s": 1200,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": null
+  },
+  {
+   "id": 159,
+   "date": "2026-12-22",
+   "order": 1,
+   "sport": "running",
+   "type": "threshold",
+   "title": "Seuil 3 × 10 min",
+   "est_duration_s": 3660,
+   "est_distance_m": 12370,
+   "intent": "Tenir l’allure seuil sans dériver",
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "warmup",
+      "label": "Échauffement",
+      "duration": {
+       "type": "time",
+       "seconds": 900
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     },
+     {
+      "kind": "repeat",
+      "count": 3,
+      "steps": [
+       {
+        "kind": "active",
+        "label": "Seuil",
+        "duration": {
+         "type": "time",
+         "seconds": 600
+        },
+        "target": {
+         "type": "pace",
+         "min_s_per_km": 262,
+         "max_s_per_km": 270
+        }
+       },
+       {
+        "kind": "recovery",
+        "label": "Récup",
+        "duration": {
+         "type": "time",
+         "seconds": 120
+        }
+       }
+      ]
+     },
+     {
+      "kind": "cooldown",
+      "label": "Retour au calme",
+      "duration": {
+       "type": "time",
+       "seconds": 600
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 160,
+   "date": "2026-12-22",
+   "order": 2,
+   "sport": "strength",
+   "type": "strength_upper",
+   "title": "Muscu dos et bras",
+   "est_duration_s": 3000,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": null
+  },
+  {
+   "id": 161,
+   "date": "2026-12-24",
+   "order": 1,
+   "sport": "running",
+   "type": "easy",
+   "title": "Footing 51 min",
+   "est_duration_s": 3060,
+   "est_distance_m": 9200,
+   "intent": "Aisance respiratoire",
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Footing",
+      "duration": {
+       "type": "time",
+       "seconds": 3060
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 162,
+   "date": "2026-12-25",
+   "order": 1,
+   "sport": "strength",
+   "type": "strength_legs",
+   "title": "Muscu leg",
+   "est_duration_s": 3000,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": null
+  },
+  {
+   "id": 163,
+   "date": "2026-12-26",
+   "order": 1,
+   "sport": "running",
+   "type": "easy",
+   "title": "Footing 41 min + lignes droites",
+   "est_duration_s": 2760,
+   "est_distance_m": 8430,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Footing",
+      "duration": {
+       "type": "time",
+       "seconds": 2460
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     },
+     {
+      "kind": "repeat",
+      "count": 5,
+      "steps": [
+       {
+        "kind": "active",
+        "label": "Ligne droite",
+        "duration": {
+         "type": "time",
+         "seconds": 20
+        },
+        "target": {
+         "type": "pace",
+         "min_s_per_km": 225,
+         "max_s_per_km": 240
+        }
+       },
+       {
+        "kind": "recovery",
+        "label": "marche",
+        "duration": {
+         "type": "time",
+         "seconds": 40
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": 164,
+   "date": "2026-12-27",
+   "order": 1,
+   "sport": "running",
+   "type": "long",
+   "title": "Sortie longue 111 min",
+   "est_duration_s": 6660,
+   "est_distance_m": 19730,
+   "intent": "Endurance, finir en contrôle",
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Sortie longue",
+      "duration": {
+       "type": "time",
+       "seconds": 6660
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 325,
+       "max_s_per_km": 350
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 165,
+   "date": "2026-12-29",
+   "order": 1,
+   "sport": "running",
+   "type": "hills",
+   "title": "Côtes 8 × 45 s",
+   "est_duration_s": 2580,
+   "est_distance_m": 7780,
+   "intent": "Force et foulée en montée",
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "warmup",
+      "label": "Échauffement",
+      "duration": {
+       "type": "time",
+       "seconds": 900
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     },
+     {
+      "kind": "repeat",
+      "count": 8,
+      "steps": [
+       {
+        "kind": "active",
+        "label": "Côte",
+        "notes": "pente 6 à 8 %",
+        "duration": {
+         "type": "time",
+         "seconds": 45
+        }
+       },
+       {
+        "kind": "recovery",
+        "label": "Descente trot",
+        "duration": {
+         "type": "time",
+         "seconds": 90
+        }
+       }
+      ]
+     },
+     {
+      "kind": "cooldown",
+      "label": "Retour au calme",
+      "duration": {
+       "type": "time",
+       "seconds": 600
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 166,
+   "date": "2026-12-29",
+   "order": 2,
+   "sport": "strength",
+   "type": "strength_upper",
+   "title": "Muscu pecs et épaules",
+   "est_duration_s": 3000,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": null
+  },
+  {
+   "id": 167,
+   "date": "2026-12-31",
+   "order": 1,
+   "sport": "running",
+   "type": "easy",
+   "title": "Footing 52 min",
+   "est_duration_s": 3120,
+   "est_distance_m": 9380,
+   "intent": "Aisance respiratoire",
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Footing",
+      "duration": {
+       "type": "time",
+       "seconds": 3120
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 168,
+   "date": "2027-01-01",
+   "order": 1,
+   "sport": "strength",
+   "type": "strength_legs",
+   "title": "Muscu leg",
+   "est_duration_s": 3000,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": null
+  },
+  {
+   "id": 169,
+   "date": "2027-01-02",
+   "order": 1,
+   "sport": "running",
+   "type": "easy",
+   "title": "Footing 42 min + lignes droites",
+   "est_duration_s": 2820,
+   "est_distance_m": 8620,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Footing",
+      "duration": {
+       "type": "time",
+       "seconds": 2520
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     },
+     {
+      "kind": "repeat",
+      "count": 5,
+      "steps": [
+       {
+        "kind": "active",
+        "label": "Ligne droite",
+        "duration": {
+         "type": "time",
+         "seconds": 20
+        },
+        "target": {
+         "type": "pace",
+         "min_s_per_km": 225,
+         "max_s_per_km": 240
+        }
+       },
+       {
+        "kind": "recovery",
+        "label": "marche",
+        "duration": {
+         "type": "time",
+         "seconds": 40
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": 170,
+   "date": "2027-01-03",
+   "order": 1,
+   "sport": "running",
+   "type": "long",
+   "title": "Sortie longue 115 min",
+   "est_duration_s": 6900,
+   "est_distance_m": 20440,
+   "intent": "Endurance, finir en contrôle",
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Sortie longue",
+      "duration": {
+       "type": "time",
+       "seconds": 6900
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 325,
+       "max_s_per_km": 350
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 171,
+   "date": "2026-12-28",
+   "order": 1,
+   "sport": "strength",
+   "type": "mobility",
+   "title": "Gainage",
+   "est_duration_s": 1200,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": null
+  },
+  {
+   "id": 172,
+   "date": "2027-01-05",
+   "order": 1,
+   "sport": "running",
+   "type": "intervals_long",
+   "title": "Fractionné 5 × 1000 m",
+   "est_duration_s": 3320,
+   "est_distance_m": 11330,
+   "intent": "Allure 10 km, récupération courte",
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "warmup",
+      "label": "Échauffement",
+      "duration": {
+       "type": "time",
+       "seconds": 900
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     },
+     {
+      "kind": "repeat",
+      "count": 5,
+      "steps": [
+       {
+        "kind": "active",
+        "label": "1000 m",
+        "duration": {
+         "type": "distance",
+         "meters": 1000
+        },
+        "target": {
+         "type": "pace",
+         "min_s_per_km": 240,
+         "max_s_per_km": 248
+        }
+       },
+       {
+        "kind": "recovery",
+        "label": "trot",
+        "duration": {
+         "type": "time",
+         "seconds": 120
+        }
+       }
+      ]
+     },
+     {
+      "kind": "cooldown",
+      "label": "Retour au calme",
+      "duration": {
+       "type": "time",
+       "seconds": 600
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 173,
+   "date": "2027-01-05",
+   "order": 2,
+   "sport": "strength",
+   "type": "strength_upper",
+   "title": "Muscu dos et bras",
+   "est_duration_s": 3000,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": null
+  },
+  {
+   "id": 174,
+   "date": "2027-01-07",
+   "order": 1,
+   "sport": "running",
+   "type": "easy",
+   "title": "Footing 30 min",
+   "est_duration_s": 1800,
+   "est_distance_m": 5410,
+   "intent": "Aisance respiratoire",
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Footing",
+      "duration": {
+       "type": "time",
+       "seconds": 1800
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 175,
+   "date": "2027-01-08",
+   "order": 1,
+   "sport": "strength",
+   "type": "strength_legs",
+   "title": "Muscu leg",
+   "est_duration_s": 3000,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": null
+  },
+  {
+   "id": 176,
+   "date": "2027-01-09",
+   "order": 1,
+   "sport": "running",
+   "type": "easy",
+   "title": "Footing 24 min + lignes droites",
+   "est_duration_s": 1740,
+   "est_distance_m": 5370,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Footing",
+      "duration": {
+       "type": "time",
+       "seconds": 1440
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     },
+     {
+      "kind": "repeat",
+      "count": 5,
+      "steps": [
+       {
+        "kind": "active",
+        "label": "Ligne droite",
+        "duration": {
+         "type": "time",
+         "seconds": 20
+        },
+        "target": {
+         "type": "pace",
+         "min_s_per_km": 225,
+         "max_s_per_km": 240
+        }
+       },
+       {
+        "kind": "recovery",
+        "label": "marche",
+        "duration": {
+         "type": "time",
+         "seconds": 40
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": 177,
+   "date": "2027-01-10",
+   "order": 1,
+   "sport": "running",
+   "type": "long",
+   "title": "Sortie longue 89 min",
+   "est_duration_s": 5340,
+   "est_distance_m": 15820,
+   "intent": "Endurance, finir en contrôle",
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Sortie longue",
+      "duration": {
+       "type": "time",
+       "seconds": 5340
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 325,
+       "max_s_per_km": 350
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 178,
+   "date": "2027-01-12",
+   "order": 1,
+   "sport": "running",
+   "type": "intervals_short",
+   "title": "VMA 10 × 400 m",
+   "est_duration_s": 3154,
+   "est_distance_m": 10780,
+   "intent": "Travailler la vitesse sans se mettre dans le rouge",
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "warmup",
+      "label": "Échauffement",
+      "duration": {
+       "type": "time",
+       "seconds": 900
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     },
+     {
+      "kind": "repeat",
+      "count": 10,
+      "steps": [
+       {
+        "kind": "active",
+        "label": "400 m vite",
+        "duration": {
+         "type": "distance",
+         "meters": 400
+        },
+        "target": {
+         "type": "pace",
+         "min_s_per_km": 222,
+         "max_s_per_km": 230
+        }
+       },
+       {
+        "kind": "recovery",
+        "label": "trot",
+        "duration": {
+         "type": "time",
+         "seconds": 75
+        }
+       }
+      ]
+     },
+     {
+      "kind": "cooldown",
+      "label": "Retour au calme",
+      "duration": {
+       "type": "time",
+       "seconds": 600
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 179,
+   "date": "2027-01-12",
+   "order": 2,
+   "sport": "strength",
+   "type": "strength_upper",
+   "title": "Muscu pecs et épaules",
+   "est_duration_s": 3000,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": null
+  },
+  {
+   "id": 180,
+   "date": "2027-01-14",
+   "order": 1,
+   "sport": "running",
+   "type": "easy",
+   "title": "Footing 52 min",
+   "est_duration_s": 3120,
+   "est_distance_m": 9380,
+   "intent": "Aisance respiratoire",
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Footing",
+      "duration": {
+       "type": "time",
+       "seconds": 3120
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 181,
+   "date": "2027-01-15",
+   "order": 1,
+   "sport": "strength",
+   "type": "strength_legs",
+   "title": "Muscu leg",
+   "est_duration_s": 3000,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": null
+  },
+  {
+   "id": 182,
+   "date": "2027-01-16",
+   "order": 1,
+   "sport": "running",
+   "type": "easy",
+   "title": "Footing 42 min + lignes droites",
+   "est_duration_s": 2820,
+   "est_distance_m": 8620,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Footing",
+      "duration": {
+       "type": "time",
+       "seconds": 2520
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     },
+     {
+      "kind": "repeat",
+      "count": 5,
+      "steps": [
+       {
+        "kind": "active",
+        "label": "Ligne droite",
+        "duration": {
+         "type": "time",
+         "seconds": 20
+        },
+        "target": {
+         "type": "pace",
+         "min_s_per_km": 225,
+         "max_s_per_km": 240
+        }
+       },
+       {
+        "kind": "recovery",
+        "label": "marche",
+        "duration": {
+         "type": "time",
+         "seconds": 40
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": 183,
+   "date": "2027-01-17",
+   "order": 1,
+   "sport": "running",
+   "type": "long",
+   "title": "Sortie longue 123 min",
+   "est_duration_s": 7380,
+   "est_distance_m": 21870,
+   "intent": "Endurance, finir en contrôle",
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Sortie longue",
+      "duration": {
+       "type": "time",
+       "seconds": 7380
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 325,
+       "max_s_per_km": 350
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 184,
+   "date": "2027-01-11",
+   "order": 1,
+   "sport": "strength",
+   "type": "mobility",
+   "title": "Gainage",
+   "est_duration_s": 1200,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": null
+  },
+  {
+   "id": 185,
+   "date": "2027-01-19",
+   "order": 1,
+   "sport": "running",
+   "type": "threshold",
+   "title": "Seuil 3 × 10 min",
+   "est_duration_s": 3660,
+   "est_distance_m": 12370,
+   "intent": "Tenir l’allure seuil sans dériver",
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "warmup",
+      "label": "Échauffement",
+      "duration": {
+       "type": "time",
+       "seconds": 900
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     },
+     {
+      "kind": "repeat",
+      "count": 3,
+      "steps": [
+       {
+        "kind": "active",
+        "label": "Seuil",
+        "duration": {
+         "type": "time",
+         "seconds": 600
+        },
+        "target": {
+         "type": "pace",
+         "min_s_per_km": 262,
+         "max_s_per_km": 270
+        }
+       },
+       {
+        "kind": "recovery",
+        "label": "Récup",
+        "duration": {
+         "type": "time",
+         "seconds": 120
+        }
+       }
+      ]
+     },
+     {
+      "kind": "cooldown",
+      "label": "Retour au calme",
+      "duration": {
+       "type": "time",
+       "seconds": 600
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 186,
+   "date": "2027-01-19",
+   "order": 2,
+   "sport": "strength",
+   "type": "strength_upper",
+   "title": "Muscu dos et bras",
+   "est_duration_s": 3000,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": null
+  },
+  {
+   "id": 187,
+   "date": "2027-01-21",
+   "order": 1,
+   "sport": "running",
+   "type": "easy",
+   "title": "Footing 52 min",
+   "est_duration_s": 3120,
+   "est_distance_m": 9380,
+   "intent": "Aisance respiratoire",
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Footing",
+      "duration": {
+       "type": "time",
+       "seconds": 3120
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 188,
+   "date": "2027-01-22",
+   "order": 1,
+   "sport": "strength",
+   "type": "strength_legs",
+   "title": "Muscu leg",
+   "est_duration_s": 3000,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": null
+  },
+  {
+   "id": 189,
+   "date": "2027-01-23",
+   "order": 1,
+   "sport": "running",
+   "type": "easy",
+   "title": "Footing 42 min + lignes droites",
+   "est_duration_s": 2820,
+   "est_distance_m": 8620,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Footing",
+      "duration": {
+       "type": "time",
+       "seconds": 2520
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     },
+     {
+      "kind": "repeat",
+      "count": 5,
+      "steps": [
+       {
+        "kind": "active",
+        "label": "Ligne droite",
+        "duration": {
+         "type": "time",
+         "seconds": 20
+        },
+        "target": {
+         "type": "pace",
+         "min_s_per_km": 225,
+         "max_s_per_km": 240
+        }
+       },
+       {
+        "kind": "recovery",
+        "label": "marche",
+        "duration": {
+         "type": "time",
+         "seconds": 40
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": 190,
+   "date": "2027-01-24",
+   "order": 1,
+   "sport": "running",
+   "type": "long",
+   "title": "Sortie longue 127 min",
+   "est_duration_s": 7620,
+   "est_distance_m": 22580,
+   "intent": "Endurance, finir en contrôle",
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Sortie longue",
+      "duration": {
+       "type": "time",
+       "seconds": 7620
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 325,
+       "max_s_per_km": 350
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 191,
+   "date": "2027-01-26",
+   "order": 1,
+   "sport": "running",
+   "type": "hills",
+   "title": "Côtes 8 × 45 s",
+   "est_duration_s": 2580,
+   "est_distance_m": 7780,
+   "intent": "Force et foulée en montée",
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "warmup",
+      "label": "Échauffement",
+      "duration": {
+       "type": "time",
+       "seconds": 900
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     },
+     {
+      "kind": "repeat",
+      "count": 8,
+      "steps": [
+       {
+        "kind": "active",
+        "label": "Côte",
+        "notes": "pente 6 à 8 %",
+        "duration": {
+         "type": "time",
+         "seconds": 45
+        }
+       },
+       {
+        "kind": "recovery",
+        "label": "Descente trot",
+        "duration": {
+         "type": "time",
+         "seconds": 90
+        }
+       }
+      ]
+     },
+     {
+      "kind": "cooldown",
+      "label": "Retour au calme",
+      "duration": {
+       "type": "time",
+       "seconds": 600
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 192,
+   "date": "2027-01-26",
+   "order": 2,
+   "sport": "strength",
+   "type": "strength_upper",
+   "title": "Muscu pecs et épaules",
+   "est_duration_s": 3000,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": null
+  },
+  {
+   "id": 193,
+   "date": "2027-01-28",
+   "order": 1,
+   "sport": "running",
+   "type": "easy",
+   "title": "Footing 52 min",
+   "est_duration_s": 3120,
+   "est_distance_m": 9380,
+   "intent": "Aisance respiratoire",
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Footing",
+      "duration": {
+       "type": "time",
+       "seconds": 3120
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 194,
+   "date": "2027-01-29",
+   "order": 1,
+   "sport": "strength",
+   "type": "strength_legs",
+   "title": "Muscu leg",
+   "est_duration_s": 3000,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": null
+  },
+  {
+   "id": 195,
+   "date": "2027-01-30",
+   "order": 1,
+   "sport": "running",
+   "type": "easy",
+   "title": "Footing 42 min + lignes droites",
+   "est_duration_s": 2820,
+   "est_distance_m": 8620,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Footing",
+      "duration": {
+       "type": "time",
+       "seconds": 2520
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     },
+     {
+      "kind": "repeat",
+      "count": 5,
+      "steps": [
+       {
+        "kind": "active",
+        "label": "Ligne droite",
+        "duration": {
+         "type": "time",
+         "seconds": 20
+        },
+        "target": {
+         "type": "pace",
+         "min_s_per_km": 225,
+         "max_s_per_km": 240
+        }
+       },
+       {
+        "kind": "recovery",
+        "label": "marche",
+        "duration": {
+         "type": "time",
+         "seconds": 40
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": 196,
+   "date": "2027-01-31",
+   "order": 1,
+   "sport": "running",
+   "type": "long",
+   "title": "Sortie longue 131 min",
+   "est_duration_s": 7860,
+   "est_distance_m": 23290,
+   "intent": "Endurance, finir en contrôle",
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Sortie longue",
+      "duration": {
+       "type": "time",
+       "seconds": 7860
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 325,
+       "max_s_per_km": 350
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 197,
+   "date": "2027-01-25",
+   "order": 1,
+   "sport": "strength",
+   "type": "mobility",
+   "title": "Gainage",
+   "est_duration_s": 1200,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": null
+  },
+  {
+   "id": 198,
+   "date": "2027-02-02",
+   "order": 1,
+   "sport": "running",
+   "type": "intervals_long",
+   "title": "Fractionné 5 × 1000 m",
+   "est_duration_s": 3320,
+   "est_distance_m": 11330,
+   "intent": "Allure 10 km, récupération courte",
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "warmup",
+      "label": "Échauffement",
+      "duration": {
+       "type": "time",
+       "seconds": 900
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     },
+     {
+      "kind": "repeat",
+      "count": 5,
+      "steps": [
+       {
+        "kind": "active",
+        "label": "1000 m",
+        "duration": {
+         "type": "distance",
+         "meters": 1000
+        },
+        "target": {
+         "type": "pace",
+         "min_s_per_km": 240,
+         "max_s_per_km": 248
+        }
+       },
+       {
+        "kind": "recovery",
+        "label": "trot",
+        "duration": {
+         "type": "time",
+         "seconds": 120
+        }
+       }
+      ]
+     },
+     {
+      "kind": "cooldown",
+      "label": "Retour au calme",
+      "duration": {
+       "type": "time",
+       "seconds": 600
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 199,
+   "date": "2027-02-02",
+   "order": 2,
+   "sport": "strength",
+   "type": "strength_upper",
+   "title": "Muscu dos et bras",
+   "est_duration_s": 3000,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": null
+  },
+  {
+   "id": 200,
+   "date": "2027-02-04",
+   "order": 1,
+   "sport": "running",
+   "type": "easy",
+   "title": "Footing 30 min",
+   "est_duration_s": 1800,
+   "est_distance_m": 5410,
+   "intent": "Aisance respiratoire",
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Footing",
+      "duration": {
+       "type": "time",
+       "seconds": 1800
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": 201,
+   "date": "2027-02-05",
+   "order": 1,
+   "sport": "strength",
+   "type": "strength_legs",
+   "title": "Muscu leg",
+   "est_duration_s": 3000,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": null
+  },
+  {
+   "id": 202,
+   "date": "2027-02-06",
+   "order": 1,
+   "sport": "running",
+   "type": "easy",
+   "title": "Footing 24 min + lignes droites",
+   "est_duration_s": 1740,
+   "est_distance_m": 5370,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Footing",
+      "duration": {
+       "type": "time",
+       "seconds": 1440
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     },
+     {
+      "kind": "repeat",
+      "count": 5,
+      "steps": [
+       {
+        "kind": "active",
+        "label": "Ligne droite",
+        "duration": {
+         "type": "time",
+         "seconds": 20
+        },
+        "target": {
+         "type": "pace",
+         "min_s_per_km": 225,
+         "max_s_per_km": 240
+        }
+       },
+       {
+        "kind": "recovery",
+        "label": "marche",
+        "duration": {
+         "type": "time",
+         "seconds": 40
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": 203,
+   "date": "2027-02-07",
+   "order": 1,
+   "sport": "running",
+   "type": "long",
+   "title": "Sortie longue 101 min",
+   "est_duration_s": 6060,
+   "est_distance_m": 17960,
+   "intent": "Endurance, finir en contrôle",
+   "status": "planned",
+   "activity_id": null,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Sortie longue",
+      "duration": {
+       "type": "time",
+       "seconds": 6060
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 325,
+       "max_s_per_km": 350
+      }
+     }
+    ]
+   }
+  }
+ ],
+ "activities": [
+  {
+   "id": 5000,
+   "date": "2026-10-20",
+   "start": "2026-10-20T07:15:00+01:00",
+   "type": "running",
+   "display_name": "VMA 10 × 400 m",
+   "distance_m": 9918,
+   "duration_s": 3287,
+   "pace_s_km": 331,
+   "avg_hr": 142,
+   "elevation_gain_m": 40,
+   "session_id": 100,
+   "laps": []
+  },
+  {
+   "id": 5001,
+   "date": "2026-10-20",
+   "start": "2026-10-20T07:15:00+01:00",
+   "type": "strength_training",
+   "display_name": "Muscu pecs et épaules",
+   "distance_m": null,
+   "duration_s": 3000,
+   "pace_s_km": null,
+   "avg_hr": 105,
+   "elevation_gain_m": null,
+   "session_id": 101,
+   "laps": []
+  },
+  {
+   "id": 5002,
+   "date": "2026-10-22",
+   "start": "2026-10-22T07:15:00+01:00",
+   "type": "running",
+   "display_name": "Footing 40 min",
+   "distance_m": 6977,
+   "duration_s": 2331,
+   "pace_s_km": 334,
+   "avg_hr": 142,
+   "elevation_gain_m": 40,
+   "session_id": 102,
+   "laps": []
+  },
+  {
+   "id": 5003,
+   "date": "2026-10-23",
+   "start": "2026-10-23T07:15:00+01:00",
+   "type": "strength_training",
+   "display_name": "Muscu leg",
+   "distance_m": null,
+   "duration_s": 3000,
+   "pace_s_km": null,
+   "avg_hr": 105,
+   "elevation_gain_m": null,
+   "session_id": 103,
+   "laps": []
+  },
+  {
+   "id": 5004,
+   "date": "2026-10-24",
+   "start": "2026-10-24T07:15:00+01:00",
+   "type": "running",
+   "display_name": "Footing 32 min + lignes droites",
+   "distance_m": 7060,
+   "duration_s": 2227,
+   "pace_s_km": 315,
+   "avg_hr": 142,
+   "elevation_gain_m": 40,
+   "session_id": 104,
+   "laps": []
+  },
+  {
+   "id": 5005,
+   "date": "2026-10-25",
+   "start": "2026-10-25T07:15:00+01:00",
+   "type": "running",
+   "display_name": "Sortie longue 75 min",
+   "distance_m": 12966,
+   "duration_s": 4613,
+   "pace_s_km": 356,
+   "avg_hr": 142,
+   "elevation_gain_m": 40,
+   "session_id": 105,
+   "laps": []
+  },
+  {
+   "id": 5006,
+   "date": "2026-10-19",
+   "start": "2026-10-19T07:15:00+01:00",
+   "type": "strength_training",
+   "display_name": "Gainage",
+   "distance_m": null,
+   "duration_s": 1200,
+   "pace_s_km": null,
+   "avg_hr": 105,
+   "elevation_gain_m": null,
+   "session_id": 106,
+   "laps": []
+  },
+  {
+   "id": 5007,
+   "date": "2026-10-27",
+   "start": "2026-10-27T07:15:00+01:00",
+   "type": "running",
+   "display_name": "Seuil 3 × 10 min",
+   "distance_m": 12875,
+   "duration_s": 3676,
+   "pace_s_km": 286,
+   "avg_hr": 142,
+   "elevation_gain_m": 40,
+   "session_id": 107,
+   "laps": []
+  },
+  {
+   "id": 5008,
+   "date": "2026-10-27",
+   "start": "2026-10-27T07:15:00+01:00",
+   "type": "strength_training",
+   "display_name": "Muscu dos et bras",
+   "distance_m": null,
+   "duration_s": 3000,
+   "pace_s_km": null,
+   "avg_hr": 105,
+   "elevation_gain_m": null,
+   "session_id": 108,
+   "laps": []
+  },
+  {
+   "id": 5009,
+   "date": "2026-10-29",
+   "start": "2026-10-29T07:15:00+01:00",
+   "type": "running",
+   "display_name": "Footing 41 min",
+   "distance_m": 7618,
+   "duration_s": 2493,
+   "pace_s_km": 327,
+   "avg_hr": 142,
+   "elevation_gain_m": 40,
+   "session_id": 109,
+   "laps": []
+  },
+  {
+   "id": 5010,
+   "date": "2026-10-30",
+   "start": "2026-10-30T07:15:00+01:00",
+   "type": "strength_training",
+   "display_name": "Muscu leg",
+   "distance_m": null,
+   "duration_s": 3000,
+   "pace_s_km": null,
+   "avg_hr": 105,
+   "elevation_gain_m": null,
+   "session_id": 110,
+   "laps": []
+  },
+  {
+   "id": 5011,
+   "date": "2026-10-31",
+   "start": "2026-10-31T07:15:00+01:00",
+   "type": "running",
+   "display_name": "Footing 33 min + lignes droites",
+   "distance_m": 7344,
+   "duration_s": 2221,
+   "pace_s_km": 302,
+   "avg_hr": 142,
+   "elevation_gain_m": 40,
+   "session_id": 111,
+   "laps": []
+  },
+  {
+   "id": 5012,
+   "date": "2026-11-01",
+   "start": "2026-11-01T07:15:00+01:00",
+   "type": "running",
+   "display_name": "Sortie longue 79 min",
+   "distance_m": 13757,
+   "duration_s": 4839,
+   "pace_s_km": 352,
+   "avg_hr": 142,
+   "elevation_gain_m": 40,
+   "session_id": 112,
+   "laps": []
+  },
+  {
+   "id": 5013,
+   "date": "2026-11-03",
+   "start": "2026-11-03T07:15:00+01:00",
+   "type": "running",
+   "display_name": "Côtes 8 × 45 s",
+   "distance_m": 8027,
+   "duration_s": 2465,
+   "pace_s_km": 307,
+   "avg_hr": 142,
+   "elevation_gain_m": 40,
+   "session_id": 113,
+   "laps": []
+  },
+  {
+   "id": 5014,
+   "date": "2026-11-03",
+   "start": "2026-11-03T07:15:00+01:00",
+   "type": "strength_training",
+   "display_name": "Muscu pecs et épaules",
+   "distance_m": null,
+   "duration_s": 3000,
+   "pace_s_km": null,
+   "avg_hr": 105,
+   "elevation_gain_m": null,
+   "session_id": 114,
+   "laps": []
+  },
+  {
+   "id": 5015,
+   "date": "2026-11-05",
+   "start": "2026-11-05T07:15:00+01:00",
+   "type": "running",
+   "display_name": "Footing 42 min",
+   "distance_m": 7803,
+   "duration_s": 2512,
+   "pace_s_km": 322,
+   "avg_hr": 142,
+   "elevation_gain_m": 40,
+   "session_id": 115,
+   "laps": []
+  },
+  {
+   "id": 5016,
+   "date": "2026-11-06",
+   "start": "2026-11-06T07:15:00+01:00",
+   "type": "strength_training",
+   "display_name": "Muscu leg",
+   "distance_m": null,
+   "duration_s": 3000,
+   "pace_s_km": null,
+   "avg_hr": 105,
+   "elevation_gain_m": null,
+   "session_id": 116,
+   "laps": []
+  },
+  {
+   "id": 5017,
+   "date": "2026-11-07",
+   "start": "2026-11-07T07:15:00+01:00",
+   "type": "running",
+   "display_name": "Footing 34 min + lignes droites",
+   "distance_m": 7655,
+   "duration_s": 2412,
+   "pace_s_km": 315,
+   "avg_hr": 142,
+   "elevation_gain_m": 40,
+   "session_id": 117,
+   "laps": []
+  },
+  {
+   "id": 5018,
+   "date": "2026-11-08",
+   "start": "2026-11-08T07:15:00+01:00",
+   "type": "running",
+   "display_name": "Sortie longue 83 min",
+   "distance_m": 13869,
+   "duration_s": 4987,
+   "pace_s_km": 360,
+   "avg_hr": 142,
+   "elevation_gain_m": 40,
+   "session_id": 118,
+   "laps": []
+  },
+  {
+   "id": 5019,
+   "date": "2026-11-02",
+   "start": "2026-11-02T07:15:00+01:00",
+   "type": "strength_training",
+   "display_name": "Gainage",
+   "distance_m": null,
+   "duration_s": 1200,
+   "pace_s_km": null,
+   "avg_hr": 105,
+   "elevation_gain_m": null,
+   "session_id": 119,
+   "laps": []
+  },
+  {
+   "id": 5020,
+   "date": "2026-11-10",
+   "start": "2026-11-10T07:15:00+01:00",
+   "type": "running",
+   "display_name": "Fractionné 5 × 1000 m",
+   "distance_m": 12097,
+   "duration_s": 3383,
+   "pace_s_km": 280,
+   "avg_hr": 142,
+   "elevation_gain_m": 40,
+   "session_id": 120,
+   "laps": []
+  },
+  {
+   "id": 5021,
+   "date": "2026-11-10",
+   "start": "2026-11-10T07:15:00+01:00",
+   "type": "strength_training",
+   "display_name": "Muscu dos et bras",
+   "distance_m": null,
+   "duration_s": 3000,
+   "pace_s_km": null,
+   "avg_hr": 105,
+   "elevation_gain_m": null,
+   "session_id": 121,
+   "laps": []
+  },
+  {
+   "id": 5022,
+   "date": "2026-11-12",
+   "start": "2026-11-12T07:15:00+01:00",
+   "type": "running",
+   "display_name": "Footing 30 min",
+   "distance_m": 5534,
+   "duration_s": 1814,
+   "pace_s_km": 328,
+   "avg_hr": 142,
+   "elevation_gain_m": 40,
+   "session_id": 122,
+   "laps": []
+  },
+  {
+   "id": 5023,
+   "date": "2026-11-13",
+   "start": "2026-11-13T07:15:00+01:00",
+   "type": "strength_training",
+   "display_name": "Muscu leg",
+   "distance_m": null,
+   "duration_s": 3000,
+   "pace_s_km": null,
+   "avg_hr": 105,
+   "elevation_gain_m": null,
+   "session_id": 123,
+   "laps": []
+  },
+  {
+   "id": 5024,
+   "date": "2026-11-14",
+   "start": "2026-11-14T07:15:00+01:00",
+   "type": "running",
+   "display_name": "Footing 24 min + lignes droites",
+   "distance_m": 5724,
+   "duration_s": 1811,
+   "pace_s_km": 316,
+   "avg_hr": 142,
+   "elevation_gain_m": 40,
+   "session_id": 124,
+   "laps": []
+  },
+  {
+   "id": 5025,
+   "date": "2026-11-15",
+   "start": "2026-11-15T07:15:00+01:00",
+   "type": "running",
+   "display_name": "Sortie longue 65 min",
+   "distance_m": 11324,
+   "duration_s": 3836,
+   "pace_s_km": 339,
+   "avg_hr": 142,
+   "elevation_gain_m": 40,
+   "session_id": 125,
+   "laps": []
+  },
+  {
+   "id": 5026,
+   "date": "2026-11-17",
+   "start": "2026-11-17T07:15:00+01:00",
+   "type": "running",
+   "display_name": "VMA 10 × 400 m",
+   "distance_m": 10350,
+   "duration_s": 3159,
+   "pace_s_km": 305,
+   "avg_hr": 142,
+   "elevation_gain_m": 40,
+   "session_id": 126,
+   "laps": [
+    {
+     "index": 1,
+     "duration_s": 900,
+     "distance_m": 2750,
+     "pace_s_km": 327,
+     "avg_hr": 138
+    },
+    {
+     "index": 2,
+     "duration_s": 86,
+     "distance_m": 400,
+     "pace_s_km": 216,
+     "avg_hr": 173
+    },
+    {
+     "index": 3,
+     "duration_s": 75,
+     "distance_m": 180,
+     "pace_s_km": 417,
+     "avg_hr": 150
+    },
+    {
+     "index": 4,
+     "duration_s": 88,
+     "distance_m": 400,
+     "pace_s_km": 219,
+     "avg_hr": 174
+    },
+    {
+     "index": 5,
+     "duration_s": 75,
+     "distance_m": 180,
+     "pace_s_km": 417,
+     "avg_hr": 150
+    },
+    {
+     "index": 6,
+     "duration_s": 90,
+     "distance_m": 400,
+     "pace_s_km": 224,
+     "avg_hr": 175
+    },
+    {
+     "index": 7,
+     "duration_s": 75,
+     "distance_m": 180,
+     "pace_s_km": 417,
+     "avg_hr": 150
+    },
+    {
+     "index": 8,
+     "duration_s": 90,
+     "distance_m": 400,
+     "pace_s_km": 226,
+     "avg_hr": 174
+    },
+    {
+     "index": 9,
+     "duration_s": 75,
+     "distance_m": 180,
+     "pace_s_km": 417,
+     "avg_hr": 150
+    },
+    {
+     "index": 10,
+     "duration_s": 90,
+     "distance_m": 400,
+     "pace_s_km": 225,
+     "avg_hr": 179
+    },
+    {
+     "index": 11,
+     "duration_s": 75,
+     "distance_m": 180,
+     "pace_s_km": 417,
+     "avg_hr": 150
+    },
+    {
+     "index": 12,
+     "duration_s": 91,
+     "distance_m": 400,
+     "pace_s_km": 228,
+     "avg_hr": 176
+    },
+    {
+     "index": 13,
+     "duration_s": 75,
+     "distance_m": 180,
+     "pace_s_km": 417,
+     "avg_hr": 150
+    },
+    {
+     "index": 14,
+     "duration_s": 92,
+     "distance_m": 400,
+     "pace_s_km": 231,
+     "avg_hr": 178
+    },
+    {
+     "index": 15,
+     "duration_s": 75,
+     "distance_m": 180,
+     "pace_s_km": 417,
+     "avg_hr": 150
+    },
+    {
+     "index": 16,
+     "duration_s": 94,
+     "distance_m": 400,
+     "pace_s_km": 236,
+     "avg_hr": 179
+    },
+    {
+     "index": 17,
+     "duration_s": 75,
+     "distance_m": 180,
+     "pace_s_km": 417,
+     "avg_hr": 150
+    },
+    {
+     "index": 18,
+     "duration_s": 95,
+     "distance_m": 400,
+     "pace_s_km": 238,
+     "avg_hr": 172
+    },
+    {
+     "index": 19,
+     "duration_s": 75,
+     "distance_m": 180,
+     "pace_s_km": 417,
+     "avg_hr": 150
+    },
+    {
+     "index": 20,
+     "duration_s": 93,
+     "distance_m": 400,
+     "pace_s_km": 233,
+     "avg_hr": 174
+    },
+    {
+     "index": 21,
+     "duration_s": 75,
+     "distance_m": 180,
+     "pace_s_km": 417,
+     "avg_hr": 150
+    },
+    {
+     "index": 22,
+     "duration_s": 600,
+     "distance_m": 1800,
+     "pace_s_km": 333,
+     "avg_hr": 140
+    }
+   ]
+  },
+  {
+   "id": 5027,
+   "date": "2026-11-17",
+   "start": "2026-11-17T07:15:00+01:00",
+   "type": "strength_training",
+   "display_name": "Muscu pecs et épaules",
+   "distance_m": null,
+   "duration_s": 3000,
+   "pace_s_km": null,
+   "avg_hr": 105,
+   "elevation_gain_m": null,
+   "session_id": 127,
+   "laps": []
+  },
+  {
+   "id": 5028,
+   "date": "2026-11-16",
+   "start": "2026-11-16T07:15:00+01:00",
+   "type": "strength_training",
+   "display_name": "Gainage",
+   "distance_m": null,
+   "duration_s": 1200,
+   "pace_s_km": null,
+   "avg_hr": 105,
+   "elevation_gain_m": null,
+   "session_id": 132,
+   "laps": []
+  }
+ ],
+ "weekly": [
+  {
+   "week_start": "2026-09-21",
+   "future": false,
+   "km": 29,
+   "zone_minutes": {
+    "z1": 15,
+    "z2": 145,
+    "z3": 12,
+    "z4": 14,
+    "z5": 6
+   },
+   "strength_hours": 1,
+   "long_run_km": 12
+  },
+  {
+   "week_start": "2026-09-28",
+   "future": false,
+   "km": 22,
+   "zone_minutes": {
+    "z1": 15,
+    "z2": 110,
+    "z3": 12,
+    "z4": 14,
+    "z5": 6
+   },
+   "strength_hours": 1,
+   "long_run_km": 12
+  },
+  {
+   "week_start": "2026-10-05",
+   "future": false,
+   "km": 25,
+   "zone_minutes": {
+    "z1": 15,
+    "z2": 125,
+    "z3": 12,
+    "z4": 14,
+    "z5": 6
+   },
+   "strength_hours": 1,
+   "long_run_km": 12
+  },
+  {
+   "week_start": "2026-10-12",
+   "future": false,
+   "km": 25,
+   "zone_minutes": {
+    "z1": 15,
+    "z2": 125,
+    "z3": 12,
+    "z4": 14,
+    "z5": 6
+   },
+   "strength_hours": 1,
+   "long_run_km": 12
+  },
+  {
+   "week_start": "2026-10-19",
+   "future": false,
+   "km": 36.9,
+   "zone_minutes": {
+    "z1": 15,
+    "z2": 185,
+    "z3": 12,
+    "z4": 14,
+    "z5": 6
+   },
+   "strength_hours": 2.4000000000000004,
+   "long_run_km": 13.3
+  },
+  {
+   "week_start": "2026-10-26",
+   "future": false,
+   "km": 41.6,
+   "zone_minutes": {
+    "z1": 15,
+    "z2": 208,
+    "z3": 12,
+    "z4": 14,
+    "z5": 6
+   },
+   "strength_hours": 1.6,
+   "long_run_km": 14
+  },
+  {
+   "week_start": "2026-11-02",
+   "future": false,
+   "km": 37.4,
+   "zone_minutes": {
+    "z1": 15,
+    "z2": 187,
+    "z3": 12,
+    "z4": 14,
+    "z5": 6
+   },
+   "strength_hours": 2.4000000000000004,
+   "long_run_km": 14.8
+  },
+  {
+   "week_start": "2026-11-09",
+   "future": false,
+   "km": 34.7,
+   "zone_minutes": {
+    "z1": 15,
+    "z2": 174,
+    "z3": 12,
+    "z4": 14,
+    "z5": 6
+   },
+   "strength_hours": 1.6,
+   "long_run_km": 11.6
+  },
+  {
+   "week_start": "2026-11-16",
+   "future": false,
+   "km": 10.4,
+   "zone_minutes": {
+    "z1": 15,
+    "z2": 52,
+    "z3": 12,
+    "z4": 14,
+    "z5": 6
+   },
+   "strength_hours": 2.4000000000000004,
+   "long_run_km": 16.2
+  },
+  {
+   "week_start": "2026-11-23",
+   "future": true,
+   "km": 35,
+   "zone_minutes": {},
+   "strength_hours": 1.6,
+   "long_run_km": 16.9
+  },
+  {
+   "week_start": "2026-11-30",
+   "future": true,
+   "km": 35,
+   "zone_minutes": {},
+   "strength_hours": 2.4000000000000004,
+   "long_run_km": 17.6
+  },
+  {
+   "week_start": "2026-12-07",
+   "future": true,
+   "km": 23,
+   "zone_minutes": {},
+   "strength_hours": 1.6,
+   "long_run_km": 13.7
+  }
+ ],
+ "wellness": [
+  {
+   "date": "2026-11-16",
+   "kind": "checkin",
+   "rpe": null,
+   "legs": 4,
+   "breath": 4,
+   "comment": null
+  },
+  {
+   "date": "2026-11-17",
+   "kind": "session",
+   "session_id": 126,
+   "rpe": 8,
+   "legs": 3,
+   "breath": 3,
+   "comment": "Démo"
+  }
+ ]
+}
