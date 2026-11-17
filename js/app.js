@@ -266,7 +266,7 @@ function dlgJour() {
 
 // ---------- réglages / premier lancement ----------
 function ecranReglages() {
-  const c0 = E.cfg || (DEMO ? { owner: 'demo', repo: 'coach-donnees', token: 'demo', phrase: 'demo' } : {});
+  const c0 = E.cfg || (DEMO ? { owner: 'demo', repo: 'coach-donnees', token: 'demo', phrase: 'demo' } : { owner: Q.get('owner') || '', repo: Q.get('repo') || '' });
   return `<div class="accueil"><h1>${E.cfg ? 'Réglages' : 'Premier lancement'}</h1>` +
     '<p class="m">Le jeton et la phrase secrète restent sur ce téléphone. La phrase n’est jamais envoyée.</p>' +
     '<form class="fm" id="f-cfg" autocomplete="off">' +
