@@ -158,6 +158,22 @@ function appliquerDemo(snap, a, at) {
     return ack('applied', a.type === 'feeling' ? 'Ressenti enregistré' : 'Douleur enregistrée');
   }
   if (a.type === 'sync_request') return ack('applied', 'Demande de synchro reçue');
+  if (a.type === 'strength_session') {
+    const B = snap.strength; if (!B) return ack('conflict', 'Action invalide');
+    if (!p.exercises || !p.exercises.length) return ack('conflict', 'aucun exercice');
+    const L = B.sessions;
+    let s = p.session_id != null ? L.find(x => x.id === p.session_id) : L.find(x => x.uid === p.uid);
+    if (p.session_id != null && !s) return ack('conflict', 'séance de muscu introuvable sur le PC (supprimée ?)');
+    const neuf = !s;
+    if (neuf) { s = { id: 900 + L.length, uid: p.uid, activity_id: null }; L.push(s); }
+    Object.assign(s, { date: p.date, title: p.title, note: p.note, exercises: p.exercises.map(e => ({ exercise: e.exercise, note: e.note, sets: e.sets })) });
+    for (const e of p.exercises) {
+      const w = e.sets.filter(x => !x.set_type).map(x => [x.reps, x.load_kg]);
+      if (!B.exercises[e.exercise]) B.exercises[e.exercise] = { label: e.exercise, last: null };
+      if (w.length) B.exercises[e.exercise].last = { date: p.date, sets: w };
+    }
+    return ack('applied', neuf ? 'Séance de muscu enregistrée' : 'Séance de muscu mise à jour');
+  }
   if (a.type === 'debrief_todo') {
     const s = parId(p.session_id);
     if (!s) return ack('conflict', 'Séance inexistante');

@@ -1,10 +1,10 @@
 // Service worker : met l'application en cache pour l'ouvrir hors ligne.
 // Les appels à api.github.com ne passent jamais par le cache (données chiffrées, toujours fraîches).
 // Changer VERSION à chaque publication pour renouveler le cache.
-const VERSION = 'coach-mobile-v3';
+const VERSION = 'coach-mobile-v4';
 const COQUILLE = [
   './', 'index.html', 'manifest.webmanifest', 'css/app.css',
-  'js/app.js', 'js/crypto.js', 'js/store.js', 'js/github.js', 'js/plan.js', 'js/vues.js',
+  'js/app.js', 'js/crypto.js', 'js/store.js', 'js/github.js', 'js/plan.js', 'js/vues.js', 'js/muscu.js',
   'fonts/exo2-700.woff2', 'fonts/texte-400.woff2', 'fonts/texte-700.woff2',
   'icons/icone-192.png', 'icons/icone-512.png', 'icons/icone-180.png', 'icons/icone-maskable-512.png',
 ];

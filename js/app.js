@@ -3,6 +3,7 @@ import * as C from './crypto.js';
 import * as ST from './store.js';
 import * as GH from './github.js';
 import { construire, semaineCourante, esc, f1, fk, dd, jl, jlong, addD, ecart, QUAL, muKind } from './plan.js';
+import * as MU from './muscu.js';
 import { vVolume, vFil, vAgenda, vFocus, vAujourdhui, detail, detailHors, formRessenti, ressentiSeance, carteRessenti, niv3 } from './vues.js';
 
 const Q = new URLSearchParams(location.search);
@@ -19,11 +20,14 @@ const E = {
   edition: false, editionJour: false,
   vue: 'fil', selW: null, cur: -1, saisie: {}, saisieJour: null,
   occupe: false, msg: '', msgErr: false, horsLigneForce: false, reglages: false,
+  // saisie muscu (D68) : brouillons gardés sur le téléphone jusqu'à l'accusé du PC, exercices ajoutés à la main
+  mu: { brouillons: [], perso: {}, cur: null, choix: false, libre: false, confirmer: false },
 };
 
 // ---------- persistance ----------
 const sauverActions = () => store.ecrire('actions', E.actions);
 const sauverConflits = () => store.ecrire('conflits', E.conflits);
+const sauverMuscu = () => store.ecrire('muscu', { brouillons: E.mu.brouillons, perso: E.mu.perso });
 
 function client(cfg) {
   if (DEMO) return GH.demo({ chiffrerJSON: C.chiffrerJSON, dechiffrerJSON: C.dechiffrerJSON, phrase: cfg.phrase, horsLigne: () => E.horsLigneForce || !navigator.onLine });
@@ -47,6 +51,7 @@ function libAction(a) {
     case 'pain': return 'Douleur ' + (p.zone || '');
     case 'debrief_todo': return 'Débrief · ' + t(p.session_id);
     case 'sync_request': return 'Demande de synchro';
+    case 'strength_session': return 'Muscu · ' + (p.title || '') + ' · ' + jl(p.date);
     default: return a.type;
   }
 }
@@ -115,6 +120,12 @@ function traiterAcks() {
   for (const a of E.actions) {
     const k = acks.get(a.id);
     if (!k) { restent.push(a); continue; }
+    if (a.type === 'strength_session') {
+      // accusé : le brouillon envoyé (et non retouché depuis) laisse place à la séance du PC ; refus : il reste
+      const b = E.mu.brouillons.find(x => x.action_id === a.id);
+      if (b && k.result === 'conflict') { b.etat = 'local'; b.erreur = k.message || 'refusée'; }
+      else if (b && b.etat === 'envoye') E.mu.brouillons = E.mu.brouillons.filter(x => x !== b);
+    }
     if (k.result === 'conflict') E.conflits.push({ id: a.id, message: k.message || 'Conflit', lib: libAction(a) });
     else if (a.type === 'debrief_todo' && !E.debriefs.includes(a.payload.session_id)) E.debriefs.push(a.payload.session_id);
     else if (a.type === 'feeling') {
@@ -123,7 +134,7 @@ function traiterAcks() {
     }
   }
   E.actions = restent;
-  sauverActions(); sauverConflits(); store.ecrire('debriefs', E.debriefs); store.ecrire('ressentis', E.ressentis);
+  sauverActions(); sauverConflits(); sauverMuscu(); store.ecrire('debriefs', E.debriefs); store.ecrire('ressentis', E.ressentis);
 }
 
 async function ajouterAction(type, payload) {
@@ -166,7 +177,7 @@ function entete() {
 }
 
 // ---------- vues ----------
-const VUES = [['fil', 'À venir'], ['agenda', 'Agenda'], ['focus', 'Semaine'], ['jour', 'Aujourd’hui']];
+const VUES = [['fil', 'À venir'], ['agenda', 'Agenda'], ['focus', 'Semaine'], ['jour', 'Aujourd’hui'], ['muscu', 'Muscu']];
 const etroit = () => innerWidth < 760;
 
 function rendre(defiler) {
@@ -176,6 +187,14 @@ function rendre(defiler) {
   sel.innerHTML = VUES.map(([k, n]) => `<button type="button" data-v="${k}" class="${k === E.vue ? 'on' : ''}">${n}</button>`).join('');
   $('conflits').innerHTML = E.conflits.map(c => `<div class="cfl"><span>⚠ <b>${esc(c.message)}</b> · ${esc(c.lib)}</span><button type="button" data-act="cfl-x" data-id="${c.id}" aria-label="Masquer">×</button></div>`).join('');
   const M = E.M;
+  if (E.vue === 'muscu' && E.snap) {
+    // pas de re-rendu pendant une saisie (synchro en arrière-plan) : le clavier et la valeur tapée restent
+    const f = document.activeElement;
+    if (vue.contains(f) && /INPUT|TEXTAREA|SELECT/.test(f.tagName) && !defiler) return;
+    vue.innerHTML = vMuscu();
+    try { localStorage.setItem('coach-vue', E.vue); } catch (e) { /* stockage indisponible */ }
+    return;
+  }
   if (!M) { vue.innerHTML = `<p class="m">${E.occupe ? 'Chargement…' : 'Pas encore de données. Touchez « Synchroniser ».'}</p>`; return; }
   if (!M.W.length && E.vue !== 'jour') { vue.innerHTML = '<p class="m">Aucune séance dans l’instantané.</p>'; return; }
   const n = E.selW != null ? E.selW : semaineCourante(M);
@@ -304,6 +323,99 @@ function dlgJour(garder) {
 }
 const versSaisie = r => ({ rpe: r.rpe != null ? String(r.rpe) : undefined, legs: r.legs != null ? String(niv3(r.legs)) : undefined, breath: r.breath != null ? String(niv3(r.breath)) : undefined, com: r.comment || '' });
 
+// ---------- muscu ----------
+const brouillon = () => E.mu.brouillons.find(b => b.uid === E.mu.cur) || null;
+const aujourdhui = () => (E.M && E.M.T) || isoLocal(new Date()).slice(0, 10);
+function vMuscu() {
+  const b = brouillon();
+  return b ? MU.editeur(b, E.snap, E.mu) : MU.accueil(E.snap, E.mu.brouillons, E.mu);
+}
+function retouche(b) { b.touche = true; b.modifie = Date.now(); if (b.etat === 'envoye') b.etat = 'local'; b.erreur = null; }
+function muRendre(haut) { E.mu.confirmer = false; rendre(true); if (haut) scrollTo({ top: 0 }); }
+function ouvrirBrouillon(b) {
+  if (!E.mu.brouillons.includes(b)) E.mu.brouillons.unshift(b);
+  E.mu.cur = b.uid; E.mu.choix = false; E.mu.libre = false;
+  sauverMuscu(); muRendre(true);
+}
+async function envoyerMuscu(b) {
+  const p = MU.payload(b);
+  if (!p.exercises.length) return;
+  b.etat = 'envoye'; b.erreur = null; E.mu.cur = null;
+  const a = { id: C.uuid(), created_at: isoLocal(new Date()), type: 'strength_session', payload: p, etat: 'a_envoyer' };
+  b.action_id = a.id;
+  E.actions.push(a);
+  await sauverActions(); await sauverMuscu();
+  modele(); muRendre(true);
+  synchroniser();
+}
+function ajoutExercice(nom) {
+  const b = brouillon(); if (!b || !nom) return;
+  MU.ajouterExercice(b, nom, E.snap); retouche(b);
+  if (!MU.liste(E.snap, b.typ, E.mu.perso).includes(nom)) (E.mu.perso[b.typ] = E.mu.perso[b.typ] || []).push(nom);
+  E.mu.libre = false; sauverMuscu(); muRendre();
+}
+function majEnvoi(b) { const env = $('vue').querySelector('[data-act="mu-env"]'); if (env) env.disabled = MU.vide(b); }
+function agirMuscu(a, t) {
+  const b = brouillon(), i = +t.dataset.e, j = +t.dataset.s, B = MU.bloc(E.snap) || {};
+  switch (a) {
+    case 'mu-nouveau': E.mu.choix = true; return muRendre(true);
+    case 'mu-typ': {
+      const typ = (B.typologies || []).find(x => x.title === t.dataset.t); if (!typ) return;
+      return ouvrirBrouillon(MU.nouveau(C.uuid(), aujourdhui(), typ));
+    }
+    case 'mu-ouvrir': { const x = E.mu.brouillons.find(y => y.uid === t.dataset.u); return x && ouvrirBrouillon(x); }
+    case 'mu-editer': {
+      const s = (B.sessions || []).find(x => x.id === +t.dataset.id); if (!s) return;
+      return ouvrirBrouillon(MU.depuisSeance(s, C.uuid(), B.typologies));
+    }
+    case 'mu-fermer':
+      // séance du PC ouverte puis refermée sans changement : rien à garder sur le téléphone
+      if (b && b.session_id != null && !b.touche && b.etat === 'local') { E.mu.brouillons = E.mu.brouillons.filter(x => x !== b); sauverMuscu(); }
+      E.mu.cur = null; E.mu.choix = false; return muRendre(true);
+    case 'mu-pm': {
+      if (!b) return;
+      const x = b.ex[i].sets[j], f = t.dataset.f;
+      x[f] = Math.max(0, Math.round(((+x[f] || 0) + +t.dataset.d) * 100) / 100);
+      retouche(b); sauverMuscu();
+      const inp = t.parentNode.querySelector('input'); if (inp) inp.value = x[f];
+      return majEnvoi(b);
+    }
+    case 'mu-s-add': if (b) { MU.ajouterSerie(b, i); retouche(b); sauverMuscu(); muRendre(); } return;
+    case 'mu-s-x': if (b) { b.ex[i].sets.splice(j, 1); retouche(b); sauverMuscu(); muRendre(); } return;
+    case 'mu-ex-x': if (b) { b.ex.splice(i, 1); retouche(b); sauverMuscu(); muRendre(); } return;
+    case 'mu-libre-ok': { const v = ($('vue').querySelector('[data-mu="libre"]') || {}).value; return ajoutExercice((v || '').trim()); }
+    case 'mu-env': return b && envoyerMuscu(b);
+    case 'mu-suppr': {
+      if (!b) return;
+      if (!E.mu.confirmer) { E.mu.confirmer = true; t.textContent = 'Confirmer la suppression'; setTimeout(() => { E.mu.confirmer = false; if (t.isConnected) t.textContent = 'Supprimer le brouillon'; }, 5000); return; }
+      E.mu.brouillons = E.mu.brouillons.filter(x => x !== b); E.mu.cur = null; sauverMuscu(); return muRendre(true);
+    }
+  }
+}
+function saisieMuscu(t, change) {
+  const b = brouillon(); if (!b) return;
+  const f = t.dataset.mu, i = +t.dataset.e, j = +t.dataset.s;
+  if (f === 'libre') return;
+  if (f === 'ajout') {
+    if (!change || !t.value) return;
+    const v = t.value; t.value = '';
+    if (v !== '__libre') return ajoutExercice(v);
+    E.mu.libre = true; muRendre();
+    const l = $('vue').querySelector('[data-mu="libre"]'); if (l) l.focus();
+    return;
+  }
+  if (f === 'typ') {
+    if (!change) return;
+    const old = (MU.bloc(E.snap).typologies || []).find(x => x.title === b.typ);
+    if (!b.title || (old && b.title === old.title)) b.title = t.value;
+    b.typ = t.value; retouche(b); sauverMuscu(); return muRendre();
+  }
+  if (f === 'reps' || f === 'load_kg') b.ex[i].sets[j][f] = t.value === '' ? null : +String(t.value).replace(',', '.');
+  else if (f === 'exnote') b.ex[i].note = t.value;
+  else if (f === 'title' || f === 'note' || f === 'date') { if (f === 'date' && !t.value) return; b[f] = t.value; }
+  retouche(b); sauverMuscu(); majEnvoi(b);
+}
+
 // ---------- réglages / premier lancement ----------
 function ecranReglages() {
   const c0 = E.cfg || (DEMO ? { owner: 'demo', repo: 'coach-donnees', token: 'demo', phrase: 'demo' } : { owner: Q.get('owner') || '', repo: Q.get('repo') || '' });
@@ -357,7 +469,7 @@ async function effacer(btn) {
   await store.toutEffacer();
   C.oublierCles();
   try { localStorage.clear(); } catch (e) { /* rien */ }
-  Object.assign(E, { cfg: null, gh: null, snap: null, etag: null, M: null, actions: [], conflits: [], debriefs: [], ressentis: {}, reglages: false, msg: 'Tout est effacé de ce téléphone', msgErr: false });
+  Object.assign(E, { cfg: null, gh: null, snap: null, etag: null, M: null, actions: [], conflits: [], debriefs: [], ressentis: {}, mu: { brouillons: [], perso: {}, cur: null, choix: false, libre: false, confirmer: false }, reglages: false, msg: 'Tout est effacé de ce téléphone', msgErr: false });
   rendre();
 }
 
@@ -365,6 +477,7 @@ async function effacer(btn) {
 let stopClic = false;
 async function agir(t) {
   const a = t.dataset.act, s = seanceCourante();
+  if (a.startsWith('mu-')) return agirMuscu(a, t);
   switch (a) {
     case 'prec': return montrer(E.cur - 1);
     case 'suiv': return montrer(E.cur + 1);
@@ -414,6 +527,11 @@ document.addEventListener('click', e => {
 $('sync').addEventListener('click', () => synchroniser(true));
 document.addEventListener('submit', e => { e.preventDefault(); if (e.target.id === 'f-cfg') testerEtEnregistrer(); });
 $('reglages').addEventListener('click', () => { fermer(); E.reglages = !E.reglages || !E.cfg; rendre(); scrollTo({ top: 0 }); });
+document.addEventListener('input', e => { const t = e.target.closest('[data-mu]'); if (t) saisieMuscu(t, false); });
+document.addEventListener('change', e => { const t = e.target.closest('[data-mu]'); if (t) saisieMuscu(t, true); });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && e.target.dataset && e.target.dataset.mu === 'libre') { e.preventDefault(); ajoutExercice(e.target.value.trim()); }
+});
 document.addEventListener('input', e => {
   const t = e.target.closest('[data-in]'); if (!t) return;
   const r = seanceCourante() ? E.saisie : E.saisieJour; if (!r) return;
@@ -528,6 +646,8 @@ async function demarrer() {
   E.conflits = await store.lire('conflits') || [];
   E.debriefs = await store.lire('debriefs') || [];
   E.ressentis = await store.lire('ressentis') || {};
+  const mu = await store.lire('muscu');
+  if (mu) { E.mu.brouillons = mu.brouillons || []; E.mu.perso = mu.perso || {}; }
   E.snap = await store.lire('snap') || null;
   E.etag = await store.lire('etag') || null;
   if (E.cfg) E.gh = client(E.cfg);

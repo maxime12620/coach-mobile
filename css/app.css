@@ -195,3 +195,28 @@ svg text{font-family:"PT Sans",sans-serif;font-size:11px;fill:var(--clair)}svg .
  .fen{max-height:100%;height:100%;border-radius:0;padding:14px 16px calc(22px + env(safe-area-inset-bottom))}.fond{padding:0}
  .tuiles{grid-template-columns:1fr 1fr}
 }
+
+/* saisie muscu (D68) : gros boutons au pouce, peu de texte */
+.mu-gros{min-height:52px;font-size:16px;font-weight:700;flex:1}
+.mu-h{margin:18px 0 4px;font-size:16px}
+.mu-typs{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px}.mu-typs .bt2{min-height:60px;font-size:16px;font-weight:700}
+.mu-ed select,.mu-ed input[type=text],.mu-ed input[type=date],.mu-ed textarea{font:inherit;font-size:16px;border:1px solid var(--filet);border-radius:8px;padding:8px;background:var(--surface);color:var(--texte);min-height:44px;box-sizing:border-box}
+.mu-tete{display:flex;gap:8px;margin-top:8px}.mu-tete select{flex:1;min-width:0;font-weight:700;color:var(--accent)}.mu-tete input{flex:none;width:9.5em}
+.mu-titre{width:100%;margin-top:6px}
+.mu-etat{flex:1;text-align:right}.mu-etat.err{color:var(--rouge)}
+.mu-ex{border:1px solid var(--filet);border-radius:10px;padding:8px 10px;margin-top:10px;background:var(--surface)}
+.mu-exh{display:flex;align-items:center;gap:8px}.mu-exh b{flex:1;color:var(--bleu);font-family:"Exo 2";font-size:16px}
+.mu-s{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-top:6px}
+.mu-col{display:flex;gap:6px;padding-left:24px;margin-top:6px;font-size:12px;color:var(--clair)}.mu-col span{width:122px;text-align:center}
+.mu-n{width:18px;color:var(--clair);font-weight:700;text-align:center}
+.mu-st{display:flex;align-items:center;gap:3px}.mu-st small{color:var(--clair);margin-left:2px}
+.mu-st input{width:44px;text-align:center;font:inherit;font-size:17px;font-weight:700;border:1px solid var(--filet);border-radius:8px;min-height:44px;padding:0;background:var(--fond);color:var(--texte);-moz-appearance:textfield}
+.mu-st input::-webkit-inner-spin-button,.mu-st input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.mu-pm{width:36px;height:44px;border:1px solid var(--filet);border-radius:8px;background:var(--accent-doux);color:var(--accent);font-size:22px;font-weight:700;cursor:pointer;touch-action:manipulation}
+.mu-x{margin-left:auto;border:0;background:none;color:var(--clair);font-size:22px;width:30px;height:40px;cursor:pointer}
+.mu-t{width:100%;padding-left:24px;color:var(--mu)}
+.mu-bas{display:flex;gap:8px;margin-top:8px}.mu-bas .bt2{min-height:44px;flex:none}.mu-bas input{flex:1;min-width:0}
+.mu-aj{margin-top:12px}.mu-aj select{width:100%;color:var(--accent);font-weight:700}
+.mu-libre{display:flex;gap:8px;margin-top:8px}.mu-libre input{flex:1;min-width:0}.mu-libre .bt2{min-height:44px}
+.mu-ed textarea{width:100%;margin-top:10px;resize:vertical}
+.mu-act{position:sticky;bottom:0;background:var(--fond);padding:8px 0 calc(8px + env(safe-area-inset-bottom))}

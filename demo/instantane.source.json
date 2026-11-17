@@ -4921,5 +4921,394 @@
  ],
  "sources": {
   "garmin_synced_at": "2026-11-18T06:25:00+00:00"
+ },
+ "strength": {
+  "typologies": [
+   {
+    "title": "Muscu dos",
+    "label": "Dos",
+    "n": 59
+   },
+   {
+    "title": "Muscu leg",
+    "label": "Jambes",
+    "n": 33
+   },
+   {
+    "title": "Muscu pecs",
+    "label": "Pecs",
+    "n": 59
+   },
+   {
+    "title": "Muscu épaules",
+    "label": "Épaules",
+    "n": 45
+   },
+   {
+    "title": "Muscu bras",
+    "label": "Bras",
+    "n": 16
+   },
+   {
+    "title": "Muscu abdos",
+    "label": "Abdos",
+    "n": 1
+   },
+   {
+    "title": "Hyrox",
+    "label": "Hyrox",
+    "n": 9
+   }
+  ],
+  "lists": {
+   "Muscu dos": [
+    "pull_up",
+    "row",
+    "cable_row",
+    "face_pull",
+    "lat_pulldown"
+   ],
+   "Muscu leg": [
+    "squat",
+    "bulgarian_split_squat",
+    "leg_curl",
+    "calf_raise",
+    "leg_press"
+   ],
+   "Muscu pecs": [
+    "bench_press",
+    "incline_dumbbell_press",
+    "dips",
+    "cable_fly"
+   ],
+   "Muscu épaules": [
+    "overhead_press",
+    "lateral_raise",
+    "face_pull"
+   ],
+   "Muscu bras": [
+    "biceps_curl",
+    "triceps_extension",
+    "dips"
+   ],
+   "Muscu abdos": [
+    "crunch",
+    "plank"
+   ],
+   "Hyrox": []
+  },
+  "exercises": {
+   "pull_up": {
+    "label": "Traction",
+    "last": {
+     "date": "2026-11-13",
+     "sets": [
+      [
+       10,
+       0
+      ],
+      [
+       8,
+       0
+      ],
+      [
+       8,
+       0
+      ],
+      [
+       6,
+       0
+      ]
+     ]
+    }
+   },
+   "row": {
+    "label": "Rowing barre",
+    "last": {
+     "date": "2026-11-13",
+     "sets": [
+      [
+       10,
+       60
+      ],
+      [
+       10,
+       60
+      ],
+      [
+       10,
+       60
+      ],
+      [
+       10,
+       60
+      ]
+     ]
+    }
+   },
+   "lat_pulldown": {
+    "label": "Tirage vertical",
+    "last": null
+   },
+   "face_pull": {
+    "label": "Face pull",
+    "last": null
+   },
+   "cable_row": {
+    "label": "Tirage horizontal",
+    "last": {
+     "date": "2026-11-06",
+     "sets": [
+      [
+       12,
+       50
+      ],
+      [
+       12,
+       50
+      ],
+      [
+       10,
+       55
+      ]
+     ]
+    }
+   },
+   "squat": {
+    "label": "Squat",
+    "last": {
+     "date": "2026-11-12",
+     "sets": [
+      [
+       8,
+       80
+      ],
+      [
+       8,
+       80
+      ],
+      [
+       6,
+       85
+      ]
+     ]
+    }
+   },
+   "bulgarian_split_squat": {
+    "label": "Squat bulgare",
+    "last": {
+     "date": "2026-11-12",
+     "sets": [
+      [
+       10,
+       16
+      ],
+      [
+       10,
+       16
+      ],
+      [
+       10,
+       16
+      ]
+     ]
+    }
+   },
+   "leg_curl": {
+    "label": "Leg curl",
+    "last": null
+   },
+   "leg_press": {
+    "label": "Presse à cuisses",
+    "last": null
+   },
+   "calf_raise": {
+    "label": "Mollets debout",
+    "last": null
+   },
+   "bench_press": {
+    "label": "Développé couché",
+    "last": {
+     "date": "2026-11-16",
+     "sets": [
+      [
+       8,
+       70
+      ],
+      [
+       8,
+       70
+      ],
+      [
+       7,
+       70
+      ]
+     ]
+    }
+   },
+   "incline_dumbbell_press": {
+    "label": "Développé incliné haltères",
+    "last": null
+   },
+   "dips": {
+    "label": "Dips",
+    "last": null
+   },
+   "cable_fly": {
+    "label": "Écarté poulie",
+    "last": null
+   },
+   "overhead_press": {
+    "label": "Développé militaire",
+    "last": {
+     "date": "2026-11-10",
+     "sets": [
+      [
+       8,
+       38
+      ],
+      [
+       7,
+       38
+      ],
+      [
+       6,
+       36
+      ]
+     ]
+    }
+   },
+   "lateral_raise": {
+    "label": "Élévations latérales",
+    "last": {
+     "date": "2026-11-10",
+     "sets": [
+      [
+       15,
+       8
+      ],
+      [
+       15,
+       8
+      ],
+      [
+       12,
+       8
+      ]
+     ]
+    }
+   },
+   "biceps_curl": {
+    "label": "Curl biceps",
+    "last": null
+   },
+   "triceps_extension": {
+    "label": "Extension triceps",
+    "last": null
+   },
+   "crunch": {
+    "label": "Crunch",
+    "last": null
+   },
+   "plank": {
+    "label": "Gainage",
+    "last": null
+   }
+  },
+  "sessions": [
+   {
+    "id": 501,
+    "uid": null,
+    "date": "2026-11-13",
+    "title": "Muscu dos",
+    "activity_id": null,
+    "note": null,
+    "exercises": [
+     {
+      "exercise": "pull_up",
+      "note": "prise large",
+      "sets": [
+       {
+        "reps": 10,
+        "load_kg": 0
+       },
+       {
+        "reps": 8,
+        "load_kg": 0
+       },
+       {
+        "reps": 8,
+        "load_kg": 0
+       },
+       {
+        "reps": 6,
+        "load_kg": 0
+       }
+      ]
+     },
+     {
+      "exercise": "row",
+      "note": null,
+      "sets": [
+       {
+        "reps": 10,
+        "load_kg": 60
+       },
+       {
+        "reps": 10,
+        "load_kg": 60
+       },
+       {
+        "reps": 10,
+        "load_kg": 60
+       },
+       {
+        "reps": 10,
+        "load_kg": 60
+       }
+      ]
+     },
+     {
+      "exercise": "pull_up",
+      "note": null,
+      "sets": [
+       {
+        "reps": 4,
+        "load_kg": 0,
+        "set_type": "rest_pause"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "id": 502,
+    "uid": null,
+    "date": "2026-11-16",
+    "title": "Muscu pecs",
+    "activity_id": null,
+    "note": "Épaule droite un peu raide",
+    "exercises": [
+     {
+      "exercise": "bench_press",
+      "note": null,
+      "sets": [
+       {
+        "reps": 8,
+        "load_kg": 70
+       },
+       {
+        "reps": 8,
+        "load_kg": 70
+       },
+       {
+        "reps": 7,
+        "load_kg": 70
+       }
+      ]
+     }
+    ]
+   }
+  ]
  }
 }
