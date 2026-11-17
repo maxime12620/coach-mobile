@@ -1,7 +1,8 @@
 // Passage de l'instantané (contrat docs/mobile.md) au modèle d'affichage, et calculs repris de la maquette validée
 // (profils, zones, étapes sur 3 colonnes, prévu vs réalisé).
 
-export const ZC = ['', '#c9d6f5', '#79B63E', '#739DF1', '#F08100', '#C30A1D'];
+// Couleurs des zones : variables CSS (échelle de bleus puis orange et rouge, thème clair et sombre, D66).
+export const ZC = ['', 'var(--z1)', 'var(--z2)', 'var(--z3)', 'var(--z4)', 'var(--z5)'];
 export const ZN = ['', 'Récup', 'Endurance', 'Marathon · semi', 'Seuil · 10 km', 'VMA'];
 export const JC = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
 export const QUAL = new Set(['intervals_short', 'intervals_long', 'threshold', 'tempo', 'hills', 'fartlek', 'test', 'race', 'race_pace', 'vo2max']);
@@ -137,6 +138,7 @@ function seance(r) {
     id: r.id, d: r.date, o: r.order || 1, ty: r.type || '', t: r.title || '', it: r.intent || '',
     sp: sport === 'running' ? 'r' : (sport === 'strength' || r.type === 'mobility') ? 'm' : 'x',
     sport, status: r.status || 'planned', actId: r.activity_id ?? null, x: [],
+    real: r.realized || null, fb: r.feedback || null,
   };
   const st = r.structure && Array.isArray(r.structure.steps) ? r.structure.steps.map(etape).filter(Boolean) : [];
   if (s.sp === 'r') {
@@ -184,16 +186,23 @@ export function construire(snap, pend = [], opts = {}) {
   }
   S.sort((a, b) => (a.d < b.d ? -1 : a.d > b.d ? 1 : a.o - b.o));
 
-  // activités : rattachement aux séances
+  // activités : rattachement aux séances (appariement du PC ; `realized` cumule les activités du même jour)
   const A = snap.activities || [];
   const parSeance = new Map(A.filter(a => a.session_id != null).map(a => [a.session_id, a]));
   const parId = new Map(A.map(a => [a.id, a]));
+  const absorbees = new Set();
   S.forEach((s, i) => {
     s.i = i;
     s.act = parSeance.get(s.id) || (s.actId != null ? parId.get(s.actId) : null) || null;
-    s.done = s.status === 'done' || s.status === 'partial' || s.status === 'exceeded' || s.status === 'below' || !!s.act;
+    if (!s.real && s.act) s.real = { activity_ids: [s.act.id], distance_m: s.act.distance_m, duration_s: s.act.duration_s, pace_s_km: s.act.pace_s_km, avg_hr: s.act.avg_hr };
+    if (s.real) (s.real.activity_ids || []).forEach(id => absorbees.add(id));
+    s.parts = s.real ? (s.real.activity_ids || []).map(id => parId.get(id)).filter(Boolean) : [];
+    s.done = s.status === 'done' || s.status === 'partial' || s.status === 'exceeded' || s.status === 'below' || !!s.act || !!s.real;
     s.passe = s.d < T;
   });
+  // réalisé hors plan : activités ni appariées ni cumulées à une séance
+  const H = A.filter(a => a.session_id == null && !absorbees.has(a.id) && a.date).map(horsPlan)
+    .sort((a, b) => (a.d < b.d ? -1 : a.d > b.d ? 1 : (a.start || '') < (b.start || '') ? -1 : 1));
   // muscu placée avant la course du même jour
   S.forEach(s => { if (s.sp === 'm') { const r = S.filter(x => x.d === s.d && x.sp === 'r'); s.av = r.length > 0 && r.every(x => x.o > s.o); } });
 
@@ -211,7 +220,8 @@ export function construire(snap, pend = [], opts = {}) {
       W.push({ n: n + 1, ws, we: addD(ws, 6), rec: !!pw.is_light, tgt: pw.target_km ?? null, ph: pw.phase || (ph && ph.name) || '' });
     }
   }
-  if (W.length) S.forEach(s => { const k = ecart(W[0].ws, s.d); s.w = Math.floor(k / 7); s.j = ((k % 7) + 7) % 7; });
+  if (W.length) [...S, ...H].forEach(s => { const k = ecart(W[0].ws, s.d); s.w = Math.floor(k / 7); s.j = ((k % 7) + 7) % 7; });
+  H.forEach((h, k) => { h.k = k; });
   W.forEach((w, n) => {
     const ss = S.filter(s => s.w === n), r = ss.filter(s => s.sp === 'r');
     w.km = r.reduce((a, s) => a + s.km, 0);
@@ -231,7 +241,40 @@ export function construire(snap, pend = [], opts = {}) {
   const avant = W.length ? reel.filter(x => x.ws < W[0].ws).sort((a, b) => (a.ws < b.ws ? -1 : 1)) : reel;
 
   const tref = Math.max(1, ...S.filter(s => s.sp === 'r').map(s => s.p.reduce((a, x) => a + x[0], 0)));
-  return { S, W, avant, T, tref, plan, snap, conflitsLocaux, today: snap.today || null, wellness: snap.wellness || [] };
+  return { S, H, W, avant, T, tref, plan, snap, conflitsLocaux, today: snap.today || null, wellness: snap.wellness || [], sources: snap.sources || {} };
+}
+
+const TYPES = { running: 'Course', strength: 'Muscu', cycling: 'Vélo', walking: 'Marche', hiking: 'Rando', swimming: 'Natation', cardio: 'Cardio' };
+function horsPlan(a) {
+  const run = a.type === 'running';
+  return {
+    id: a.id, d: a.date, start: a.start, sp: run ? 'r' : a.type === 'strength' ? 'm' : 'x', type: a.type,
+    t: a.display_name || TYPES[a.type] || 'Activité', km: (a.distance_m || 0) / 1000, mn: (a.duration_s || 0) / 60,
+    pace: a.pace_s_km || null, hr: a.avg_hr || null, raw: a,
+  };
+}
+
+// ---------- prévu vs réalisé : chiffres clés ----------
+// Lignes [libellé, prévu, réalisé, écart] ; seulement les grandeurs connues d'un côté au moins.
+export function versus(s) {
+  const r = s.real; if (!r) return null;
+  const km = (r.distance_m || 0) / 1000, mn = (r.duration_s || 0) / 60;
+  const ecartPc = (a, b) => (a && b ? Math.round((b / a - 1) * 100) : null);
+  const rows = [];
+  if (s.sp === 'r' || km >= 0.5) rows.push(['Distance', s.km ? f1(s.km) + ' km' : '—', km ? f1(km) + ' km' : '—', ecartPc(s.km, km)]);
+  rows.push(['Durée', s.mn ? Math.round(s.mn) + ' min' : '—', mn ? Math.round(mn) + ' min' : '—', ecartPc(s.mn, mn)]);
+  if (s.sp === 'r') {
+    const pp = s.km && s.mn ? s.mn * 60 / s.km : null;
+    rows.push(['Allure', pp ? pc(pp) + ' /km' : '—', r.pace_s_km ? pc(r.pace_s_km) + ' /km' : '—', null]);
+  }
+  if (r.avg_hr) rows.push(['FC moyenne', '—', r.avg_hr + ' bpm', null]);
+  return { rows, km, mn, n: (r.activity_ids || []).length };
+}
+// Résumé d'une ligne : « 8,5 → 12,9 km » (course) ou « 45 → 34 min ».
+export function versusCourt(s) {
+  const v = versus(s); if (!v) return '';
+  if (s.sp === 'r' && v.km) return (s.km ? f1(s.km) + ' → ' : '') + f1(v.km) + ' km';
+  return (s.mn ? Math.round(s.mn) + ' → ' : '') + Math.round(v.mn) + ' min';
 }
 
 export function semaineCourante(M) {
@@ -269,9 +312,10 @@ export function prevuRealise(s) {
     });
   });
   const rp = laps.map(l => [l.duration_s || 0, l.pace_s_km ? lvAllure(l.pace_s_km) : 1]);
-  const realKm = (a.distance_m || 0) / 1000;
+  const r = s.real || a;
+  const realKm = (r.distance_m || 0) / 1000;
   const vol = s.km ? Math.round(realKm / s.km * 100) : null;
-  return { rows, rp, realKm, vol, nIn, nCible, sec: a.duration_s || 0, aligne };
+  return { rows, rp, realKm, vol, nIn, nCible, sec: r.duration_s || 0, aligne };
 }
 
 // 0 à 3 lignes : volume, allures, régularité. Rien si la séance est conforme.

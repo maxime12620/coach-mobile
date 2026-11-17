@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#2E3464">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14161d" media="(prefers-color-scheme: dark)">
 <meta name="robots" content="noindex">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://api.github.com; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; font-src 'self'; base-uri 'none'; form-action 'none'">
 <title>Coach</title>
@@ -15,7 +16,7 @@
 <body>
 <header class="haut" id="haut">
   <div class="etat"><b id="date-donnees">Pas encore de données</b><span id="attente" class="pa" hidden></span><span id="msg" class="m"></span></div>
-  <button class="bt2" id="sync" type="button">Synchroniser</button>
+  <button class="bt2 pri" id="sync" type="button" title="Récupérer les données du PC et lui demander une synchro Garmin"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.3-4.9L4 8"/><path d="M4 3v5h5"/><path d="M4 13a8 8 0 0 0 14.3 4.9L20 16"/><path d="M20 21v-5h-5"/></svg><span>Synchroniser</span></button>
   <button class="engr" id="reglages" type="button" aria-label="Réglages" title="Réglages"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></svg></button>
 </header>
 <nav class="sel" id="sel"></nav>

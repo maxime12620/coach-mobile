@@ -226,7 +226,17 @@
       }
      }
     ]
-   }
+   },
+   "realized": {
+    "activity_ids": [
+     5000
+    ],
+    "distance_m": 9918,
+    "duration_s": 3287,
+    "pace_s_km": 331,
+    "avg_hr": 142
+   },
+   "feedback": null
   },
   {
    "id": 101,
@@ -240,7 +250,17 @@
    "intent": null,
    "status": "done",
    "activity_id": 5001,
-   "structure": null
+   "structure": null,
+   "realized": {
+    "activity_ids": [
+     5001
+    ],
+    "distance_m": null,
+    "duration_s": 3000,
+    "pace_s_km": null,
+    "avg_hr": 105
+   },
+   "feedback": null
   },
   {
    "id": 102,
@@ -270,7 +290,17 @@
       }
      }
     ]
-   }
+   },
+   "realized": {
+    "activity_ids": [
+     5002
+    ],
+    "distance_m": 6977,
+    "duration_s": 2331,
+    "pace_s_km": 334,
+    "avg_hr": 142
+   },
+   "feedback": null
   },
   {
    "id": 103,
@@ -284,7 +314,17 @@
    "intent": null,
    "status": "done",
    "activity_id": 5003,
-   "structure": null
+   "structure": null,
+   "realized": {
+    "activity_ids": [
+     5003
+    ],
+    "distance_m": null,
+    "duration_s": 3000,
+    "pace_s_km": null,
+    "avg_hr": 105
+   },
+   "feedback": null
   },
   {
    "id": 104,
@@ -341,7 +381,17 @@
       ]
      }
     ]
-   }
+   },
+   "realized": {
+    "activity_ids": [
+     5004
+    ],
+    "distance_m": 7060,
+    "duration_s": 2227,
+    "pace_s_km": 315,
+    "avg_hr": 142
+   },
+   "feedback": null
   },
   {
    "id": 105,
@@ -371,7 +421,17 @@
       }
      }
     ]
-   }
+   },
+   "realized": {
+    "activity_ids": [
+     5005
+    ],
+    "distance_m": 12966,
+    "duration_s": 4613,
+    "pace_s_km": 356,
+    "avg_hr": 142
+   },
+   "feedback": null
   },
   {
    "id": 106,
@@ -385,7 +445,17 @@
    "intent": null,
    "status": "done",
    "activity_id": 5006,
-   "structure": null
+   "structure": null,
+   "realized": {
+    "activity_ids": [
+     5006
+    ],
+    "distance_m": null,
+    "duration_s": 1200,
+    "pace_s_km": null,
+    "avg_hr": 105
+   },
+   "feedback": null
   },
   {
    "id": 107,
@@ -455,7 +525,17 @@
       }
      }
     ]
-   }
+   },
+   "realized": {
+    "activity_ids": [
+     5007
+    ],
+    "distance_m": 12875,
+    "duration_s": 3676,
+    "pace_s_km": 286,
+    "avg_hr": 142
+   },
+   "feedback": null
   },
   {
    "id": 108,
@@ -469,7 +549,17 @@
    "intent": null,
    "status": "done",
    "activity_id": 5008,
-   "structure": null
+   "structure": null,
+   "realized": {
+    "activity_ids": [
+     5008
+    ],
+    "distance_m": null,
+    "duration_s": 3000,
+    "pace_s_km": null,
+    "avg_hr": 105
+   },
+   "feedback": null
   },
   {
    "id": 109,
@@ -499,7 +589,17 @@
       }
      }
     ]
-   }
+   },
+   "realized": {
+    "activity_ids": [
+     5009
+    ],
+    "distance_m": 7618,
+    "duration_s": 2493,
+    "pace_s_km": 327,
+    "avg_hr": 142
+   },
+   "feedback": null
   },
   {
    "id": 110,
@@ -513,7 +613,17 @@
    "intent": null,
    "status": "done",
    "activity_id": 5010,
-   "structure": null
+   "structure": null,
+   "realized": {
+    "activity_ids": [
+     5010
+    ],
+    "distance_m": null,
+    "duration_s": 3000,
+    "pace_s_km": null,
+    "avg_hr": 105
+   },
+   "feedback": null
   },
   {
    "id": 111,
@@ -570,7 +680,17 @@
       ]
      }
     ]
-   }
+   },
+   "realized": {
+    "activity_ids": [
+     5011
+    ],
+    "distance_m": 7344,
+    "duration_s": 2221,
+    "pace_s_km": 302,
+    "avg_hr": 142
+   },
+   "feedback": null
   },
   {
    "id": 112,
@@ -600,7 +720,17 @@
       }
      }
     ]
-   }
+   },
+   "realized": {
+    "activity_ids": [
+     5012
+    ],
+    "distance_m": 13757,
+    "duration_s": 4839,
+    "pace_s_km": 352,
+    "avg_hr": 142
+   },
+   "feedback": null
   },
   {
    "id": 113,
@@ -666,7 +796,17 @@
       }
      }
     ]
-   }
+   },
+   "realized": {
+    "activity_ids": [
+     5013
+    ],
+    "distance_m": 8027,
+    "duration_s": 2465,
+    "pace_s_km": 307,
+    "avg_hr": 142
+   },
+   "feedback": null
   },
   {
    "id": 114,
@@ -680,7 +820,17 @@
    "intent": null,
    "status": "done",
    "activity_id": 5014,
-   "structure": null
+   "structure": null,
+   "realized": {
+    "activity_ids": [
+     5014
+    ],
+    "distance_m": null,
+    "duration_s": 3000,
+    "pace_s_km": null,
+    "avg_hr": 105
+   },
+   "feedback": null
   },
   {
    "id": 115,
@@ -710,7 +860,17 @@
       }
      }
     ]
-   }
+   },
+   "realized": {
+    "activity_ids": [
+     5015
+    ],
+    "distance_m": 7803,
+    "duration_s": 2512,
+    "pace_s_km": 322,
+    "avg_hr": 142
+   },
+   "feedback": null
   },
   {
    "id": 116,
@@ -724,7 +884,17 @@
    "intent": null,
    "status": "done",
    "activity_id": 5016,
-   "structure": null
+   "structure": null,
+   "realized": {
+    "activity_ids": [
+     5016
+    ],
+    "distance_m": null,
+    "duration_s": 3000,
+    "pace_s_km": null,
+    "avg_hr": 105
+   },
+   "feedback": null
   },
   {
    "id": 117,
@@ -781,7 +951,17 @@
       ]
      }
     ]
-   }
+   },
+   "realized": {
+    "activity_ids": [
+     5017
+    ],
+    "distance_m": 7655,
+    "duration_s": 2412,
+    "pace_s_km": 315,
+    "avg_hr": 142
+   },
+   "feedback": null
   },
   {
    "id": 118,
@@ -811,7 +991,17 @@
       }
      }
     ]
-   }
+   },
+   "realized": {
+    "activity_ids": [
+     5018
+    ],
+    "distance_m": 13869,
+    "duration_s": 4987,
+    "pace_s_km": 360,
+    "avg_hr": 142
+   },
+   "feedback": null
   },
   {
    "id": 119,
@@ -825,7 +1015,17 @@
    "intent": null,
    "status": "done",
    "activity_id": 5019,
-   "structure": null
+   "structure": null,
+   "realized": {
+    "activity_ids": [
+     5019
+    ],
+    "distance_m": null,
+    "duration_s": 1200,
+    "pace_s_km": null,
+    "avg_hr": 105
+   },
+   "feedback": null
   },
   {
    "id": 120,
@@ -895,7 +1095,17 @@
       }
      }
     ]
-   }
+   },
+   "realized": {
+    "activity_ids": [
+     5020
+    ],
+    "distance_m": 12097,
+    "duration_s": 3383,
+    "pace_s_km": 280,
+    "avg_hr": 142
+   },
+   "feedback": null
   },
   {
    "id": 121,
@@ -909,7 +1119,17 @@
    "intent": null,
    "status": "done",
    "activity_id": 5021,
-   "structure": null
+   "structure": null,
+   "realized": {
+    "activity_ids": [
+     5021
+    ],
+    "distance_m": null,
+    "duration_s": 3000,
+    "pace_s_km": null,
+    "avg_hr": 105
+   },
+   "feedback": null
   },
   {
    "id": 122,
@@ -939,7 +1159,17 @@
       }
      }
     ]
-   }
+   },
+   "realized": {
+    "activity_ids": [
+     5022
+    ],
+    "distance_m": 5534,
+    "duration_s": 1814,
+    "pace_s_km": 328,
+    "avg_hr": 142
+   },
+   "feedback": null
   },
   {
    "id": 123,
@@ -953,7 +1183,17 @@
    "intent": null,
    "status": "done",
    "activity_id": 5023,
-   "structure": null
+   "structure": null,
+   "realized": {
+    "activity_ids": [
+     5023
+    ],
+    "distance_m": null,
+    "duration_s": 3000,
+    "pace_s_km": null,
+    "avg_hr": 105
+   },
+   "feedback": null
   },
   {
    "id": 124,
@@ -1010,7 +1250,17 @@
       ]
      }
     ]
-   }
+   },
+   "realized": {
+    "activity_ids": [
+     5024
+    ],
+    "distance_m": 5724,
+    "duration_s": 1811,
+    "pace_s_km": 316,
+    "avg_hr": 142
+   },
+   "feedback": null
   },
   {
    "id": 125,
@@ -1040,7 +1290,18 @@
       }
      }
     ]
-   }
+   },
+   "realized": {
+    "activity_ids": [
+     5029,
+     5025
+    ],
+    "distance_m": 13714,
+    "duration_s": 4616,
+    "pace_s_km": 337,
+    "avg_hr": 140
+   },
+   "feedback": null
   },
   {
    "id": 126,
@@ -1110,6 +1371,22 @@
       }
      }
     ]
+   },
+   "realized": {
+    "activity_ids": [
+     5026
+    ],
+    "distance_m": 10350,
+    "duration_s": 3159,
+    "pace_s_km": 305,
+    "avg_hr": 142
+   },
+   "feedback": {
+    "activity_id": 5026,
+    "rpe": 8,
+    "legs": 3,
+    "breath": 3,
+    "comment": "Dur sur les dernières"
    }
   },
   {
@@ -1124,7 +1401,17 @@
    "intent": null,
    "status": "done",
    "activity_id": 5027,
-   "structure": null
+   "structure": null,
+   "realized": {
+    "activity_ids": [
+     5027
+    ],
+    "distance_m": null,
+    "duration_s": 3000,
+    "pace_s_km": null,
+    "avg_hr": 105
+   },
+   "feedback": null
   },
   {
    "id": 128,
@@ -1154,7 +1441,9 @@
       }
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 129,
@@ -1168,7 +1457,9 @@
    "intent": null,
    "status": "planned",
    "activity_id": null,
-   "structure": null
+   "structure": null,
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 130,
@@ -1225,7 +1516,9 @@
       ]
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 131,
@@ -1255,7 +1548,9 @@
       }
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 132,
@@ -1269,7 +1564,17 @@
    "intent": null,
    "status": "done",
    "activity_id": 5028,
-   "structure": null
+   "structure": null,
+   "realized": {
+    "activity_ids": [
+     5028
+    ],
+    "distance_m": null,
+    "duration_s": 1200,
+    "pace_s_km": null,
+    "avg_hr": 105
+   },
+   "feedback": null
   },
   {
    "id": 133,
@@ -1339,7 +1644,9 @@
       }
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 134,
@@ -1353,7 +1660,9 @@
    "intent": null,
    "status": "planned",
    "activity_id": null,
-   "structure": null
+   "structure": null,
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 135,
@@ -1383,7 +1692,9 @@
       }
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 136,
@@ -1397,7 +1708,9 @@
    "intent": null,
    "status": "planned",
    "activity_id": null,
-   "structure": null
+   "structure": null,
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 137,
@@ -1454,7 +1767,9 @@
       ]
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 138,
@@ -1484,7 +1799,9 @@
       }
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 139,
@@ -1550,7 +1867,9 @@
       }
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 140,
@@ -1564,7 +1883,9 @@
    "intent": null,
    "status": "planned",
    "activity_id": null,
-   "structure": null
+   "structure": null,
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 141,
@@ -1594,7 +1915,9 @@
       }
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 142,
@@ -1608,7 +1931,9 @@
    "intent": null,
    "status": "planned",
    "activity_id": null,
-   "structure": null
+   "structure": null,
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 143,
@@ -1665,7 +1990,9 @@
       ]
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 144,
@@ -1695,7 +2022,9 @@
       }
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 145,
@@ -1709,7 +2038,9 @@
    "intent": null,
    "status": "planned",
    "activity_id": null,
-   "structure": null
+   "structure": null,
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 146,
@@ -1779,7 +2110,9 @@
       }
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 147,
@@ -1793,7 +2126,9 @@
    "intent": null,
    "status": "planned",
    "activity_id": null,
-   "structure": null
+   "structure": null,
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 148,
@@ -1823,7 +2158,9 @@
       }
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 149,
@@ -1837,7 +2174,9 @@
    "intent": null,
    "status": "planned",
    "activity_id": null,
-   "structure": null
+   "structure": null,
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 150,
@@ -1894,7 +2233,9 @@
       ]
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 151,
@@ -1924,7 +2265,9 @@
       }
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 152,
@@ -1994,7 +2337,9 @@
       }
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 153,
@@ -2008,7 +2353,9 @@
    "intent": null,
    "status": "planned",
    "activity_id": null,
-   "structure": null
+   "structure": null,
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 154,
@@ -2038,7 +2385,9 @@
       }
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 155,
@@ -2052,7 +2401,9 @@
    "intent": null,
    "status": "planned",
    "activity_id": null,
-   "structure": null
+   "structure": null,
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 156,
@@ -2109,7 +2460,9 @@
       ]
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 157,
@@ -2139,7 +2492,9 @@
       }
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 158,
@@ -2153,7 +2508,9 @@
    "intent": null,
    "status": "planned",
    "activity_id": null,
-   "structure": null
+   "structure": null,
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 159,
@@ -2223,7 +2580,9 @@
       }
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 160,
@@ -2237,7 +2596,9 @@
    "intent": null,
    "status": "planned",
    "activity_id": null,
-   "structure": null
+   "structure": null,
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 161,
@@ -2267,7 +2628,9 @@
       }
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 162,
@@ -2281,7 +2644,9 @@
    "intent": null,
    "status": "planned",
    "activity_id": null,
-   "structure": null
+   "structure": null,
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 163,
@@ -2338,7 +2703,9 @@
       ]
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 164,
@@ -2368,7 +2735,9 @@
       }
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 165,
@@ -2434,7 +2803,9 @@
       }
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 166,
@@ -2448,7 +2819,9 @@
    "intent": null,
    "status": "planned",
    "activity_id": null,
-   "structure": null
+   "structure": null,
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 167,
@@ -2478,7 +2851,9 @@
       }
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 168,
@@ -2492,7 +2867,9 @@
    "intent": null,
    "status": "planned",
    "activity_id": null,
-   "structure": null
+   "structure": null,
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 169,
@@ -2549,7 +2926,9 @@
       ]
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 170,
@@ -2579,7 +2958,9 @@
       }
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 171,
@@ -2593,7 +2974,9 @@
    "intent": null,
    "status": "planned",
    "activity_id": null,
-   "structure": null
+   "structure": null,
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 172,
@@ -2663,7 +3046,9 @@
       }
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 173,
@@ -2677,7 +3062,9 @@
    "intent": null,
    "status": "planned",
    "activity_id": null,
-   "structure": null
+   "structure": null,
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 174,
@@ -2707,7 +3094,9 @@
       }
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 175,
@@ -2721,7 +3110,9 @@
    "intent": null,
    "status": "planned",
    "activity_id": null,
-   "structure": null
+   "structure": null,
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 176,
@@ -2778,7 +3169,9 @@
       ]
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 177,
@@ -2808,7 +3201,9 @@
       }
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 178,
@@ -2878,7 +3273,9 @@
       }
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 179,
@@ -2892,7 +3289,9 @@
    "intent": null,
    "status": "planned",
    "activity_id": null,
-   "structure": null
+   "structure": null,
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 180,
@@ -2922,7 +3321,9 @@
       }
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 181,
@@ -2936,7 +3337,9 @@
    "intent": null,
    "status": "planned",
    "activity_id": null,
-   "structure": null
+   "structure": null,
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 182,
@@ -2993,7 +3396,9 @@
       ]
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 183,
@@ -3023,7 +3428,9 @@
       }
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 184,
@@ -3037,7 +3444,9 @@
    "intent": null,
    "status": "planned",
    "activity_id": null,
-   "structure": null
+   "structure": null,
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 185,
@@ -3107,7 +3516,9 @@
       }
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 186,
@@ -3121,7 +3532,9 @@
    "intent": null,
    "status": "planned",
    "activity_id": null,
-   "structure": null
+   "structure": null,
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 187,
@@ -3151,7 +3564,9 @@
       }
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 188,
@@ -3165,7 +3580,9 @@
    "intent": null,
    "status": "planned",
    "activity_id": null,
-   "structure": null
+   "structure": null,
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 189,
@@ -3222,7 +3639,9 @@
       ]
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 190,
@@ -3252,7 +3671,9 @@
       }
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 191,
@@ -3318,7 +3739,9 @@
       }
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 192,
@@ -3332,7 +3755,9 @@
    "intent": null,
    "status": "planned",
    "activity_id": null,
-   "structure": null
+   "structure": null,
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 193,
@@ -3362,7 +3787,9 @@
       }
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 194,
@@ -3376,7 +3803,9 @@
    "intent": null,
    "status": "planned",
    "activity_id": null,
-   "structure": null
+   "structure": null,
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 195,
@@ -3433,7 +3862,9 @@
       ]
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 196,
@@ -3463,7 +3894,9 @@
       }
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 197,
@@ -3477,7 +3910,9 @@
    "intent": null,
    "status": "planned",
    "activity_id": null,
-   "structure": null
+   "structure": null,
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 198,
@@ -3547,7 +3982,9 @@
       }
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 199,
@@ -3561,7 +3998,9 @@
    "intent": null,
    "status": "planned",
    "activity_id": null,
-   "structure": null
+   "structure": null,
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 200,
@@ -3591,7 +4030,9 @@
       }
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 201,
@@ -3605,7 +4046,9 @@
    "intent": null,
    "status": "planned",
    "activity_id": null,
-   "structure": null
+   "structure": null,
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 202,
@@ -3662,7 +4105,9 @@
       ]
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   },
   {
    "id": 203,
@@ -3692,10 +4137,26 @@
       }
      }
     ]
-   }
+   },
+   "realized": null,
+   "feedback": null
   }
  ],
  "activities": [
+  {
+   "id": 5006,
+   "date": "2026-10-19",
+   "start": "2026-10-19T07:15:00+01:00",
+   "type": "strength_training",
+   "display_name": "Gainage",
+   "distance_m": null,
+   "duration_s": 1200,
+   "pace_s_km": null,
+   "avg_hr": 105,
+   "elevation_gain_m": null,
+   "session_id": 106,
+   "laps": []
+  },
   {
    "id": 5000,
    "date": "2026-10-20",
@@ -3778,20 +4239,6 @@
    "avg_hr": 142,
    "elevation_gain_m": 40,
    "session_id": 105,
-   "laps": []
-  },
-  {
-   "id": 5006,
-   "date": "2026-10-19",
-   "start": "2026-10-19T07:15:00+01:00",
-   "type": "strength_training",
-   "display_name": "Gainage",
-   "distance_m": null,
-   "duration_s": 1200,
-   "pace_s_km": null,
-   "avg_hr": 105,
-   "elevation_gain_m": null,
-   "session_id": 106,
    "laps": []
   },
   {
@@ -3879,6 +4326,20 @@
    "laps": []
   },
   {
+   "id": 5019,
+   "date": "2026-11-02",
+   "start": "2026-11-02T07:15:00+01:00",
+   "type": "strength_training",
+   "display_name": "Gainage",
+   "distance_m": null,
+   "duration_s": 1200,
+   "pace_s_km": null,
+   "avg_hr": 105,
+   "elevation_gain_m": null,
+   "session_id": 119,
+   "laps": []
+  },
+  {
    "id": 5013,
    "date": "2026-11-03",
    "start": "2026-11-03T07:15:00+01:00",
@@ -3963,20 +4424,6 @@
    "laps": []
   },
   {
-   "id": 5019,
-   "date": "2026-11-02",
-   "start": "2026-11-02T07:15:00+01:00",
-   "type": "strength_training",
-   "display_name": "Gainage",
-   "distance_m": null,
-   "duration_s": 1200,
-   "pace_s_km": null,
-   "avg_hr": 105,
-   "elevation_gain_m": null,
-   "session_id": 119,
-   "laps": []
-  },
-  {
    "id": 5020,
    "date": "2026-11-10",
    "start": "2026-11-10T07:15:00+01:00",
@@ -4019,6 +4466,20 @@
    "laps": []
   },
   {
+   "id": 5030,
+   "date": "2026-11-12",
+   "start": "2026-11-12T18:40:00+01:00",
+   "type": "running",
+   "display_name": "Footing avec un ami",
+   "distance_m": 6120,
+   "duration_s": 2150,
+   "pace_s_km": 351,
+   "avg_hr": 134,
+   "elevation_gain_m": 30,
+   "session_id": null,
+   "laps": []
+  },
+  {
    "id": 5023,
    "date": "2026-11-13",
    "start": "2026-11-13T07:15:00+01:00",
@@ -4047,6 +4508,34 @@
    "laps": []
   },
   {
+   "id": 5031,
+   "date": "2026-11-14",
+   "start": "2026-11-14T10:00:00+01:00",
+   "type": "cycling",
+   "display_name": "Vélo",
+   "distance_m": 32400,
+   "duration_s": 4300,
+   "pace_s_km": null,
+   "avg_hr": 121,
+   "elevation_gain_m": 310,
+   "session_id": null,
+   "laps": []
+  },
+  {
+   "id": 5029,
+   "date": "2026-11-15",
+   "start": "2026-11-15T07:02:00+01:00",
+   "type": "running",
+   "display_name": "Échauffement",
+   "distance_m": 2390,
+   "duration_s": 780,
+   "pace_s_km": 326,
+   "avg_hr": 131,
+   "elevation_gain_m": 8,
+   "session_id": null,
+   "laps": []
+  },
+  {
    "id": 5025,
    "date": "2026-11-15",
    "start": "2026-11-15T07:15:00+01:00",
@@ -4058,6 +4547,20 @@
    "avg_hr": 142,
    "elevation_gain_m": 40,
    "session_id": 125,
+   "laps": []
+  },
+  {
+   "id": 5028,
+   "date": "2026-11-16",
+   "start": "2026-11-16T07:15:00+01:00",
+   "type": "strength_training",
+   "display_name": "Gainage",
+   "distance_m": null,
+   "duration_s": 1200,
+   "pace_s_km": null,
+   "avg_hr": 105,
+   "elevation_gain_m": null,
+   "session_id": 132,
    "laps": []
   },
   {
@@ -4242,20 +4745,6 @@
    "elevation_gain_m": null,
    "session_id": 127,
    "laps": []
-  },
-  {
-   "id": 5028,
-   "date": "2026-11-16",
-   "start": "2026-11-16T07:15:00+01:00",
-   "type": "strength_training",
-   "display_name": "Gainage",
-   "distance_m": null,
-   "duration_s": 1200,
-   "pace_s_km": null,
-   "avg_hr": 105,
-   "elevation_gain_m": null,
-   "session_id": 132,
-   "laps": []
   }
  ],
  "weekly": [
@@ -4360,10 +4849,10 @@
   {
    "week_start": "2026-11-09",
    "future": false,
-   "km": 34.7,
+   "km": 75.6,
    "zone_minutes": {
     "z1": 15,
-    "z2": 174,
+    "z2": 378,
     "z3": 12,
     "z4": 14,
     "z5": 6
@@ -4414,19 +4903,23 @@
   {
    "date": "2026-11-16",
    "kind": "checkin",
-   "rpe": null,
-   "legs": 4,
-   "breath": 4,
+   "fatigue": 2,
+   "soreness": 2,
+   "mood": 4,
    "comment": null
   },
   {
    "date": "2026-11-17",
    "kind": "session",
+   "activity_id": 5026,
    "session_id": 126,
    "rpe": 8,
    "legs": 3,
    "breath": 3,
-   "comment": "Démo"
+   "comment": "Dur sur les dernières"
   }
- ]
+ ],
+ "sources": {
+  "garmin_synced_at": "2026-11-18T06:25:00+00:00"
+ }
 }

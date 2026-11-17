@@ -157,6 +157,7 @@ function appliquerDemo(snap, a, at) {
       : { date: p.date, kind: 'pain', zone: p.zone, intensity: p.intensity, comment: p.comment ?? null, session_id: p.session_id ?? null });
     return ack('applied', a.type === 'feeling' ? 'Ressenti enregistré' : 'Douleur enregistrée');
   }
+  if (a.type === 'sync_request') return ack('applied', 'Demande de synchro reçue');
   if (a.type === 'debrief_todo') {
     const s = parId(p.session_id);
     if (!s) return ack('conflict', 'Séance inexistante');

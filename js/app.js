@@ -3,7 +3,7 @@ import * as C from './crypto.js';
 import * as ST from './store.js';
 import * as GH from './github.js';
 import { construire, semaineCourante, esc, f1, fk, dd, jl, jlong, addD, ecart, QUAL, muKind } from './plan.js';
-import { vVolume, vFil, vAgenda, vFocus, vAujourdhui, detail, formRessenti } from './vues.js';
+import { vVolume, vFil, vAgenda, vFocus, vAujourdhui, detail, detailHors, formRessenti, ressentiSeance, carteRessenti, niv3 } from './vues.js';
 
 const Q = new URLSearchParams(location.search);
 const DEMO = Q.get('demo') === '1';
@@ -15,6 +15,8 @@ const E = {
   actions: [],      // actions locales non accusées : {id, created_at, type, payload, etat: 'a_envoyer' | 'envoyee'}
   conflits: [],     // {id, message, lib}
   debriefs: [],     // séances dont le débrief a été accepté par le PC
+  ressentis: {},    // ressentis accusés par le PC : {'s<id>' | 'j<date>': {rpe, legs, breath, comment}}
+  edition: false, editionJour: false,
   vue: 'fil', selW: null, cur: -1, saisie: {}, saisieJour: null,
   occupe: false, msg: '', msgErr: false, horsLigneForce: false, reglages: false,
 };
@@ -44,6 +46,7 @@ function libAction(a) {
     case 'feeling': return 'Ressenti' + (p.session_id ? ' · ' + t(p.session_id) : ' du jour');
     case 'pain': return 'Douleur ' + (p.zone || '');
     case 'debrief_todo': return 'Débrief · ' + t(p.session_id);
+    case 'sync_request': return 'Demande de synchro';
     default: return a.type;
   }
 }
@@ -51,8 +54,21 @@ function libAction(a) {
 // ---------- synchronisation ----------
 function message(t, err) { E.msg = t; E.msgErr = !!err; entete(); }
 
-async function synchroniser() {
+// Dépose une demande de synchro Garmin pour le PC (`coach mobile tick`) : une seule en attente, et au plus une
+// toutes les 10 min à l'ouverture ou au retour sur l'appli (le bouton passe outre ce délai).
+async function demanderSynchro(manuel) {
+  if (!E.cfg) return;
+  if (E.actions.some(a => a.type === 'sync_request')) return;
+  const der = await store.lire('demande');
+  if (!manuel && der && Date.now() - new Date(der) < 10 * 60e3) return;
+  await store.ecrire('demande', new Date().toISOString());
+  E.actions.push({ id: C.uuid(), created_at: isoLocal(new Date()), type: 'sync_request', payload: {}, etat: 'a_envoyer' });
+  await sauverActions();
+}
+
+async function synchroniser(manuel) {
   if (E.occupe || !E.cfg) return;
+  await demanderSynchro(manuel);
   E.occupe = true; entete();
   try {
     // 1. envoi des actions en file
@@ -76,7 +92,7 @@ async function synchroniser() {
     }
     await store.ecrire('derniere', new Date().toISOString());
     const reste = r.quota && r.quota.reste;
-    message('Synchronisé à ' + heure(new Date()) + (reste != null && reste < 500 ? ` · quota GitHub restant ${reste}` : ''));
+    message(reste != null && reste < 500 ? `Quota GitHub restant ${reste}` : '');
   } catch (e) {
     const horsLigne = e.code === 0;
     message(horsLigne ? 'Hors ligne' + (E.actions.length ? ' · actions gardées sur le téléphone' : '') : (e.message || 'Erreur de synchronisation'), !horsLigne);
@@ -101,9 +117,13 @@ function traiterAcks() {
     if (!k) { restent.push(a); continue; }
     if (k.result === 'conflict') E.conflits.push({ id: a.id, message: k.message || 'Conflit', lib: libAction(a) });
     else if (a.type === 'debrief_todo' && !E.debriefs.includes(a.payload.session_id)) E.debriefs.push(a.payload.session_id);
+    else if (a.type === 'feeling') {
+      const p = a.payload;
+      E.ressentis[p.session_id != null ? 's' + p.session_id : 'j' + p.date] = { rpe: p.rpe, legs: p.legs, breath: p.breath, comment: p.comment };
+    }
   }
   E.actions = restent;
-  sauverActions(); sauverConflits(); store.ecrire('debriefs', E.debriefs);
+  sauverActions(); sauverConflits(); store.ecrire('debriefs', E.debriefs); store.ecrire('ressentis', E.ressentis);
 }
 
 async function ajouterAction(type, payload) {
@@ -123,14 +143,21 @@ function isoLocal(d) {
 }
 
 // ---------- en-tête ----------
+const quand = d => {
+  const auj = new Date(), hier = new Date(auj); hier.setDate(auj.getDate() - 1);
+  const meme = (a, b) => a.toDateString() === b.toDateString();
+  return meme(d, auj) ? 'à ' + heure(d) : meme(d, hier) ? 'hier à ' + heure(d) : `le ${d.getDate()}/${String(d.getMonth() + 1).padStart(2, '0')} à ${heure(d)}`;
+};
 function entete() {
   const g = E.snap && E.snap.generated_at ? new Date(E.snap.generated_at) : null;
-  $('date-donnees').textContent = g && !isNaN(g) ? `Données du ${g.getDate()}/${String(g.getMonth() + 1).padStart(2, '0')} à ${heure(g)}` : (E.cfg ? 'Pas encore de données' : 'Coach');
-  const n = E.actions.length;
+  const gs = E.snap && E.snap.sources && E.snap.sources.garmin_synced_at ? new Date(E.snap.sources.garmin_synced_at) : null;
+  $('date-donnees').textContent = g && !isNaN(g) ? 'Données du PC ' + quand(g) : (E.cfg ? 'Pas encore de données' : 'Coach');
+  const n = E.actions.filter(a => a.type !== 'sync_request').length, dem = E.actions.some(a => a.type === 'sync_request');
   $('attente').hidden = !n;
   $('attente').textContent = n;
   $('attente').title = n + ' action' + (n > 1 ? 's' : '') + ' en attente du PC';
-  $('msg').textContent = E.occupe ? 'Synchronisation…' : (n ? `${n} en attente du PC` + (E.msg ? ' · ' + E.msg : '') : E.msg);
+  const info = [dem ? 'synchro demandée au PC' : gs && !isNaN(gs) ? 'Garmin lu ' + quand(gs) : '', n ? `${n} en attente du PC` : ''].filter(Boolean).join(' · ');
+  $('msg').textContent = E.occupe ? 'Synchronisation…' : [E.msg, info].filter(Boolean).join(' · ');
   $('msg').classList.toggle('err', E.msgErr && !E.occupe);
   $('sync').disabled = E.occupe || !E.cfg;
   $('sync').classList.toggle('tourne', E.occupe);
@@ -166,9 +193,12 @@ function rendre(defiler) {
 // ---------- fenêtres ----------
 const fond = $('fond'), c = $('c');
 let ouverte = false;
-function ouvrir(html) {
+// garder : même fenêtre re-rendue (choix dans un formulaire, envoi) -> la position de défilement est conservée.
+function ouvrir(html, garder) {
   E.ecran = 'autre';
+  const sc = c.parentNode.scrollTop;
   c.innerHTML = html;
+  if (garder && ouverte) { c.parentNode.scrollTop = sc; return; }
   if (!ouverte) { ouverte = true; fond.classList.add('on'); history.pushState({ fen: 1 }, ''); document.body.style.overflow = 'hidden'; }
   c.parentNode.scrollTop = 0;
 }
@@ -186,12 +216,13 @@ addEventListener('popstate', () => { if (ouverte) fermer(true); });
 
 function montrer(i) {
   const M = E.M; if (!M || i < 0 || i >= M.S.length) return;
-  if (E.cur !== i) E.saisie = {};
+  const meme = E.cur === i && E.ecran === 'detail';
+  if (E.cur !== i) { E.saisie = {}; E.edition = false; }
   E.cur = i;
-  ouvrir(detail(M, M.S[i], ctxDetail()));
+  ouvrir(detail(M, M.S[i], ctxDetail()), meme);
   E.ecran = 'detail';
 }
-const ctxDetail = () => ({ saisie: E.saisie, envoyes: E.actions, debriefs: E.debriefs });
+const ctxDetail = () => ({ saisie: E.saisie, envoyes: E.actions, debriefs: E.debriefs, ressentis: E.ressentis, edition: E.edition });
 const seanceCourante = () => (E.M && E.cur >= 0 ? E.M.S[E.cur] : null);
 
 // ---------- déplacer / intervertir ----------
@@ -257,12 +288,21 @@ async function envoyerRessenti(s) {
     await ajouterAction('feeling', { date, rpe: r.rpe ? +r.rpe : null, legs: r.legs ? +r.legs : null, breath: r.breath ? +r.breath : null, comment: com, session_id: sid });
   }
   if (r.douleur === 'oui') await ajouterAction('pain', { date, zone: r.zone || 'autre', intensity: +(r.int || 0), comment: com, session_id: sid });
-  if (s) { E.saisie = {}; montrer(E.cur); } else { E.saisieJour = null; fermer(); }
+  if (s) { E.saisie = {}; E.edition = false; montrer(E.cur); } else { E.saisieJour = null; E.editionJour = false; dlgJour(true); }
 }
-function dlgJour() {
+function ressentiJour() {
+  const env = E.actions.filter(a => a.type === 'feeling' && a.payload && a.payload.session_id == null && a.payload.date === E.M.T).pop();
+  if (env) return { ...env.payload, statut: 'envoyé, en attente du PC' };
+  const loc = E.ressentis['j' + E.M.T];
+  return loc ? { ...loc, statut: 'enregistré' } : null;
+}
+function dlgJour(garder) {
   E.saisieJour = E.saisieJour || {};
-  ouvrir(`<h3 id="fen-titre">Ressenti du jour</h3><div class="m">${jl(E.M.T)}</div>` + formRessenti(E.saisieJour));
+  const r = ressentiJour();
+  ouvrir(`<h3 id="fen-titre">Ressenti du jour</h3><div class="m">${jl(E.M.T)}</div>` +
+    (r && !E.editionJour ? carteRessenti(r, 'res-edit-jour') : formRessenti(E.saisieJour, !!r)), garder);
 }
+const versSaisie = r => ({ rpe: r.rpe != null ? String(r.rpe) : undefined, legs: r.legs != null ? String(niv3(r.legs)) : undefined, breath: r.breath != null ? String(niv3(r.breath)) : undefined, com: r.comment || '' });
 
 // ---------- réglages / premier lancement ----------
 function ecranReglages() {
@@ -317,7 +357,7 @@ async function effacer(btn) {
   await store.toutEffacer();
   C.oublierCles();
   try { localStorage.clear(); } catch (e) { /* rien */ }
-  Object.assign(E, { cfg: null, gh: null, snap: null, etag: null, M: null, actions: [], conflits: [], debriefs: [], reglages: false, msg: 'Tout est effacé de ce téléphone', msgErr: false });
+  Object.assign(E, { cfg: null, gh: null, snap: null, etag: null, M: null, actions: [], conflits: [], debriefs: [], ressentis: {}, reglages: false, msg: 'Tout est effacé de ce téléphone', msgErr: false });
   rendre();
 }
 
@@ -341,10 +381,18 @@ async function agir(t) {
     case 'res': {
       const r = s ? E.saisie : E.saisieJour; if (!r) return;
       r[t.dataset.f] = String(r[t.dataset.f]) === t.dataset.val ? undefined : t.dataset.val;
-      return s ? montrer(E.cur) : dlgJour();
+      // mise à jour en place (pas de re-rendu, pas de retour en haut) ; la douleur ajoute des champs : re-rendu gardé
+      if (t.dataset.f === 'douleur') return s ? montrer(E.cur) : dlgJour(true);
+      t.parentNode.querySelectorAll('button').forEach(b => b.classList.toggle('on', String(r[t.dataset.f]) === b.dataset.val));
+      const ok = c.querySelector('[data-act="res-ok"]');
+      if (ok) ok.disabled = !(r.rpe || r.legs || r.breath || r.douleur === 'oui' || (r.com || '').trim());
+      return;
     }
     case 'res-ok': return envoyerRessenti(s);
-    case 'ressenti-jour': return dlgJour();
+    case 'res-edit': { if (!s) return; const r = ressentiSeance(E.M, s, ctxDetail()); E.saisie = r ? versSaisie(r) : {}; E.edition = true; return montrer(E.cur); }
+    case 'res-edit-jour': { const r = ressentiJour(); E.saisieJour = r ? versSaisie(r) : {}; E.editionJour = true; return dlgJour(true); }
+    case 'res-annuler': if (s) { E.saisie = {}; E.edition = false; return montrer(E.cur); } E.saisieJour = null; E.editionJour = false; return dlgJour(true);
+    case 'ressenti-jour': E.editionJour = false; return dlgJour();
     case 'cfl-x': E.conflits = E.conflits.filter(x => x.id !== t.dataset.id); await sauverConflits(); return rendre();
     case 'cfg-test': return testerEtEnregistrer();
     case 'cfg-retour': E.reglages = false; return rendre();
@@ -354,15 +402,16 @@ async function agir(t) {
 
 document.addEventListener('click', e => {
   if (stopClic) { e.preventDefault(); e.stopPropagation(); stopClic = false; return; }
-  const t = e.target.closest('[data-act],[data-v],[data-i],[data-w],[data-nav]');
+  const t = e.target.closest('[data-act],[data-v],[data-i],[data-h],[data-w],[data-nav]');
   if (!t || t.disabled) return;
   if (t.dataset.act) { e.preventDefault(); agir(t); return; }
   if (t.dataset.v) { E.vue = t.dataset.v; rendre(true); scrollTo({ top: 0 }); return; }
   if (t.dataset.i !== undefined) return montrer(+t.dataset.i);
+  if (t.dataset.h !== undefined) { const x = E.M && E.M.H[+t.dataset.h]; if (x) { E.cur = -1; ouvrir(detailHors(E.M, x)); } return; }
   if (t.dataset.w !== undefined) { E.selW = +t.dataset.w; return rendre(true); }
   if (t.dataset.nav) { const n = E.selW != null ? E.selW : semaineCourante(E.M); E.selW = Math.max(0, Math.min(E.M.W.length - 1, n + +t.dataset.nav)); return rendre(true); }
 });
-$('sync').addEventListener('click', () => synchroniser());
+$('sync').addEventListener('click', () => synchroniser(true));
 document.addEventListener('submit', e => { e.preventDefault(); if (e.target.id === 'f-cfg') testerEtEnregistrer(); });
 $('reglages').addEventListener('click', () => { fermer(); E.reglages = !E.reglages || !E.cfg; rendre(); scrollTo({ top: 0 }); });
 document.addEventListener('input', e => {
@@ -478,6 +527,7 @@ async function demarrer() {
   E.actions = await store.lire('actions') || [];
   E.conflits = await store.lire('conflits') || [];
   E.debriefs = await store.lire('debriefs') || [];
+  E.ressentis = await store.lire('ressentis') || {};
   E.snap = await store.lire('snap') || null;
   E.etag = await store.lire('etag') || null;
   if (E.cfg) E.gh = client(E.cfg);
@@ -488,7 +538,7 @@ async function demarrer() {
   document.addEventListener('visibilitychange', async () => {
     if (document.visibilityState !== 'visible' || !E.cfg) return;
     const d = await store.lire('derniere');
-    if (!d || Date.now() - new Date(d) > 5 * 60e3 || E.actions.some(a => a.etat === 'a_envoyer')) synchroniser();
+    if (!d || Date.now() - new Date(d) > 60e3 || E.actions.some(a => a.etat === 'a_envoyer')) synchroniser();
   });
   let l = innerWidth < 760;
   addEventListener('resize', () => { const n = innerWidth < 760; if (n !== l) { l = n; rendre(); } });
