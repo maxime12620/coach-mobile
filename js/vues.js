@@ -1,5 +1,5 @@
 // Rendu HTML des vues, repris de la maquette plan-integre (version téléphone d'abord).
-import { ZC, ZN, JC, JL, esc, f1, fh, dd, jlong, addD, jour, ecart, muKind, prevuRealise, evaluation, pc, versus, etat, ecartPrevu, ecartAffiche, chiffresSeance, dureeDansTitre, semainePlanning, deplacable, titreCourt, allureCible, profilUtile, memeTypologie, statutEnvoi } from './plan.js';
+import { ZC, ZN, JC, JL, esc, f1, fh, dd, jlong, addD, jour, ecart, muKind, prevuRealise, evaluation, pc, versus, etat, ecartPrevu, ecartAffiche, chiffresSeance, dureeDansTitre, semainePlanning, lignesSemaine, deplacable, titreCourt, allureCible, profilUtile, memeTypologie, statutEnvoi } from './plan.js';
 import { vAnalyse } from './analyse.js';
 import * as MUS from './muscu.js';
 
@@ -90,16 +90,15 @@ function barreSemaine(P, montre) {
   return `<div class="pbar" aria-hidden="true"><div class="pz pale">${z}</div>${plein}</div>`;
 }
 function legendeSemaine(montre) {
-  return `<div class="pleg">${montre ? '<p>Chiffres : réalisé / prévu. Barre : prévu par intensité en pâle, réalisé en plein (gris au-delà du prévu).</p>' : '<p>Chiffres et barre : prévu, par intensité.</p>'}` +
-    `<p class="pleg-i">${ICO.route} km de course · ${ICO.run} temps de course · ${ICO.mus} temps de muscu</p><div class="zl">${[1, 2, 3, 4, 5].map(l => `<span><i style="background:${ZC[l]}"></i>${ZN[l]}</span>`).join('')}</div></div>`;
+  return `<div class="pleg">${montre ? '<p>Chiffres : réalisé, puis projeté en fin de semaine (réalisé + séances restantes) et prévu. Barre : prévu par intensité en pâle, réalisé en plein (gris au-delà du prévu).</p>' : '<p>Chiffres et barre : prévu, par intensité.</p>'}` +
+    `<p class="pleg-i">${ICO.route} km de course · ${ICO.run} temps de course · ${ICO.mus} temps de muscu · séances faites / prévues</p><div class="zl">${[1, 2, 3, 4, 5].map(l => `<span><i style="background:${ZC[l]}"></i>${ZN[l]}</span>`).join('')}</div></div>`;
 }
 function teteSemaine(P) {
   const w = P.w, montre = P.passee || P.encours;
-  const v = (r, p, f, u) => (montre ? `<b>${f(r)}</b><small> / ${f(p)}${u}</small>` : `<b>${f(p)}</b><small>${u}</small>`);
+  const L = lignesSemaine(P), ic = { km: ICO.route, course: ICO.run, muscu: ICO.mus, seances: '' };
+  const tt = { km: 'Km de course', course: 'Temps de course', muscu: 'Temps de muscu', seances: 'Séances faites' };
   return `<div class="ptete" data-act="leg-sem" role="button" tabindex="0" aria-label="Afficher la légende de la semaine"><div class="pt1"><b>S${w.n}</b><span>${dd(w.ws)} → ${dd(w.we)}</span>${w.ph ? `<span class="ph">${esc(w.ph)}</span>` : ''}${w.rec ? '<span class="ph">allégée</span>' : ''}${P.encours ? '<span class="enc">cette semaine</span>' : ''}</div>` +
-    `<div class="pt2"><span title="Km de course${montre ? ' réalisés / prévus' : ' prévus'}">${ICO.route}${v(P.reel.km, P.prevu.km, f1, ' km')}</span>` +
-    `<span title="Temps de course">${ICO.run}${v(P.reel.hr, P.prevu.hr, fh, '')}</span>` +
-    `<span title="Temps de muscu">${ICO.mus}${v(P.reel.hm, P.prevu.hm, fh, '')}</span></div>${barreSemaine(P, montre)}${legendeSemaine(montre)}</div>`;
+    `<div class="pt2">${L.map(l => `<span title="${tt[l.cle]}">${ic[l.cle]}<b>${l.main}</b><small>${l.tail}</small></span>`).join('')}</div>${barreSemaine(P, montre)}${legendeSemaine(montre)}</div>`;
 }
 export function vPlanning(M, ctx) {
   let h = '<div class="planning">';

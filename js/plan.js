@@ -423,6 +423,37 @@ export function remplacerOuAjouter(actions, a) {
   const b = { ...actions[i], payload: a.payload, created_at: a.created_at };
   return { actions: actions.map((x, j) => (j === i ? b : x)), action: b };
 }
+// Totaux d'une semaine, même règle que le PC (lib/planning.ts, weekTotals). Prévu : séances du plan (hors sautées).
+// Réalisé : séances faites (activités rattachées, muscu saisie) + activités hors plan. Projeté : réalisé + prévu des
+// séances restantes (aujourd'hui et à venir, ni faites ni sautées) ; une séance passée non faite compte 0.
+export function totauxSemaine(S, Hw, T) {
+  const somme = (xs, f) => xs.reduce((a, x) => a + (f(x) || 0), 0);
+  const plan = S.filter(s => s.status !== 'skipped');
+  const run = xs => xs.filter(s => s.sp === 'r'), mus = xs => xs.filter(s => s.sp !== 'r');
+  const prev = xs => ({ km: somme(run(xs), s => s.km), hr: somme(run(xs), s => s.mn) / 60, hm: somme(mus(xs), s => s.mn) / 60, n: xs.length });
+  const faites = plan.filter(s => s.done);
+  const reel = {
+    km: somme(run(faites), s => s.real && s.real.distance_m) / 1000 + somme(Hw.filter(h => h.sp === 'r'), h => h.km),
+    hr: (somme(run(faites), s => s.real && s.real.duration_s) / 60 + somme(Hw.filter(h => h.sp === 'r'), h => h.mn)) / 60,
+    hm: (somme(mus(faites), s => s.real && s.real.duration_s) / 60 + somme(Hw.filter(h => h.sp === 'm'), h => h.mn)) / 60,
+    n: faites.length + Hw.filter(h => h.sp === 'r' || h.sp === 'm').length,
+  };
+  const reste = prev(plan.filter(s => !s.done && s.d >= T));
+  return { prevu: prev(plan), reel, proj: { km: reel.km + reste.km, hr: reel.hr + reste.hr, hm: reel.hm + reste.hm, n: reel.n + reste.n } };
+}
+// Chiffres de l'en-tête de semaine, même présentation que le PC (weekLines) : passée = réalisé et prévu ; en cours =
+// réalisé → projeté (prévu) ; à venir = prévu seul. `cle` : km, course, muscu, seances.
+export function lignesSemaine(P) {
+  const { prevu: p, reel: r, proj: j } = P, enc = P.encours;
+  if (!P.passee && !enc) return [
+    { cle: 'km', main: f1(p.km), tail: ' km prévus' }, { cle: 'course', main: fh(p.hr), tail: '' },
+    { cle: 'muscu', main: fh(p.hm), tail: '' }, { cle: 'seances', main: String(p.n), tail: ' séances' }];
+  return [
+    { cle: 'km', main: f1(r.km), tail: enc ? ` → ${f1(j.km)} km (prévu ${f1(p.km)})` : ` km · prévu ${f1(p.km)}` },
+    { cle: 'course', main: fh(r.hr), tail: enc ? ` → ${fh(j.hr)}` : ` / ${fh(p.hr)}` },
+    { cle: 'muscu', main: fh(r.hm), tail: enc ? ` → ${fh(j.hm)}` : ` / ${fh(p.hm)}` },
+    { cle: 'seances', main: String(r.n), tail: ` / ${p.n}` }];
+}
 // Une semaine du planning : les 7 jours (vides compris) et le volume prévu / réalisé.
 // Réalisé : séances faites (cumul des activités rattachées) plus activités hors plan de la semaine.
 export function semainePlanning(M, n) {
@@ -432,16 +463,8 @@ export function semainePlanning(M, n) {
     return { d, j, auj: d === M.T, passe: d < M.T, S: M.S.filter(s => s.d === d), H: H.filter(h => h.d === d) };
   });
   const S = M.S.filter(s => s.w === n), Hw = H.filter(h => h.w === n);
-  const run = S.filter(s => s.sp === 'r'), mus = S.filter(s => s.sp === 'm');
-  const somme = (xs, f) => xs.reduce((a, x) => a + (f(x) || 0), 0);
-  const fr = xs => xs.filter(s => s.done && s.real);
-  const prevu = { km: somme(run, s => s.km), hr: somme(run, s => s.mn) / 60, hm: somme(mus, s => s.mn) / 60 };
-  const reel = {
-    km: somme(fr(run), s => s.real.distance_m) / 1000 + somme(Hw.filter(h => h.sp === 'r'), h => h.km),
-    hr: (somme(fr(run), s => s.real.duration_s) / 60 + somme(Hw.filter(h => h.sp === 'r'), h => h.mn)) / 60,
-    hm: (somme(fr(mus), s => s.real.duration_s) / 60 + somme(Hw.filter(h => h.sp === 'm'), h => h.mn)) / 60,
-  };
-  return { w, n, jours, prevu, reel, zk: w.zk, nPrevu: S.length, nFait: S.filter(s => s.done).length, passee: w.passee, encours: w.encours };
+  const { prevu, reel, proj } = totauxSemaine(S, Hw, M.T);
+  return { w, n, jours, prevu, reel, proj, zk: w.zk, nPrevu: S.length, nFait: S.filter(s => s.done).length, passee: w.passee, encours: w.encours };
 }
 // Déplacement d'une séance : seulement une séance à venir non faite, vers un autre jour à venir (vide ou non).
 export const deplacable = (M, s) => !!s && !s.done && s.d >= M.T;
