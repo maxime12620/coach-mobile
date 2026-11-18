@@ -220,3 +220,36 @@ svg text{font-family:"PT Sans",sans-serif;font-size:11px;fill:var(--clair)}svg .
 .mu-libre{display:flex;gap:8px;margin-top:8px}.mu-libre input{flex:1;min-width:0}.mu-libre .bt2{min-height:44px}
 .mu-ed textarea{width:100%;margin-top:10px;resize:vertical}
 .mu-act{position:sticky;bottom:0;background:var(--fond);padding:8px 0 calc(8px + env(safe-area-inset-bottom))}
+/* Analyse de séance (D69) : orange = trop rapide, bleu = trop lente, vert sobre = dans la cible */
+.an{--an-in:var(--ok);--an-fast:var(--orange);--an-slow:var(--bleu2);--an-in-f:rgba(79,138,31,.14);--an-fast-f:rgba(240,129,0,.2);--an-slow-f:rgba(115,157,241,.25)}
+.an-vd{border:1px solid var(--filet);border-left:4px solid var(--clair);border-radius:8px;padding:9px 12px;margin:10px 0}
+.an-vd.conforme{border-left-color:var(--an-in)}.an-vd.a_surveiller{border-left-color:var(--an-fast)}.an-vd.hors_cible{border-left-color:var(--rouge)}
+.an-et{font:700 15px "Exo 2"}.an-vd.conforme .an-et{color:var(--an-in)}.an-vd.a_surveiller .an-et{color:var(--an-fast)}.an-vd.hors_cible .an-et{color:var(--rouge)}
+.an-vd ul{list-style:none;margin:6px 0 0;padding:0}.an-vd li{display:flex;gap:7px;padding:2px 0;font-size:13px}
+.an-vd summary{cursor:pointer;color:var(--accent);font-size:12px;font-weight:700;margin-top:6px}
+.an-lv{flex:none;width:14px;text-align:center;font-weight:700}.an-lv.lv-bad{color:var(--rouge)}.an-lv.lv-warn{color:var(--an-fast)}.an-lv.lv-info{color:var(--clair)}.an-lv.lv-ok{color:var(--an-in)}
+.an-ph{display:flex;gap:3px;margin-top:6px}.an-ph button{border:0;background:var(--teinte);border-radius:6px;padding:6px 7px;text-align:left;min-width:0;overflow:hidden;color:var(--gris);cursor:pointer}
+.an-ph button.on{outline:2px solid var(--accent)}.an-ph b{display:block;font-size:12px;color:var(--accent);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.an-ph span{display:block;font-size:11px;color:var(--clair);white-space:nowrap}
+.an-det{font-size:12px;margin-top:5px;min-height:16px}
+.an-set{margin-top:12px}.an-set>b{font:700 13px "Exo 2";color:var(--accent)}
+.an-c.fast{color:var(--an-fast);font-weight:700}.an-c.slow{color:var(--an-slow);font-weight:700}.an-c.in{color:var(--an-in)}
+.an-chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
+.an-chip{border:1px solid var(--filet);background:var(--surface);border-radius:6px;padding:3px 4px;font-size:12px;line-height:1.15;text-align:center;min-width:44px;color:var(--gris);cursor:pointer;touch-action:manipulation}
+.an-chip i{display:block;font-style:normal;font-size:10px;color:var(--clair)}.an-chip b{display:block;font-size:13px}.an-chip span{display:block;font-size:11px;font-weight:700}
+.an-chip.in{border-color:var(--an-in)}.an-chip.in span{color:var(--an-in)}.an-chip.fast{border-color:var(--an-fast);background:var(--an-fast-f)}.an-chip.fast span{color:var(--an-fast)}
+.an-chip.slow{border-color:var(--an-slow);background:var(--an-slow-f)}.an-chip.slow span{color:var(--an-slow)}.an-chip.on{outline:2px solid var(--accent)}.an-chip.miss{border-style:dashed;color:var(--clair)}
+.an-hd{display:flex;justify-content:space-between;align-items:center;margin:14px 0 4px}.an-hd b{font:700 13px "Exo 2";color:var(--accent)}
+.an-hd .seg{display:flex;gap:3px}.an-hd .seg button{border:1px solid var(--gb);background:var(--surface);color:var(--gris);border-radius:6px;height:30px;padding:0 10px;font-size:12px;cursor:pointer}
+.an-hd .seg button.on{background:var(--accent);color:var(--accent-t);border-color:var(--accent)}
+.an-cv svg{display:block;width:100%;height:auto;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.an-cv text{font-size:9px;fill:var(--clair)}.an-cv text.t{font-weight:700;fill:var(--gris)}
+.an-cv .gr{stroke:var(--filet)}.an-cv .be{fill:rgba(115,157,241,.16)}.an-cv .ac{stroke:var(--clair);stroke-dasharray:3 3}
+.an-cv .col{fill:var(--an-in-f)}.an-cv .col.fast{fill:var(--an-fast-f)}.an-cv .col.slow{fill:var(--an-slow-f)}
+.an-cv .ln{fill:none;stroke:var(--accent);stroke-width:1.2;stroke-linejoin:round}.an-cv .hr{fill:none;stroke:var(--mu);stroke-width:1.1}
+.an-cv .rl{fill:none;stroke-width:2.4;stroke-linecap:round;stroke:var(--an-in)}.an-cv .rl.fast{stroke:var(--an-fast)}.an-cv .rl.slow{stroke:var(--an-slow)}
+.an-cv .pl rect{fill:var(--an-in)}.an-cv .pl.fast rect{fill:var(--an-fast)}.an-cv .pl.slow rect{fill:var(--an-slow)}.an-cv .pl text{fill:#fff;font-size:8px;font-weight:700}
+.an-cv .cx{stroke:var(--gris);stroke-width:1}
+.an-lu{font-size:12px;min-height:18px;margin-top:4px}
+.an-leg{display:flex;flex-wrap:wrap;gap:3px 12px;font-size:11px;color:var(--clair);margin-top:4px}.an-leg i{display:inline-block;width:12px;height:8px;border-radius:2px;margin-right:4px}
+.an-leg i.in{background:var(--an-in)}.an-leg i.fast{background:var(--an-fast)}.an-leg i.slow{background:var(--an-slow)}.an-leg i.hr{height:2px;vertical-align:3px;background:var(--mu)}
+.an-laps{margin-top:12px}.an-laps summary{cursor:pointer;color:var(--accent);font-size:13px;font-weight:700}.an tr.an-stub td{color:var(--trait)}

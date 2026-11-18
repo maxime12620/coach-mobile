@@ -138,7 +138,7 @@ function seance(r) {
     id: r.id, d: r.date, o: r.order || 1, ty: r.type || '', t: r.title || '', it: r.intent || '',
     sp: sport === 'running' ? 'r' : (sport === 'strength' || r.type === 'mobility') ? 'm' : 'x',
     sport, status: r.status || 'planned', actId: r.activity_id ?? null, x: [],
-    real: r.realized || null, fb: r.feedback || null,
+    real: r.realized || null, fb: r.feedback || null, an: r.analysis && r.analysis.available ? r.analysis : null,
   };
   const st = r.structure && Array.isArray(r.structure.steps) ? r.structure.steps.map(etape).filter(Boolean) : [];
   if (s.sp === 'r') {
@@ -186,14 +186,15 @@ export function construire(snap, pend = [], opts = {}) {
   }
   S.sort((a, b) => (a.d < b.d ? -1 : a.d > b.d ? 1 : a.o - b.o));
 
-  // activités : rattachement aux séances (appariement du PC ; `realized` cumule les activités du même jour)
+  // activités : rattachement du PC (règle unique D69 : toutes les activités rattachées portent session_id ;
+  // `realized` les cumule, `activity_id` reste l'activité principale)
   const A = snap.activities || [];
   const parSeance = new Map(A.filter(a => a.session_id != null).map(a => [a.session_id, a]));
   const parId = new Map(A.map(a => [a.id, a]));
   const absorbees = new Set();
   S.forEach((s, i) => {
     s.i = i;
-    s.act = parSeance.get(s.id) || (s.actId != null ? parId.get(s.actId) : null) || null;
+    s.act = (s.actId != null ? parId.get(s.actId) : null) || parSeance.get(s.id) || null;
     if (!s.real && s.act) s.real = { activity_ids: [s.act.id], distance_m: s.act.distance_m, duration_s: s.act.duration_s, pace_s_km: s.act.pace_s_km, avg_hr: s.act.avg_hr };
     if (s.real) (s.real.activity_ids || []).forEach(id => absorbees.add(id));
     s.parts = s.real ? (s.real.activity_ids || []).map(id => parId.get(id)).filter(Boolean) : [];

@@ -4,6 +4,7 @@ import * as ST from './store.js';
 import * as GH from './github.js';
 import { construire, semaineCourante, esc, f1, fk, dd, jl, jlong, addD, ecart, QUAL, muKind } from './plan.js';
 import * as MU from './muscu.js';
+import { agirAnalyse, lire as lireCourbe } from './analyse.js';
 import { vVolume, vFil, vAgenda, vFocus, vAujourdhui, detail, detailHors, formRessenti, ressentiSeance, carteRessenti, niv3 } from './vues.js';
 
 const Q = new URLSearchParams(location.search);
@@ -478,6 +479,7 @@ let stopClic = false;
 async function agir(t) {
   const a = t.dataset.act, s = seanceCourante();
   if (a.startsWith('mu-')) return agirMuscu(a, t);
+  if (a.startsWith('an-')) return agirAnalyse(a, t);
   switch (a) {
     case 'prec': return montrer(E.cur - 1);
     case 'suiv': return montrer(E.cur + 1);
@@ -524,6 +526,9 @@ document.addEventListener('click', e => {
   if (t.dataset.w !== undefined) { E.selW = +t.dataset.w; return rendre(true); }
   if (t.dataset.nav) { const n = E.selW != null ? E.selW : semaineCourante(E.M); E.selW = Math.max(0, Math.min(E.M.W.length - 1, n + +t.dataset.nav)); return rendre(true); }
 });
+// Courbe de l'analyse : lecture au doigt (glisser) ou à la souris.
+c.addEventListener('pointermove', e => { const sv = e.target.closest && e.target.closest('#an-cv svg'); if (sv) lireCourbe(sv, e.clientX); });
+c.addEventListener('pointerdown', e => { const sv = e.target.closest && e.target.closest('#an-cv svg'); if (sv) lireCourbe(sv, e.clientX); });
 $('sync').addEventListener('click', () => synchroniser(true));
 document.addEventListener('submit', e => { e.preventDefault(); if (e.target.id === 'f-cfg') testerEtEnregistrer(); });
 $('reglages').addEventListener('click', () => { fermer(); E.reglages = !E.reglages || !E.cfg; rendre(); scrollTo({ top: 0 }); });

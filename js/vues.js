@@ -1,5 +1,6 @@
 // Rendu HTML des vues, repris de la maquette plan-integre (version téléphone d'abord).
 import { ZC, ZN, JC, JL, esc, fk, f1, fh, dd, addD, jour, ecart, muKind, prevuRealise, evaluation, pc, semaineCourante, versus, versusCourt } from './plan.js';
+import { vAnalyse } from './analyse.js';
 
 const MU = 'var(--mu)', GB = 'var(--gb)';
 export const ICO = {
@@ -241,7 +242,9 @@ export function detail(M, s, ctx) {
       vs.rows.map(([l, a, b, e]) => `<tr><td>${l}</td><td>${a}</td><td><b>${b}</b>${e != null && Math.abs(e) >= 5 ? `<small class="${e > 0 ? 'plus' : 'moins'}">${e > 0 ? '+' : ''}${e} %</small>` : ''}</td></tr>`).join('') + '</table>';
     if (s.parts.length > 1) h += `<div class="m">${s.parts.length} activités cumulées : ${s.parts.map(a => a.distance_m ? f1(a.distance_m / 1000) + ' km' : Math.round((a.duration_s || 0) / 60) + ' min').join(' + ')}</div>`;
   }
-  const pr = s.done && s.act ? prevuRealise(s) : null;
+  // Analyse du PC (D69) quand l'instantané la porte ; sinon la comparaison étape par étape faite ici à partir des tours.
+  if (s.done && s.an) h += vAnalyse(s.an);
+  const pr = s.done && s.act && !s.an ? prevuRealise(s) : null;
   if (pr) {
     if (pr.nCible) h += `<div class="cf"><div><b>${pr.nIn}/${pr.nCible}</b>dans la cible</div></div>`;
     if (pr.rp.length && s.p.length) {

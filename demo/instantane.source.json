@@ -236,7 +236,8 @@
     "pace_s_km": 331,
     "avg_hr": 142
    },
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 101,
@@ -260,7 +261,8 @@
     "pace_s_km": null,
     "avg_hr": 105
    },
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 102,
@@ -300,7 +302,8 @@
     "pace_s_km": 334,
     "avg_hr": 142
    },
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 103,
@@ -324,7 +327,8 @@
     "pace_s_km": null,
     "avg_hr": 105
    },
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 104,
@@ -391,7 +395,8 @@
     "pace_s_km": 315,
     "avg_hr": 142
    },
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 105,
@@ -431,7 +436,8 @@
     "pace_s_km": 356,
     "avg_hr": 142
    },
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 106,
@@ -455,7 +461,8 @@
     "pace_s_km": null,
     "avg_hr": 105
    },
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 107,
@@ -535,7 +542,8 @@
     "pace_s_km": 286,
     "avg_hr": 142
    },
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 108,
@@ -559,7 +567,8 @@
     "pace_s_km": null,
     "avg_hr": 105
    },
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 109,
@@ -599,7 +608,8 @@
     "pace_s_km": 327,
     "avg_hr": 142
    },
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 110,
@@ -623,7 +633,8 @@
     "pace_s_km": null,
     "avg_hr": 105
    },
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 111,
@@ -690,7 +701,8 @@
     "pace_s_km": 302,
     "avg_hr": 142
    },
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 112,
@@ -730,7 +742,8 @@
     "pace_s_km": 352,
     "avg_hr": 142
    },
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 113,
@@ -806,7 +819,8 @@
     "pace_s_km": 307,
     "avg_hr": 142
    },
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 114,
@@ -830,7 +844,8 @@
     "pace_s_km": null,
     "avg_hr": 105
    },
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 115,
@@ -870,7 +885,8 @@
     "pace_s_km": 322,
     "avg_hr": 142
    },
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 116,
@@ -894,7 +910,8 @@
     "pace_s_km": null,
     "avg_hr": 105
    },
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 117,
@@ -961,7 +978,8 @@
     "pace_s_km": 315,
     "avg_hr": 142
    },
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 118,
@@ -1001,7 +1019,8 @@
     "pace_s_km": 360,
     "avg_hr": 142
    },
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 119,
@@ -1025,7 +1044,8 @@
     "pace_s_km": null,
     "avg_hr": 105
    },
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 120,
@@ -1105,7 +1125,8 @@
     "pace_s_km": 280,
     "avg_hr": 142
    },
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 121,
@@ -1129,7 +1150,8 @@
     "pace_s_km": null,
     "avg_hr": 105
    },
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 122,
@@ -1169,7 +1191,8 @@
     "pace_s_km": 328,
     "avg_hr": 142
    },
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 123,
@@ -1193,7 +1216,8 @@
     "pace_s_km": null,
     "avg_hr": 105
    },
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 124,
@@ -1260,7 +1284,8 @@
     "pace_s_km": 316,
     "avg_hr": 142
    },
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 125,
@@ -1293,7 +1318,7 @@
    },
    "realized": {
     "activity_ids": [
-     5029,
+     5030,
      5025
     ],
     "distance_m": 13714,
@@ -1301,7 +1326,8 @@
     "pace_s_km": 337,
     "avg_hr": 140
    },
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 126,
@@ -1309,10 +1335,10 @@
    "order": 1,
    "sport": "running",
    "type": "intervals_short",
-   "title": "VMA 10 × 400 m",
-   "est_duration_s": 3154,
-   "est_distance_m": 10780,
-   "intent": "Travailler la vitesse sans se mettre dans le rouge",
+   "title": "30/30 sur piste (2 × 8)",
+   "est_duration_s": 2940,
+   "est_distance_m": 9800,
+   "intent": "Temps passé près de la VMA, récupération courte",
    "status": "done",
    "activity_id": 5026,
    "structure": {
@@ -1332,27 +1358,71 @@
      },
      {
       "kind": "repeat",
-      "count": 10,
+      "count": 8,
       "steps": [
        {
         "kind": "active",
-        "label": "400 m vite",
+        "label": "30 s vite",
         "duration": {
-         "type": "distance",
-         "meters": 400
+         "type": "time",
+         "seconds": 30
         },
         "target": {
          "type": "pace",
-         "min_s_per_km": 222,
-         "max_s_per_km": 230
+         "min_s_per_km": 195,
+         "max_s_per_km": 203
         }
        },
        {
         "kind": "recovery",
-        "label": "trot",
+        "label": "30 s trot",
         "duration": {
          "type": "time",
-         "seconds": 75
+         "seconds": 30
+        },
+        "target": {
+         "type": "open"
+        }
+       }
+      ]
+     },
+     {
+      "kind": "recovery",
+      "label": "Récup entre séries",
+      "duration": {
+       "type": "time",
+       "seconds": 180
+      },
+      "target": {
+       "type": "open"
+      }
+     },
+     {
+      "kind": "repeat",
+      "count": 8,
+      "steps": [
+       {
+        "kind": "active",
+        "label": "30 s vite",
+        "duration": {
+         "type": "time",
+         "seconds": 30
+        },
+        "target": {
+         "type": "pace",
+         "min_s_per_km": 195,
+         "max_s_per_km": 203
+        }
+       },
+       {
+        "kind": "recovery",
+        "label": "30 s trot",
+        "duration": {
+         "type": "time",
+         "seconds": 30
+        },
+        "target": {
+         "type": "open"
         }
        }
       ]
@@ -1362,7 +1432,7 @@
       "label": "Retour au calme",
       "duration": {
        "type": "time",
-       "seconds": 600
+       "seconds": 900
       },
       "target": {
        "type": "pace",
@@ -1374,12 +1444,13 @@
    },
    "realized": {
     "activity_ids": [
+     5029,
      5026
     ],
-    "distance_m": 10350,
-    "duration_s": 3159,
-    "pace_s_km": 305,
-    "avg_hr": 142
+    "distance_m": 11191,
+    "duration_s": 3520,
+    "pace_s_km": 315,
+    "avg_hr": 150
    },
    "feedback": {
     "activity_id": 5026,
@@ -1387,6 +1458,2406 @@
     "legs": 3,
     "breath": 3,
     "comment": "Dur sur les dernières"
+   },
+   "analysis": {
+    "available": true,
+    "state": "a_surveiller",
+    "label": "À surveiller",
+    "mode": "intervals",
+    "session_type": "intervals_short",
+    "highlights": [
+     {
+      "level": "warn",
+      "text": "Série 2 : ralentissement de 12 s/km entre les premières et les dernières répétitions."
+     },
+     {
+      "level": "ok",
+      "text": "16/16 répétitions faites."
+     },
+     {
+      "level": "ok",
+      "text": "13/16 répétitions dans la cible 3:15–3:23 (± 8 s), moyenne 3:22."
+     }
+    ],
+    "checks": [
+     {
+      "level": "warn",
+      "text": "Série 2 : ralentissement de 12 s/km entre les premières et les dernières répétitions."
+     },
+     {
+      "level": "ok",
+      "text": "16/16 répétitions faites."
+     },
+     {
+      "level": "ok",
+      "text": "13/16 répétitions dans la cible 3:15–3:23 (± 8 s), moyenne 3:22."
+     },
+     {
+      "level": "ok",
+      "text": "Volume 58 min pour 49 min prévues (+20 %), 11,2 km."
+     }
+    ],
+    "total": {
+     "duration_s": 3520,
+     "distance_m": 11191,
+     "avg_hr": 150
+    },
+    "planned": {
+     "duration_s": 2940,
+     "distance_m": null
+    },
+    "activities": [
+     {
+      "start": "2026-11-17T18:05:00+01:00",
+      "duration_s": 760,
+      "distance_m": 2304
+     },
+     {
+      "start": "2026-11-17T18:19:10+01:00",
+      "duration_s": 2760,
+      "distance_m": 8887
+     }
+    ],
+    "phases": [
+     {
+      "code": "warmup",
+      "label": "Échauffement",
+      "planned_s": 900,
+      "pace_lo": 320,
+      "pace_hi": 345,
+      "duration_s": 1360,
+      "distance_m": 4050,
+      "pace_s_km": 336,
+      "avg_hr": 139,
+      "max_hr": 144
+     },
+     {
+      "code": "core",
+      "label": "Cœur de séance",
+      "planned_s": 1110,
+      "pace_lo": null,
+      "pace_hi": null,
+      "duration_s": 1080,
+      "distance_m": 3915,
+      "pace_s_km": 276,
+      "avg_hr": 166,
+      "max_hr": 177
+     },
+     {
+      "code": "cooldown",
+      "label": "Retour au calme",
+      "planned_s": 930,
+      "pace_lo": 320,
+      "pace_hi": 345,
+      "duration_s": 1080,
+      "distance_m": 3227,
+      "pace_s_km": 335,
+      "avg_hr": 149,
+      "max_hr": 173
+     }
+    ],
+    "sets": [
+     {
+      "set": 1,
+      "planned": 8,
+      "done": 8,
+      "n_in": 7,
+      "n_fast": 1,
+      "n_slow": 0,
+      "mean_pace": 198,
+      "cv_pct": 3.2,
+      "drift_s": 4,
+      "avg_hr": 169,
+      "pace_lo": 195,
+      "pace_hi": 203
+     },
+     {
+      "set": 2,
+      "planned": 8,
+      "done": 8,
+      "n_in": 6,
+      "n_fast": 0,
+      "n_slow": 2,
+      "mean_pace": 206,
+      "cv_pct": 2.6,
+      "drift_s": 12,
+      "avg_hr": 171,
+      "pace_lo": 195,
+      "pace_hi": 203
+     }
+    ],
+    "reps": [
+     {
+      "set": 1,
+      "rep": 1,
+      "planned": "30 s",
+      "done": true,
+      "t0": 1360,
+      "t1": 1390,
+      "duration_s": 30,
+      "distance_m": 151,
+      "pace_s_km": 199,
+      "avg_hr": 160,
+      "max_hr": 168,
+      "status": "in",
+      "pace_lo": 195,
+      "pace_hi": 203,
+      "tol_s": 7
+     },
+     {
+      "set": 1,
+      "rep": 2,
+      "planned": "30 s",
+      "done": true,
+      "t0": 1420,
+      "t1": 1450,
+      "duration_s": 30,
+      "distance_m": 152,
+      "pace_s_km": 197,
+      "avg_hr": 169,
+      "max_hr": 171,
+      "status": "in",
+      "pace_lo": 195,
+      "pace_hi": 203,
+      "tol_s": 6
+     },
+     {
+      "set": 1,
+      "rep": 3,
+      "planned": "30 s",
+      "done": true,
+      "t0": 1480,
+      "t1": 1510,
+      "duration_s": 30,
+      "distance_m": 164,
+      "pace_s_km": 183,
+      "avg_hr": 168,
+      "max_hr": 170,
+      "status": "fast",
+      "pace_lo": 195,
+      "pace_hi": 203,
+      "tol_s": 6
+     },
+     {
+      "set": 1,
+      "rep": 4,
+      "planned": "30 s",
+      "done": true,
+      "t0": 1540,
+      "t1": 1570,
+      "duration_s": 30,
+      "distance_m": 147,
+      "pace_s_km": 204,
+      "avg_hr": 170,
+      "max_hr": 172,
+      "status": "in",
+      "pace_lo": 195,
+      "pace_hi": 203,
+      "tol_s": 7
+     },
+     {
+      "set": 1,
+      "rep": 5,
+      "planned": "30 s",
+      "done": true,
+      "t0": 1600,
+      "t1": 1630,
+      "duration_s": 30,
+      "distance_m": 153,
+      "pace_s_km": 196,
+      "avg_hr": 172,
+      "max_hr": 175,
+      "status": "in",
+      "pace_lo": 195,
+      "pace_hi": 203,
+      "tol_s": 6
+     },
+     {
+      "set": 1,
+      "rep": 6,
+      "planned": "30 s",
+      "done": true,
+      "t0": 1660,
+      "t1": 1690,
+      "duration_s": 30,
+      "distance_m": 149,
+      "pace_s_km": 201,
+      "avg_hr": 171,
+      "max_hr": 174,
+      "status": "in",
+      "pace_lo": 195,
+      "pace_hi": 203,
+      "tol_s": 7
+     },
+     {
+      "set": 1,
+      "rep": 7,
+      "planned": "30 s",
+      "done": true,
+      "t0": 1720,
+      "t1": 1750,
+      "duration_s": 30,
+      "distance_m": 150,
+      "pace_s_km": 201,
+      "avg_hr": 171,
+      "max_hr": 175,
+      "status": "in",
+      "pace_lo": 195,
+      "pace_hi": 203,
+      "tol_s": 7
+     },
+     {
+      "set": 1,
+      "rep": 8,
+      "planned": "30 s",
+      "done": true,
+      "t0": 1780,
+      "t1": 1810,
+      "duration_s": 30,
+      "distance_m": 147,
+      "pace_s_km": 204,
+      "avg_hr": 174,
+      "max_hr": 177,
+      "status": "in",
+      "pace_lo": 195,
+      "pace_hi": 203,
+      "tol_s": 7
+     },
+     {
+      "set": 2,
+      "rep": 1,
+      "planned": "30 s",
+      "done": true,
+      "t0": 1990,
+      "t1": 2020,
+      "duration_s": 30,
+      "distance_m": 151,
+      "pace_s_km": 199,
+      "avg_hr": 163,
+      "max_hr": 171,
+      "status": "in",
+      "pace_lo": 195,
+      "pace_hi": 203,
+      "tol_s": 7
+     },
+     {
+      "set": 2,
+      "rep": 2,
+      "planned": "30 s",
+      "done": true,
+      "t0": 2050,
+      "t1": 2080,
+      "duration_s": 30,
+      "distance_m": 150,
+      "pace_s_km": 201,
+      "avg_hr": 170,
+      "max_hr": 173,
+      "status": "in",
+      "pace_lo": 195,
+      "pace_hi": 203,
+      "tol_s": 7
+     },
+     {
+      "set": 2,
+      "rep": 3,
+      "planned": "30 s",
+      "done": true,
+      "t0": 2110,
+      "t1": 2140,
+      "duration_s": 30,
+      "distance_m": 147,
+      "pace_s_km": 203,
+      "avg_hr": 170,
+      "max_hr": 174,
+      "status": "in",
+      "pace_lo": 195,
+      "pace_hi": 203,
+      "tol_s": 7
+     },
+     {
+      "set": 2,
+      "rep": 4,
+      "planned": "30 s",
+      "done": true,
+      "t0": 2170,
+      "t1": 2200,
+      "duration_s": 30,
+      "distance_m": 148,
+      "pace_s_km": 203,
+      "avg_hr": 171,
+      "max_hr": 175,
+      "status": "in",
+      "pace_lo": 195,
+      "pace_hi": 203,
+      "tol_s": 7
+     },
+     {
+      "set": 2,
+      "rep": 5,
+      "planned": "30 s",
+      "done": true,
+      "t0": 2230,
+      "t1": 2260,
+      "duration_s": 30,
+      "distance_m": 145,
+      "pace_s_km": 207,
+      "avg_hr": 172,
+      "max_hr": 174,
+      "status": "in",
+      "pace_lo": 195,
+      "pace_hi": 203,
+      "tol_s": 7
+     },
+     {
+      "set": 2,
+      "rep": 6,
+      "planned": "30 s",
+      "done": true,
+      "t0": 2290,
+      "t1": 2320,
+      "duration_s": 30,
+      "distance_m": 142,
+      "pace_s_km": 211,
+      "avg_hr": 172,
+      "max_hr": 174,
+      "status": "slow",
+      "pace_lo": 195,
+      "pace_hi": 203,
+      "tol_s": 7
+     },
+     {
+      "set": 2,
+      "rep": 7,
+      "planned": "30 s",
+      "done": true,
+      "t0": 2350,
+      "t1": 2380,
+      "duration_s": 30,
+      "distance_m": 138,
+      "pace_s_km": 217,
+      "avg_hr": 174,
+      "max_hr": 176,
+      "status": "slow",
+      "pace_lo": 195,
+      "pace_hi": 203,
+      "tol_s": 8
+     },
+     {
+      "set": 2,
+      "rep": 8,
+      "planned": "30 s",
+      "done": true,
+      "t0": 2410,
+      "t1": 2440,
+      "duration_s": 30,
+      "distance_m": 145,
+      "pace_s_km": 207,
+      "avg_hr": 173,
+      "max_hr": 175,
+      "status": "in",
+      "pace_lo": 195,
+      "pace_hi": 203,
+      "tol_s": 7
+     }
+    ],
+    "extra_reps": 0,
+    "recoveries": [
+     {
+      "between_sets": false,
+      "planned_s": 30,
+      "duration_s": 30,
+      "pace_s_km": 387,
+      "avg_hr": 164
+     },
+     {
+      "between_sets": false,
+      "planned_s": 30,
+      "duration_s": 30,
+      "pace_s_km": 367,
+      "avg_hr": 164
+     },
+     {
+      "between_sets": false,
+      "planned_s": 30,
+      "duration_s": 30,
+      "pace_s_km": 385,
+      "avg_hr": 166
+     },
+     {
+      "between_sets": false,
+      "planned_s": 30,
+      "duration_s": 30,
+      "pace_s_km": 375,
+      "avg_hr": 167
+     },
+     {
+      "between_sets": false,
+      "planned_s": 30,
+      "duration_s": 30,
+      "pace_s_km": 363,
+      "avg_hr": 170
+     },
+     {
+      "between_sets": false,
+      "planned_s": 30,
+      "duration_s": 30,
+      "pace_s_km": 392,
+      "avg_hr": 168
+     },
+     {
+      "between_sets": false,
+      "planned_s": 30,
+      "duration_s": 30,
+      "pace_s_km": 375,
+      "avg_hr": 168
+     },
+     {
+      "between_sets": true,
+      "planned_s": 210,
+      "duration_s": 180,
+      "pace_s_km": 422,
+      "avg_hr": 150
+     },
+     {
+      "between_sets": false,
+      "planned_s": 30,
+      "duration_s": 30,
+      "pace_s_km": 385,
+      "avg_hr": 167
+     },
+     {
+      "between_sets": false,
+      "planned_s": 30,
+      "duration_s": 30,
+      "pace_s_km": 395,
+      "avg_hr": 167
+     },
+     {
+      "between_sets": false,
+      "planned_s": 30,
+      "duration_s": 30,
+      "pace_s_km": 369,
+      "avg_hr": 166
+     },
+     {
+      "between_sets": false,
+      "planned_s": 30,
+      "duration_s": 30,
+      "pace_s_km": 398,
+      "avg_hr": 169
+     },
+     {
+      "between_sets": false,
+      "planned_s": 30,
+      "duration_s": 30,
+      "pace_s_km": 376,
+      "avg_hr": 168
+     },
+     {
+      "between_sets": false,
+      "planned_s": 30,
+      "duration_s": 30,
+      "pace_s_km": 370,
+      "avg_hr": 169
+     },
+     {
+      "between_sets": false,
+      "planned_s": 30,
+      "duration_s": 30,
+      "pace_s_km": 368,
+      "avg_hr": 170
+     }
+    ],
+    "main": null,
+    "laps": [
+     {
+      "act": 1,
+      "phase": "warmup",
+      "duration_s": 760,
+      "distance_m": 2304,
+      "pace_s_km": 330,
+      "avg_hr": 138,
+      "max_hr": 142
+     },
+     {
+      "act": 2,
+      "phase": "warmup",
+      "duration_s": 600,
+      "distance_m": 1746,
+      "pace_s_km": 344,
+      "avg_hr": 140,
+      "max_hr": 144
+     },
+     {
+      "act": 2,
+      "phase": "rep:1:1",
+      "duration_s": 30,
+      "distance_m": 151,
+      "pace_s_km": 199,
+      "avg_hr": 160,
+      "max_hr": 168
+     },
+     {
+      "act": 2,
+      "phase": "recovery",
+      "duration_s": 30,
+      "distance_m": 78,
+      "pace_s_km": 387,
+      "avg_hr": 164,
+      "max_hr": 167
+     },
+     {
+      "act": 2,
+      "phase": "rep:1:2",
+      "duration_s": 30,
+      "distance_m": 152,
+      "pace_s_km": 197,
+      "avg_hr": 169,
+      "max_hr": 171
+     },
+     {
+      "act": 2,
+      "phase": "recovery",
+      "duration_s": 30,
+      "distance_m": 82,
+      "pace_s_km": 367,
+      "avg_hr": 164,
+      "max_hr": 168
+     },
+     {
+      "act": 2,
+      "phase": "rep:1:3",
+      "duration_s": 30,
+      "distance_m": 164,
+      "pace_s_km": 183,
+      "avg_hr": 168,
+      "max_hr": 170
+     },
+     {
+      "act": 2,
+      "phase": "recovery",
+      "duration_s": 30,
+      "distance_m": 78,
+      "pace_s_km": 385,
+      "avg_hr": 166,
+      "max_hr": 169
+     },
+     {
+      "act": 2,
+      "phase": "rep:1:4",
+      "duration_s": 30,
+      "distance_m": 147,
+      "pace_s_km": 204,
+      "avg_hr": 170,
+      "max_hr": 172
+     },
+     {
+      "act": 2,
+      "phase": "recovery",
+      "duration_s": 30,
+      "distance_m": 80,
+      "pace_s_km": 375,
+      "avg_hr": 167,
+      "max_hr": 170
+     },
+     {
+      "act": 2,
+      "phase": "rep:1:5",
+      "duration_s": 30,
+      "distance_m": 153,
+      "pace_s_km": 196,
+      "avg_hr": 172,
+      "max_hr": 175
+     },
+     {
+      "act": 2,
+      "phase": "recovery",
+      "duration_s": 30,
+      "distance_m": 83,
+      "pace_s_km": 363,
+      "avg_hr": 170,
+      "max_hr": 175
+     },
+     {
+      "act": 2,
+      "phase": "rep:1:6",
+      "duration_s": 30,
+      "distance_m": 149,
+      "pace_s_km": 201,
+      "avg_hr": 171,
+      "max_hr": 174
+     },
+     {
+      "act": 2,
+      "phase": "recovery",
+      "duration_s": 30,
+      "distance_m": 77,
+      "pace_s_km": 392,
+      "avg_hr": 168,
+      "max_hr": 172
+     },
+     {
+      "act": 2,
+      "phase": "rep:1:7",
+      "duration_s": 30,
+      "distance_m": 150,
+      "pace_s_km": 201,
+      "avg_hr": 171,
+      "max_hr": 175
+     },
+     {
+      "act": 2,
+      "phase": "recovery",
+      "duration_s": 30,
+      "distance_m": 80,
+      "pace_s_km": 375,
+      "avg_hr": 168,
+      "max_hr": 174
+     },
+     {
+      "act": 2,
+      "phase": "rep:1:8",
+      "duration_s": 30,
+      "distance_m": 147,
+      "pace_s_km": 204,
+      "avg_hr": 174,
+      "max_hr": 177
+     },
+     {
+      "act": 2,
+      "phase": "inter",
+      "duration_s": 180,
+      "distance_m": 426,
+      "pace_s_km": 422,
+      "avg_hr": 150,
+      "max_hr": 174
+     },
+     {
+      "act": 2,
+      "phase": "rep:2:1",
+      "duration_s": 30,
+      "distance_m": 151,
+      "pace_s_km": 199,
+      "avg_hr": 163,
+      "max_hr": 171
+     },
+     {
+      "act": 2,
+      "phase": "recovery",
+      "duration_s": 30,
+      "distance_m": 78,
+      "pace_s_km": 385,
+      "avg_hr": 167,
+      "max_hr": 171
+     },
+     {
+      "act": 2,
+      "phase": "rep:2:2",
+      "duration_s": 30,
+      "distance_m": 150,
+      "pace_s_km": 201,
+      "avg_hr": 170,
+      "max_hr": 173
+     },
+     {
+      "act": 2,
+      "phase": "recovery",
+      "duration_s": 30,
+      "distance_m": 76,
+      "pace_s_km": 395,
+      "avg_hr": 167,
+      "max_hr": 169
+     },
+     {
+      "act": 2,
+      "phase": "rep:2:3",
+      "duration_s": 30,
+      "distance_m": 147,
+      "pace_s_km": 203,
+      "avg_hr": 170,
+      "max_hr": 174
+     },
+     {
+      "act": 2,
+      "phase": "recovery",
+      "duration_s": 30,
+      "distance_m": 81,
+      "pace_s_km": 369,
+      "avg_hr": 166,
+      "max_hr": 173
+     },
+     {
+      "act": 2,
+      "phase": "rep:2:4",
+      "duration_s": 30,
+      "distance_m": 148,
+      "pace_s_km": 203,
+      "avg_hr": 171,
+      "max_hr": 175
+     },
+     {
+      "act": 2,
+      "phase": "recovery",
+      "duration_s": 30,
+      "distance_m": 75,
+      "pace_s_km": 398,
+      "avg_hr": 169,
+      "max_hr": 173
+     },
+     {
+      "act": 2,
+      "phase": "rep:2:5",
+      "duration_s": 30,
+      "distance_m": 145,
+      "pace_s_km": 207,
+      "avg_hr": 172,
+      "max_hr": 174
+     },
+     {
+      "act": 2,
+      "phase": "recovery",
+      "duration_s": 30,
+      "distance_m": 80,
+      "pace_s_km": 376,
+      "avg_hr": 168,
+      "max_hr": 172
+     },
+     {
+      "act": 2,
+      "phase": "rep:2:6",
+      "duration_s": 30,
+      "distance_m": 142,
+      "pace_s_km": 211,
+      "avg_hr": 172,
+      "max_hr": 174
+     },
+     {
+      "act": 2,
+      "phase": "recovery",
+      "duration_s": 30,
+      "distance_m": 81,
+      "pace_s_km": 370,
+      "avg_hr": 169,
+      "max_hr": 172
+     },
+     {
+      "act": 2,
+      "phase": "rep:2:7",
+      "duration_s": 30,
+      "distance_m": 138,
+      "pace_s_km": 217,
+      "avg_hr": 174,
+      "max_hr": 176
+     },
+     {
+      "act": 2,
+      "phase": "recovery",
+      "duration_s": 30,
+      "distance_m": 81,
+      "pace_s_km": 368,
+      "avg_hr": 170,
+      "max_hr": 174
+     },
+     {
+      "act": 2,
+      "phase": "rep:2:8",
+      "duration_s": 30,
+      "distance_m": 145,
+      "pace_s_km": 207,
+      "avg_hr": 173,
+      "max_hr": 175
+     },
+     {
+      "act": 2,
+      "phase": "cooldown",
+      "duration_s": 1080,
+      "distance_m": 3227,
+      "pace_s_km": 335,
+      "avg_hr": 149,
+      "max_hr": 173
+     }
+    ],
+    "curve": {
+     "total_s": 3520,
+     "bands": [
+      {
+       "t0": 0,
+       "t1": 1360,
+       "lo": 320,
+       "hi": 345,
+       "kind": "warmup"
+      },
+      {
+       "t0": 2440,
+       "t1": 3520,
+       "lo": 320,
+       "hi": 345,
+       "kind": "cooldown"
+      },
+      {
+       "t0": 1360,
+       "t1": 1390,
+       "lo": 195,
+       "hi": 203,
+       "kind": "rep",
+       "status": "in"
+      },
+      {
+       "t0": 1420,
+       "t1": 1450,
+       "lo": 195,
+       "hi": 203,
+       "kind": "rep",
+       "status": "in"
+      },
+      {
+       "t0": 1480,
+       "t1": 1510,
+       "lo": 195,
+       "hi": 203,
+       "kind": "rep",
+       "status": "fast"
+      },
+      {
+       "t0": 1540,
+       "t1": 1570,
+       "lo": 195,
+       "hi": 203,
+       "kind": "rep",
+       "status": "in"
+      },
+      {
+       "t0": 1600,
+       "t1": 1630,
+       "lo": 195,
+       "hi": 203,
+       "kind": "rep",
+       "status": "in"
+      },
+      {
+       "t0": 1660,
+       "t1": 1690,
+       "lo": 195,
+       "hi": 203,
+       "kind": "rep",
+       "status": "in"
+      },
+      {
+       "t0": 1720,
+       "t1": 1750,
+       "lo": 195,
+       "hi": 203,
+       "kind": "rep",
+       "status": "in"
+      },
+      {
+       "t0": 1780,
+       "t1": 1810,
+       "lo": 195,
+       "hi": 203,
+       "kind": "rep",
+       "status": "in"
+      },
+      {
+       "t0": 1990,
+       "t1": 2020,
+       "lo": 195,
+       "hi": 203,
+       "kind": "rep",
+       "status": "in"
+      },
+      {
+       "t0": 2050,
+       "t1": 2080,
+       "lo": 195,
+       "hi": 203,
+       "kind": "rep",
+       "status": "in"
+      },
+      {
+       "t0": 2110,
+       "t1": 2140,
+       "lo": 195,
+       "hi": 203,
+       "kind": "rep",
+       "status": "in"
+      },
+      {
+       "t0": 2170,
+       "t1": 2200,
+       "lo": 195,
+       "hi": 203,
+       "kind": "rep",
+       "status": "in"
+      },
+      {
+       "t0": 2230,
+       "t1": 2260,
+       "lo": 195,
+       "hi": 203,
+       "kind": "rep",
+       "status": "in"
+      },
+      {
+       "t0": 2290,
+       "t1": 2320,
+       "lo": 195,
+       "hi": 203,
+       "kind": "rep",
+       "status": "slow"
+      },
+      {
+       "t0": 2350,
+       "t1": 2380,
+       "lo": 195,
+       "hi": 203,
+       "kind": "rep",
+       "status": "slow"
+      },
+      {
+       "t0": 2410,
+       "t1": 2440,
+       "lo": 195,
+       "hi": 203,
+       "kind": "rep",
+       "status": "in"
+      }
+     ],
+     "phases": [
+      {
+       "code": "warmup",
+       "t0": 0,
+       "t1": 1360
+      },
+      {
+       "code": "core",
+       "t0": 1360,
+       "t1": 2440
+      },
+      {
+       "code": "cooldown",
+       "t0": 2440,
+       "t1": 3520
+      }
+     ],
+     "starts": [
+      0,
+      760
+     ],
+     "step_s": 5,
+     "pace": [
+      321,
+      328,
+      339,
+      337,
+      334,
+      348,
+      326,
+      330,
+      323,
+      337,
+      336,
+      327,
+      324,
+      321,
+      318,
+      324,
+      323,
+      332,
+      330,
+      334,
+      318,
+      318,
+      324,
+      333,
+      326,
+      348,
+      346,
+      324,
+      326,
+      318,
+      350,
+      323,
+      319,
+      322,
+      323,
+      322,
+      323,
+      338,
+      333,
+      326,
+      328,
+      333,
+      334,
+      333,
+      330,
+      323,
+      326,
+      329,
+      334,
+      333,
+      325,
+      332,
+      340,
+      337,
+      338,
+      330,
+      312,
+      330,
+      331,
+      321,
+      318,
+      337,
+      340,
+      326,
+      326,
+      326,
+      329,
+      345,
+      326,
+      327,
+      327,
+      332,
+      318,
+      331,
+      324,
+      326,
+      323,
+      334,
+      343,
+      334,
+      321,
+      346,
+      326,
+      322,
+      330,
+      341,
+      333,
+      331,
+      332,
+      331,
+      321,
+      340,
+      322,
+      329,
+      330,
+      329,
+      342,
+      327,
+      318,
+      320,
+      317,
+      327,
+      327,
+      339,
+      324,
+      323,
+      333,
+      334,
+      337,
+      346,
+      341,
+      328,
+      330,
+      337,
+      325,
+      328,
+      327,
+      317,
+      333,
+      313,
+      322,
+      344,
+      327,
+      331,
+      330,
+      338,
+      323,
+      335,
+      347,
+      329,
+      331,
+      327,
+      347,
+      329,
+      342,
+      346,
+      336,
+      339,
+      327,
+      334,
+      330,
+      334,
+      331,
+      339,
+      321,
+      318,
+      324,
+      317,
+      336,
+      336,
+      328,
+      348,
+      344,
+      353,
+      353,
+      346,
+      347,
+      353,
+      339,
+      342,
+      333,
+      332,
+      340,
+      356,
+      334,
+      352,
+      345,
+      334,
+      341,
+      343,
+      345,
+      344,
+      341,
+      348,
+      324,
+      347,
+      332,
+      329,
+      343,
+      325,
+      345,
+      343,
+      351,
+      337,
+      329,
+      342,
+      336,
+      345,
+      336,
+      350,
+      352,
+      337,
+      336,
+      346,
+      346,
+      342,
+      334,
+      357,
+      336,
+      336,
+      370,
+      349,
+      366,
+      358,
+      337,
+      348,
+      352,
+      346,
+      352,
+      353,
+      341,
+      347,
+      347,
+      352,
+      360,
+      336,
+      338,
+      351,
+      344,
+      332,
+      348,
+      331,
+      332,
+      343,
+      340,
+      339,
+      338,
+      334,
+      343,
+      350,
+      348,
+      350,
+      354,
+      340,
+      350,
+      331,
+      334,
+      351,
+      350,
+      352,
+      344,
+      356,
+      355,
+      348,
+      336,
+      336,
+      349,
+      340,
+      350,
+      337,
+      325,
+      356,
+      358,
+      331,
+      359,
+      360,
+      337,
+      347,
+      332,
+      340,
+      374,
+      347,
+      324,
+      352,
+      347,
+      329,
+      354,
+      345,
+      339,
+      334,
+      343,
+      357,
+      219,
+      202,
+      194,
+      198,
+      186,
+      196,
+      310,
+      418,
+      385,
+      424,
+      401,
+      412,
+      227,
+      192,
+      194,
+      192,
+      189,
+      193,
+      296,
+      385,
+      369,
+      382,
+      399,
+      394,
+      212,
+      180,
+      169,
+      172,
+      184,
+      186,
+      298,
+      421,
+      397,
+      415,
+      405,
+      407,
+      231,
+      200,
+      201,
+      201,
+      201,
+      195,
+      298,
+      398,
+      392,
+      386,
+      401,
+      400,
+      218,
+      198,
+      185,
+      189,
+      189,
+      200,
+      288,
+      391,
+      365,
+      382,
+      387,
+      387,
+      227,
+      198,
+      193,
+      197,
+      197,
+      198,
+      301,
+      429,
+      410,
+      414,
+      422,
+      410,
+      232,
+      196,
+      196,
+      195,
+      201,
+      189,
+      305,
+      404,
+      392,
+      378,
+      412,
+      380,
+      232,
+      203,
+      198,
+      200,
+      193,
+      200,
+      322,
+      440,
+      440,
+      432,
+      424,
+      417,
+      430,
+      433,
+      430,
+      421,
+      427,
+      437,
+      429,
+      429,
+      434,
+      413,
+      409,
+      444,
+      414,
+      431,
+      423,
+      439,
+      427,
+      417,
+      419,
+      425,
+      427,
+      405,
+      408,
+      413,
+      435,
+      408,
+      455,
+      421,
+      418,
+      442,
+      225,
+      196,
+      198,
+      196,
+      193,
+      189,
+      298,
+      410,
+      408,
+      428,
+      391,
+      412,
+      225,
+      198,
+      191,
+      201,
+      197,
+      194,
+      309,
+      407,
+      432,
+      422,
+      424,
+      411,
+      241,
+      193,
+      198,
+      202,
+      196,
+      197,
+      309,
+      373,
+      388,
+      393,
+      375,
+      389,
+      233,
+      200,
+      197,
+      199,
+      201,
+      194,
+      305,
+      441,
+      435,
+      394,
+      428,
+      422,
+      237,
+      199,
+      207,
+      198,
+      200,
+      206,
+      300,
+      405,
+      392,
+      385,
+      392,
+      406,
+      245,
+      208,
+      204,
+      213,
+      204,
+      196,
+      303,
+      396,
+      389,
+      367,
+      394,
+      394,
+      231,
+      212,
+      214,
+      216,
+      207,
+      222,
+      315,
+      388,
+      381,
+      376,
+      386,
+      375,
+      237,
+      211,
+      203,
+      196,
+      202,
+      199,
+      279,
+      334,
+      328,
+      330,
+      325,
+      333,
+      330,
+      344,
+      340,
+      332,
+      334,
+      354,
+      341,
+      343,
+      316,
+      344,
+      326,
+      332,
+      330,
+      328,
+      340,
+      342,
+      342,
+      335,
+      335,
+      332,
+      327,
+      332,
+      356,
+      330,
+      328,
+      332,
+      326,
+      343,
+      349,
+      346,
+      339,
+      339,
+      324,
+      328,
+      338,
+      325,
+      335,
+      336,
+      335,
+      340,
+      325,
+      339,
+      333,
+      339,
+      344,
+      336,
+      343,
+      337,
+      343,
+      328,
+      343,
+      336,
+      318,
+      334,
+      323,
+      332,
+      342,
+      332,
+      335,
+      339,
+      342,
+      332,
+      338,
+      336,
+      335,
+      342,
+      333,
+      329,
+      321,
+      327,
+      354,
+      338,
+      339,
+      341,
+      337,
+      338,
+      337,
+      338,
+      338,
+      331,
+      326,
+      328,
+      333,
+      336,
+      340,
+      332,
+      334,
+      346,
+      330,
+      341,
+      337,
+      329,
+      320,
+      340,
+      345,
+      340,
+      350,
+      341,
+      341,
+      324,
+      335,
+      352,
+      322,
+      336,
+      330,
+      334,
+      368,
+      344,
+      326,
+      348,
+      338,
+      339,
+      323,
+      319,
+      336,
+      331,
+      349,
+      332,
+      336,
+      343,
+      341,
+      347,
+      346,
+      348,
+      327,
+      321,
+      357,
+      341,
+      326,
+      330,
+      342,
+      343,
+      344,
+      344,
+      340,
+      327,
+      328,
+      341,
+      342,
+      332,
+      334,
+      321,
+      340,
+      328,
+      351,
+      327,
+      339,
+      317,
+      324,
+      330,
+      328,
+      322,
+      325,
+      324,
+      341,
+      350,
+      333,
+      342,
+      329,
+      350,
+      351,
+      334,
+      326,
+      342,
+      342,
+      321,
+      330,
+      335,
+      345,
+      337,
+      333,
+      338,
+      331,
+      338,
+      339,
+      320,
+      334,
+      332,
+      329,
+      343,
+      329,
+      333,
+      332,
+      334,
+      329,
+      338,
+      338,
+      335,
+      337,
+      340,
+      332,
+      328,
+      353,
+      327,
+      331,
+      338,
+      342,
+      336,
+      334,
+      327,
+      324,
+      318,
+      344,
+      314,
+      321,
+      346,
+      332,
+      325,
+      320,
+      360
+     ],
+     "hr": [
+      129,
+      134,
+      136,
+      137,
+      138,
+      138,
+      137,
+      138,
+      137,
+      138,
+      137,
+      136,
+      137,
+      139,
+      140,
+      139,
+      138,
+      137,
+      138,
+      137,
+      135,
+      135,
+      135,
+      136,
+      136,
+      136,
+      137,
+      136,
+      136,
+      136,
+      137,
+      139,
+      139,
+      138,
+      138,
+      138,
+      140,
+      140,
+      139,
+      138,
+      137,
+      138,
+      138,
+      139,
+      137,
+      136,
+      135,
+      136,
+      137,
+      139,
+      140,
+      141,
+      140,
+      139,
+      139,
+      139,
+      139,
+      138,
+      138,
+      139,
+      140,
+      140,
+      141,
+      139,
+      137,
+      135,
+      137,
+      138,
+      138,
+      139,
+      141,
+      140,
+      140,
+      140,
+      141,
+      140,
+      141,
+      138,
+      138,
+      138,
+      138,
+      138,
+      139,
+      140,
+      138,
+      139,
+      138,
+      139,
+      140,
+      139,
+      139,
+      138,
+      138,
+      140,
+      140,
+      140,
+      139,
+      139,
+      139,
+      140,
+      140,
+      142,
+      141,
+      140,
+      141,
+      141,
+      141,
+      141,
+      139,
+      139,
+      138,
+      137,
+      137,
+      137,
+      138,
+      139,
+      137,
+      137,
+      136,
+      135,
+      136,
+      138,
+      138,
+      140,
+      139,
+      138,
+      140,
+      138,
+      138,
+      139,
+      141,
+      140,
+      138,
+      137,
+      136,
+      137,
+      136,
+      135,
+      135,
+      135,
+      135,
+      135,
+      138,
+      138,
+      137,
+      137,
+      136,
+      136,
+      137,
+      137,
+      137,
+      137,
+      131,
+      133,
+      135,
+      136,
+      138,
+      139,
+      139,
+      140,
+      140,
+      139,
+      138,
+      138,
+      136,
+      136,
+      137,
+      137,
+      137,
+      137,
+      137,
+      138,
+      140,
+      140,
+      140,
+      140,
+      141,
+      141,
+      141,
+      142,
+      141,
+      141,
+      142,
+      141,
+      143,
+      144,
+      143,
+      142,
+      142,
+      142,
+      140,
+      138,
+      140,
+      140,
+      141,
+      141,
+      141,
+      140,
+      141,
+      140,
+      142,
+      141,
+      140,
+      140,
+      141,
+      141,
+      140,
+      139,
+      139,
+      140,
+      141,
+      141,
+      140,
+      140,
+      139,
+      139,
+      140,
+      140,
+      140,
+      141,
+      142,
+      141,
+      140,
+      141,
+      143,
+      143,
+      142,
+      142,
+      143,
+      143,
+      141,
+      141,
+      140,
+      140,
+      142,
+      142,
+      141,
+      141,
+      140,
+      139,
+      141,
+      141,
+      140,
+      140,
+      140,
+      139,
+      139,
+      138,
+      138,
+      138,
+      140,
+      140,
+      140,
+      139,
+      139,
+      140,
+      141,
+      141,
+      140,
+      141,
+      141,
+      139,
+      140,
+      140,
+      140,
+      139,
+      140,
+      140,
+      140,
+      140,
+      138,
+      138,
+      146,
+      155,
+      161,
+      163,
+      167,
+      168,
+      166,
+      165,
+      164,
+      164,
+      164,
+      164,
+      167,
+      170,
+      170,
+      169,
+      169,
+      169,
+      167,
+      165,
+      164,
+      163,
+      163,
+      163,
+      164,
+      165,
+      168,
+      169,
+      170,
+      169,
+      168,
+      166,
+      164,
+      164,
+      165,
+      166,
+      169,
+      170,
+      171,
+      171,
+      171,
+      170,
+      169,
+      165,
+      166,
+      166,
+      168,
+      168,
+      167,
+      170,
+      173,
+      172,
+      174,
+      174,
+      174,
+      172,
+      170,
+      169,
+      167,
+      167,
+      168,
+      170,
+      170,
+      172,
+      172,
+      173,
+      172,
+      169,
+      167,
+      166,
+      167,
+      167,
+      166,
+      169,
+      172,
+      173,
+      174,
+      175,
+      172,
+      169,
+      167,
+      167,
+      168,
+      167,
+      169,
+      174,
+      176,
+      175,
+      176,
+      176,
+      170,
+      163,
+      158,
+      153,
+      150,
+      150,
+      151,
+      151,
+      150,
+      149,
+      149,
+      150,
+      148,
+      147,
+      147,
+      147,
+      148,
+      149,
+      149,
+      150,
+      150,
+      150,
+      150,
+      150,
+      149,
+      148,
+      147,
+      149,
+      151,
+      152,
+      150,
+      148,
+      148,
+      148,
+      149,
+      148,
+      153,
+      159,
+      163,
+      165,
+      167,
+      170,
+      170,
+      168,
+      166,
+      166,
+      165,
+      165,
+      167,
+      170,
+      172,
+      172,
+      170,
+      170,
+      168,
+      168,
+      168,
+      166,
+      165,
+      164,
+      167,
+      168,
+      170,
+      170,
+      172,
+      173,
+      171,
+      168,
+      166,
+      165,
+      163,
+      164,
+      166,
+      170,
+      171,
+      173,
+      173,
+      174,
+      172,
+      170,
+      170,
+      168,
+      167,
+      167,
+      169,
+      170,
+      171,
+      173,
+      172,
+      173,
+      170,
+      170,
+      169,
+      167,
+      168,
+      167,
+      168,
+      171,
+      171,
+      173,
+      173,
+      173,
+      171,
+      171,
+      169,
+      167,
+      167,
+      168,
+      170,
+      173,
+      174,
+      174,
+      175,
+      175,
+      174,
+      172,
+      170,
+      169,
+      169,
+      169,
+      172,
+      173,
+      174,
+      173,
+      174,
+      174,
+      169,
+      163,
+      159,
+      154,
+      153,
+      151,
+      150,
+      152,
+      149,
+      147,
+      148,
+      149,
+      149,
+      147,
+      148,
+      147,
+      148,
+      149,
+      148,
+      148,
+      148,
+      150,
+      150,
+      150,
+      150,
+      150,
+      150,
+      151,
+      150,
+      151,
+      149,
+      147,
+      146,
+      145,
+      145,
+      148,
+      148,
+      147,
+      146,
+      147,
+      147,
+      148,
+      149,
+      149,
+      147,
+      147,
+      147,
+      147,
+      147,
+      148,
+      149,
+      149,
+      149,
+      149,
+      149,
+      150,
+      150,
+      149,
+      150,
+      149,
+      150,
+      149,
+      148,
+      148,
+      149,
+      149,
+      149,
+      148,
+      147,
+      147,
+      148,
+      149,
+      149,
+      148,
+      148,
+      147,
+      147,
+      147,
+      146,
+      146,
+      148,
+      149,
+      151,
+      151,
+      150,
+      149,
+      150,
+      152,
+      152,
+      152,
+      151,
+      150,
+      150,
+      150,
+      149,
+      147,
+      148,
+      148,
+      148,
+      148,
+      149,
+      147,
+      146,
+      146,
+      147,
+      149,
+      149,
+      148,
+      147,
+      148,
+      147,
+      147,
+      146,
+      146,
+      148,
+      146,
+      146,
+      147,
+      148,
+      147,
+      146,
+      146,
+      147,
+      149,
+      148,
+      149,
+      150,
+      149,
+      148,
+      148,
+      148,
+      148,
+      148,
+      149,
+      149,
+      149,
+      148,
+      149,
+      150,
+      150,
+      147,
+      148,
+      147,
+      147,
+      148,
+      148,
+      149,
+      149,
+      150,
+      149,
+      148,
+      148,
+      150,
+      150,
+      149,
+      147,
+      147,
+      147,
+      148,
+      149,
+      148,
+      149,
+      149,
+      147,
+      147,
+      145,
+      146,
+      148,
+      148,
+      147,
+      146,
+      146,
+      148,
+      148,
+      148,
+      148,
+      149,
+      148,
+      148,
+      148,
+      148,
+      150,
+      151,
+      150,
+      151,
+      150,
+      149,
+      149,
+      149,
+      149,
+      148,
+      147,
+      147,
+      149,
+      148,
+      148,
+      147,
+      145,
+      146,
+      148,
+      147,
+      147,
+      148,
+      149,
+      147,
+      147,
+      147,
+      148,
+      148,
+      149,
+      148,
+      147,
+      149,
+      148,
+      149,
+      150
+     ]
+    }
    }
   },
   {
@@ -1411,7 +3882,8 @@
     "pace_s_km": null,
     "avg_hr": 105
    },
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 128,
@@ -1443,7 +3915,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 129,
@@ -1459,7 +3932,8 @@
    "activity_id": null,
    "structure": null,
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 130,
@@ -1518,7 +3992,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 131,
@@ -1550,7 +4025,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 132,
@@ -1574,7 +4050,8 @@
     "pace_s_km": null,
     "avg_hr": 105
    },
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 133,
@@ -1646,7 +4123,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 134,
@@ -1662,7 +4140,8 @@
    "activity_id": null,
    "structure": null,
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 135,
@@ -1694,7 +4173,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 136,
@@ -1710,7 +4190,8 @@
    "activity_id": null,
    "structure": null,
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 137,
@@ -1769,7 +4250,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 138,
@@ -1801,7 +4283,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 139,
@@ -1869,7 +4352,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 140,
@@ -1885,7 +4369,8 @@
    "activity_id": null,
    "structure": null,
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 141,
@@ -1917,7 +4402,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 142,
@@ -1933,7 +4419,8 @@
    "activity_id": null,
    "structure": null,
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 143,
@@ -1992,7 +4479,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 144,
@@ -2024,7 +4512,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 145,
@@ -2040,7 +4529,8 @@
    "activity_id": null,
    "structure": null,
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 146,
@@ -2112,7 +4602,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 147,
@@ -2128,7 +4619,8 @@
    "activity_id": null,
    "structure": null,
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 148,
@@ -2160,7 +4652,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 149,
@@ -2176,7 +4669,8 @@
    "activity_id": null,
    "structure": null,
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 150,
@@ -2235,7 +4729,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 151,
@@ -2267,7 +4762,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 152,
@@ -2339,7 +4835,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 153,
@@ -2355,7 +4852,8 @@
    "activity_id": null,
    "structure": null,
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 154,
@@ -2387,7 +4885,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 155,
@@ -2403,7 +4902,8 @@
    "activity_id": null,
    "structure": null,
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 156,
@@ -2462,7 +4962,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 157,
@@ -2494,7 +4995,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 158,
@@ -2510,7 +5012,8 @@
    "activity_id": null,
    "structure": null,
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 159,
@@ -2582,7 +5085,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 160,
@@ -2598,7 +5102,8 @@
    "activity_id": null,
    "structure": null,
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 161,
@@ -2630,7 +5135,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 162,
@@ -2646,7 +5152,8 @@
    "activity_id": null,
    "structure": null,
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 163,
@@ -2705,7 +5212,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 164,
@@ -2737,7 +5245,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 165,
@@ -2805,7 +5314,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 166,
@@ -2821,7 +5331,8 @@
    "activity_id": null,
    "structure": null,
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 167,
@@ -2853,7 +5364,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 168,
@@ -2869,7 +5381,8 @@
    "activity_id": null,
    "structure": null,
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 169,
@@ -2928,7 +5441,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 170,
@@ -2960,7 +5474,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 171,
@@ -2976,7 +5491,8 @@
    "activity_id": null,
    "structure": null,
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 172,
@@ -3048,7 +5564,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 173,
@@ -3064,7 +5581,8 @@
    "activity_id": null,
    "structure": null,
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 174,
@@ -3096,7 +5614,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 175,
@@ -3112,7 +5631,8 @@
    "activity_id": null,
    "structure": null,
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 176,
@@ -3171,7 +5691,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 177,
@@ -3203,7 +5724,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 178,
@@ -3275,7 +5797,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 179,
@@ -3291,7 +5814,8 @@
    "activity_id": null,
    "structure": null,
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 180,
@@ -3323,7 +5847,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 181,
@@ -3339,7 +5864,8 @@
    "activity_id": null,
    "structure": null,
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 182,
@@ -3398,7 +5924,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 183,
@@ -3430,7 +5957,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 184,
@@ -3446,7 +5974,8 @@
    "activity_id": null,
    "structure": null,
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 185,
@@ -3518,7 +6047,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 186,
@@ -3534,7 +6064,8 @@
    "activity_id": null,
    "structure": null,
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 187,
@@ -3566,7 +6097,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 188,
@@ -3582,7 +6114,8 @@
    "activity_id": null,
    "structure": null,
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 189,
@@ -3641,7 +6174,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 190,
@@ -3673,7 +6207,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 191,
@@ -3741,7 +6276,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 192,
@@ -3757,7 +6293,8 @@
    "activity_id": null,
    "structure": null,
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 193,
@@ -3789,7 +6326,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 194,
@@ -3805,7 +6343,8 @@
    "activity_id": null,
    "structure": null,
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 195,
@@ -3864,7 +6403,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 196,
@@ -3896,7 +6436,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 197,
@@ -3912,7 +6453,8 @@
    "activity_id": null,
    "structure": null,
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 198,
@@ -3984,7 +6526,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 199,
@@ -4000,7 +6543,8 @@
    "activity_id": null,
    "structure": null,
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 200,
@@ -4032,7 +6576,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 201,
@@ -4048,7 +6593,8 @@
    "activity_id": null,
    "structure": null,
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 202,
@@ -4107,7 +6653,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   },
   {
    "id": 203,
@@ -4139,7 +6686,8 @@
     ]
    },
    "realized": null,
-   "feedback": null
+   "feedback": null,
+   "analysis": null
   }
  ],
  "activities": [
@@ -4466,7 +7014,7 @@
    "laps": []
   },
   {
-   "id": 5030,
+   "id": 5031,
    "date": "2026-11-12",
    "start": "2026-11-12T18:40:00+01:00",
    "type": "running",
@@ -4508,7 +7056,7 @@
    "laps": []
   },
   {
-   "id": 5031,
+   "id": 5032,
    "date": "2026-11-14",
    "start": "2026-11-14T10:00:00+01:00",
    "type": "cycling",
@@ -4522,7 +7070,7 @@
    "laps": []
   },
   {
-   "id": 5029,
+   "id": 5030,
    "date": "2026-11-15",
    "start": "2026-11-15T07:02:00+01:00",
    "type": "running",
@@ -4532,7 +7080,7 @@
    "pace_s_km": 326,
    "avg_hr": 131,
    "elevation_gain_m": 8,
-   "session_id": null,
+   "session_id": 125,
    "laps": []
   },
   {
@@ -4564,175 +7112,6 @@
    "laps": []
   },
   {
-   "id": 5026,
-   "date": "2026-11-17",
-   "start": "2026-11-17T07:15:00+01:00",
-   "type": "running",
-   "display_name": "VMA 10 × 400 m",
-   "distance_m": 10350,
-   "duration_s": 3159,
-   "pace_s_km": 305,
-   "avg_hr": 142,
-   "elevation_gain_m": 40,
-   "session_id": 126,
-   "laps": [
-    {
-     "index": 1,
-     "duration_s": 900,
-     "distance_m": 2750,
-     "pace_s_km": 327,
-     "avg_hr": 138
-    },
-    {
-     "index": 2,
-     "duration_s": 86,
-     "distance_m": 400,
-     "pace_s_km": 216,
-     "avg_hr": 173
-    },
-    {
-     "index": 3,
-     "duration_s": 75,
-     "distance_m": 180,
-     "pace_s_km": 417,
-     "avg_hr": 150
-    },
-    {
-     "index": 4,
-     "duration_s": 88,
-     "distance_m": 400,
-     "pace_s_km": 219,
-     "avg_hr": 174
-    },
-    {
-     "index": 5,
-     "duration_s": 75,
-     "distance_m": 180,
-     "pace_s_km": 417,
-     "avg_hr": 150
-    },
-    {
-     "index": 6,
-     "duration_s": 90,
-     "distance_m": 400,
-     "pace_s_km": 224,
-     "avg_hr": 175
-    },
-    {
-     "index": 7,
-     "duration_s": 75,
-     "distance_m": 180,
-     "pace_s_km": 417,
-     "avg_hr": 150
-    },
-    {
-     "index": 8,
-     "duration_s": 90,
-     "distance_m": 400,
-     "pace_s_km": 226,
-     "avg_hr": 174
-    },
-    {
-     "index": 9,
-     "duration_s": 75,
-     "distance_m": 180,
-     "pace_s_km": 417,
-     "avg_hr": 150
-    },
-    {
-     "index": 10,
-     "duration_s": 90,
-     "distance_m": 400,
-     "pace_s_km": 225,
-     "avg_hr": 179
-    },
-    {
-     "index": 11,
-     "duration_s": 75,
-     "distance_m": 180,
-     "pace_s_km": 417,
-     "avg_hr": 150
-    },
-    {
-     "index": 12,
-     "duration_s": 91,
-     "distance_m": 400,
-     "pace_s_km": 228,
-     "avg_hr": 176
-    },
-    {
-     "index": 13,
-     "duration_s": 75,
-     "distance_m": 180,
-     "pace_s_km": 417,
-     "avg_hr": 150
-    },
-    {
-     "index": 14,
-     "duration_s": 92,
-     "distance_m": 400,
-     "pace_s_km": 231,
-     "avg_hr": 178
-    },
-    {
-     "index": 15,
-     "duration_s": 75,
-     "distance_m": 180,
-     "pace_s_km": 417,
-     "avg_hr": 150
-    },
-    {
-     "index": 16,
-     "duration_s": 94,
-     "distance_m": 400,
-     "pace_s_km": 236,
-     "avg_hr": 179
-    },
-    {
-     "index": 17,
-     "duration_s": 75,
-     "distance_m": 180,
-     "pace_s_km": 417,
-     "avg_hr": 150
-    },
-    {
-     "index": 18,
-     "duration_s": 95,
-     "distance_m": 400,
-     "pace_s_km": 238,
-     "avg_hr": 172
-    },
-    {
-     "index": 19,
-     "duration_s": 75,
-     "distance_m": 180,
-     "pace_s_km": 417,
-     "avg_hr": 150
-    },
-    {
-     "index": 20,
-     "duration_s": 93,
-     "distance_m": 400,
-     "pace_s_km": 233,
-     "avg_hr": 174
-    },
-    {
-     "index": 21,
-     "duration_s": 75,
-     "distance_m": 180,
-     "pace_s_km": 417,
-     "avg_hr": 150
-    },
-    {
-     "index": 22,
-     "duration_s": 600,
-     "distance_m": 1800,
-     "pace_s_km": 333,
-     "avg_hr": 140
-    }
-   ]
-  },
-  {
    "id": 5027,
    "date": "2026-11-17",
    "start": "2026-11-17T07:15:00+01:00",
@@ -4745,6 +7124,274 @@
    "elevation_gain_m": null,
    "session_id": 127,
    "laps": []
+  },
+  {
+   "id": 5029,
+   "date": "2026-11-17",
+   "start": "2026-11-17T18:05:00+01:00",
+   "type": "running",
+   "display_name": "Échauffement",
+   "distance_m": 2304,
+   "duration_s": 760,
+   "pace_s_km": 330,
+   "avg_hr": 138,
+   "elevation_gain_m": 4,
+   "session_id": 126,
+   "laps": [
+    {
+     "index": 1,
+     "duration_s": 760,
+     "distance_m": 2304,
+     "pace_s_km": 330,
+     "avg_hr": 138
+    }
+   ]
+  },
+  {
+   "id": 5026,
+   "date": "2026-11-17",
+   "start": "2026-11-17T18:19:10+01:00",
+   "type": "running",
+   "display_name": "30/30 sur piste (2 × 8)",
+   "distance_m": 8887,
+   "duration_s": 2760,
+   "pace_s_km": 311,
+   "avg_hr": 153,
+   "elevation_gain_m": 40,
+   "session_id": 126,
+   "laps": [
+    {
+     "index": 1,
+     "duration_s": 600,
+     "distance_m": 1746,
+     "pace_s_km": 344,
+     "avg_hr": 140
+    },
+    {
+     "index": 2,
+     "duration_s": 30,
+     "distance_m": 151,
+     "pace_s_km": 199,
+     "avg_hr": 160
+    },
+    {
+     "index": 3,
+     "duration_s": 30,
+     "distance_m": 78,
+     "pace_s_km": 387,
+     "avg_hr": 164
+    },
+    {
+     "index": 4,
+     "duration_s": 30,
+     "distance_m": 152,
+     "pace_s_km": 197,
+     "avg_hr": 169
+    },
+    {
+     "index": 5,
+     "duration_s": 30,
+     "distance_m": 82,
+     "pace_s_km": 367,
+     "avg_hr": 164
+    },
+    {
+     "index": 6,
+     "duration_s": 30,
+     "distance_m": 164,
+     "pace_s_km": 183,
+     "avg_hr": 168
+    },
+    {
+     "index": 7,
+     "duration_s": 30,
+     "distance_m": 78,
+     "pace_s_km": 385,
+     "avg_hr": 166
+    },
+    {
+     "index": 8,
+     "duration_s": 30,
+     "distance_m": 147,
+     "pace_s_km": 204,
+     "avg_hr": 170
+    },
+    {
+     "index": 9,
+     "duration_s": 30,
+     "distance_m": 80,
+     "pace_s_km": 375,
+     "avg_hr": 167
+    },
+    {
+     "index": 10,
+     "duration_s": 30,
+     "distance_m": 153,
+     "pace_s_km": 196,
+     "avg_hr": 172
+    },
+    {
+     "index": 11,
+     "duration_s": 30,
+     "distance_m": 83,
+     "pace_s_km": 363,
+     "avg_hr": 170
+    },
+    {
+     "index": 12,
+     "duration_s": 30,
+     "distance_m": 149,
+     "pace_s_km": 201,
+     "avg_hr": 171
+    },
+    {
+     "index": 13,
+     "duration_s": 30,
+     "distance_m": 77,
+     "pace_s_km": 392,
+     "avg_hr": 168
+    },
+    {
+     "index": 14,
+     "duration_s": 30,
+     "distance_m": 150,
+     "pace_s_km": 201,
+     "avg_hr": 171
+    },
+    {
+     "index": 15,
+     "duration_s": 30,
+     "distance_m": 80,
+     "pace_s_km": 375,
+     "avg_hr": 168
+    },
+    {
+     "index": 16,
+     "duration_s": 30,
+     "distance_m": 147,
+     "pace_s_km": 204,
+     "avg_hr": 174
+    },
+    {
+     "index": 17,
+     "duration_s": 180,
+     "distance_m": 426,
+     "pace_s_km": 422,
+     "avg_hr": 150
+    },
+    {
+     "index": 18,
+     "duration_s": 30,
+     "distance_m": 151,
+     "pace_s_km": 199,
+     "avg_hr": 163
+    },
+    {
+     "index": 19,
+     "duration_s": 30,
+     "distance_m": 78,
+     "pace_s_km": 385,
+     "avg_hr": 167
+    },
+    {
+     "index": 20,
+     "duration_s": 30,
+     "distance_m": 150,
+     "pace_s_km": 201,
+     "avg_hr": 170
+    },
+    {
+     "index": 21,
+     "duration_s": 30,
+     "distance_m": 76,
+     "pace_s_km": 395,
+     "avg_hr": 167
+    },
+    {
+     "index": 22,
+     "duration_s": 30,
+     "distance_m": 147,
+     "pace_s_km": 203,
+     "avg_hr": 170
+    },
+    {
+     "index": 23,
+     "duration_s": 30,
+     "distance_m": 81,
+     "pace_s_km": 369,
+     "avg_hr": 166
+    },
+    {
+     "index": 24,
+     "duration_s": 30,
+     "distance_m": 148,
+     "pace_s_km": 203,
+     "avg_hr": 171
+    },
+    {
+     "index": 25,
+     "duration_s": 30,
+     "distance_m": 75,
+     "pace_s_km": 398,
+     "avg_hr": 169
+    },
+    {
+     "index": 26,
+     "duration_s": 30,
+     "distance_m": 145,
+     "pace_s_km": 207,
+     "avg_hr": 172
+    },
+    {
+     "index": 27,
+     "duration_s": 30,
+     "distance_m": 80,
+     "pace_s_km": 376,
+     "avg_hr": 168
+    },
+    {
+     "index": 28,
+     "duration_s": 30,
+     "distance_m": 142,
+     "pace_s_km": 211,
+     "avg_hr": 172
+    },
+    {
+     "index": 29,
+     "duration_s": 30,
+     "distance_m": 81,
+     "pace_s_km": 370,
+     "avg_hr": 169
+    },
+    {
+     "index": 30,
+     "duration_s": 30,
+     "distance_m": 138,
+     "pace_s_km": 217,
+     "avg_hr": 174
+    },
+    {
+     "index": 31,
+     "duration_s": 30,
+     "distance_m": 81,
+     "pace_s_km": 368,
+     "avg_hr": 170
+    },
+    {
+     "index": 32,
+     "duration_s": 30,
+     "distance_m": 145,
+     "pace_s_km": 207,
+     "avg_hr": 173
+    },
+    {
+     "index": 33,
+     "duration_s": 1080,
+     "distance_m": 3227,
+     "pace_s_km": 335,
+     "avg_hr": 149
+    }
+   ]
   }
  ],
  "weekly": [
@@ -4765,10 +7412,10 @@
   {
    "week_start": "2026-09-28",
    "future": false,
-   "km": 22,
+   "km": 26,
    "zone_minutes": {
     "z1": 15,
-    "z2": 110,
+    "z2": 130,
     "z3": 12,
     "z4": 14,
     "z5": 6
@@ -4779,10 +7426,10 @@
   {
    "week_start": "2026-10-05",
    "future": false,
-   "km": 25,
+   "km": 28,
    "zone_minutes": {
     "z1": 15,
-    "z2": 125,
+    "z2": 140,
     "z3": 12,
     "z4": 14,
     "z5": 6
@@ -4793,10 +7440,10 @@
   {
    "week_start": "2026-10-12",
    "future": false,
-   "km": 25,
+   "km": 29,
    "zone_minutes": {
     "z1": 15,
-    "z2": 125,
+    "z2": 145,
     "z3": 12,
     "z4": 14,
     "z5": 6
@@ -4863,10 +7510,10 @@
   {
    "week_start": "2026-11-16",
    "future": false,
-   "km": 10.4,
+   "km": 11.2,
    "zone_minutes": {
     "z1": 15,
-    "z2": 52,
+    "z2": 56,
     "z3": 12,
     "z4": 14,
     "z5": 6
