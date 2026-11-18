@@ -24,7 +24,7 @@ const ord = k => (k === 1 ? '1re' : `${k}e`);
 
 export function lapLabel(ph, sets) {
   ph = ph || '';
-  if (ph.startsWith('rep:')) { const [, s, r] = ph.split(':'); return sets > 1 ? `S${s} · rép. ${r}` : `rép. ${r}`; }
+  if (ph.startsWith('rep:')) { const [, s, r] = ph.split(':'); return sets > 1 ? `Série ${s} · rép. ${r}` : `rép. ${r}`; }
   return { warmup: 'échauffement', recovery: 'récup', inter: 'récup entre séries', cooldown: 'retour au calme', core: 'cœur', main: '', extra: 'effort en plus', stub: 'fin, ignorée' }[ph] ?? '';
 }
 
@@ -37,7 +37,7 @@ export function points(c) {
 }
 
 export function repLine(x, sets) {
-  const head = sets > 1 ? `Série ${x.set}, rép. ${x.rep}` : `Rép. ${x.rep}`;
+  const head = sets > 1 ? `Série ${x.set} · rép. ${x.rep}` : `Rép. ${x.rep}`;
   if (!x.done) return `${head} : non trouvée`;
   const tgt = x.pace_lo != null ? ` (cible ${pace(x.pace_lo)}–${pace(x.pace_hi)}${x.tol_s ? `, ± ${x.tol_s} s` : ''})` : '';
   return `${head} : ${dmin(x.duration_s)} · ${dist(x.distance_m)} · ${pace(x.pace_s_km)}/km${tgt}${x.status ? ' · ' + ST[x.status] : ''} · FC ${hr(x.avg_hr)} (max ${hr(x.max_hr)})`;
@@ -147,7 +147,7 @@ export function lire(svg, clientX) {
   const ns = (A.sets || []).length;
   const r = (A.reps || []).find(y => y.t0 != null && p[0] >= y.t0 && p[0] <= y.t1);
   const lu = document.getElementById('an-lu');
-  if (lu) lu.innerHTML = `<b>${dmin(p[0])}</b> · ${p[1] ? pace(p[1]) + '/km' : 'arrêt ou marche'} · FC ${hr(p[2])}` + (r ? ` · <span class="an-c ${r.status || ''}">${ns > 1 ? `S${r.set} ` : ''}rép. ${r.rep} : ${pace(r.pace_s_km)}/km${r.status ? ' ' + MK[r.status] : ''}</span>` : '');
+  if (lu) lu.innerHTML = `<b>${dmin(p[0])}</b> · ${p[1] ? pace(p[1]) + '/km' : 'arrêt ou marche'} · FC ${hr(p[2])}` + (r ? ` · <span class="an-c ${r.status || ''}">${ns > 1 ? `Série ${r.set} · ` : ''}rép. ${r.rep} : ${pace(r.pace_s_km)}/km${r.status ? ' ' + MK[r.status] : ''}</span>` : '');
 }
 
 /** Actions `an-*` de la fenêtre de détail (mises à jour en place, sans re-rendu). */

@@ -40,8 +40,30 @@ export function liste(snap, typ, perso) {
   return [...base, ...ajout];
 }
 
-export function nouveau(uid, date, typ) {
-  return { uid, session_id: null, date, typ: typ.title, title: typ.title, note: '', ex: [], etat: 'local', modifie: Date.now() };
+/** Libellé affiché d'une typologie (« Jambes ») ; la donnée stockée reste son titre (« Muscu leg »). */
+export function libTyp(snap, title) {
+  const b = bloc(snap), t = b && (b.typologies || []).find(x => x.title === title);
+  return t ? t.label : title || 'Muscu';
+}
+
+const copieSets = sets => (sets || []).map(x => (Array.isArray(x) ? { reps: x[0], load_kg: x[1] } : { ...x }));
+
+/** Nouveau brouillon : reprend les exercices et toutes les séries de la dernière séance de ce type ; à défaut, les
+ * exercices du type déjà faits (dernière performance connue). */
+export function nouveau(uid, date, typ, snap) {
+  const b = { uid, session_id: null, date, typ: typ.title, title: typ.title, note: '', ex: [], etat: 'local', modifie: Date.now() };
+  const B = bloc(snap); if (!B) return b;
+  const der = (B.sessions || []).filter(x => x.title === typ.title && x.date <= date).sort((x, y) => (x.date < y.date ? 1 : x.date > y.date ? -1 : y.id - x.id))[0];
+  if (der) {
+    const vus = new Set();
+    for (const e of der.exercises || []) {
+      if (vus.has(e.exercise)) continue; vus.add(e.exercise);
+      b.ex.push({ k: e.exercise, note: '', sets: copieSets(e.sets).filter(x => !x.set_type || x.set_type === 'normal').map(x => ({ reps: x.reps ?? null, load_kg: x.load_kg ?? null })) });
+    }
+  } else {
+    for (const k of liste(snap, typ.title)) { if (derniere(snap, k, date)) ajouterExercice(b, k, snap); }
+  }
+  return b;
 }
 
 /** Brouillon à partir d'une séance de l'instantané (édition d'une séance déjà sur le PC). */
@@ -59,11 +81,25 @@ export function ajouterSerie(b, i) {
   e.sets.push(p ? { reps: p.reps, load_kg: p.load_kg } : { reps: null, load_kg: null });
 }
 
-/** Ajoute un exercice, prérempli comme la dernière fois (mêmes répétitions et charge pour la première série). */
-export function ajouterExercice(b, k, snap) {
-  const d = derniere(snap, k, b.date), p = d && d.sets && d.sets[0];
-  b.ex.push({ k, note: '', sets: [{ reps: p ? p[0] : null, load_kg: p ? p[1] : null }] });
+/** Valeur après un appui sur − / + : une case vide part de la série précédente (ou de 10 répétitions, ou de 0 kg). */
+export function pas(b, i, j, f, d) {
+  const sets = b.ex[i].sets, v = nb(sets[j][f]);
+  if (v == null) {
+    const prec = j > 0 ? nb(sets[j - 1][f]) : null;
+    if (prec != null) return prec;
+    return f === 'reps' ? 10 : Math.max(0, d);
+  }
+  return Math.max(0, Math.round((v + d) * 100) / 100);
 }
+
+/** Ajoute un exercice, prérempli comme la dernière fois (toutes les séries, mêmes répétitions et charges). */
+export function ajouterExercice(b, k, snap) {
+  const d = derniere(snap, k, b.date), sets = d && d.sets && d.sets.length ? copieSets(d.sets) : [{ reps: null, load_kg: null }];
+  b.ex.push({ k, note: '', sets: sets.map(x => ({ reps: x.reps ?? null, load_kg: x.load_kg ?? null })) });
+}
+
+/** Exercices sans aucune série remplie : ignorés à l'envoi (prévenir avant). */
+export const sansSerie = b => b.ex.filter(e => !e.sets.some(x => nb(x.reps) != null || nb(x.load_kg) != null || x.duration_s != null || x.distance_m != null)).length;
 
 export function payload(b) {
   return {
@@ -101,7 +137,7 @@ export function editeur(b, snap, ctx) {
     `<div class="titre-vue"><button type="button" class="bt2" data-act="mu-fermer">‹ Séances</button><div class="m mu-etat${b.erreur ? ' err' : ''}">${esc(statut)}</div></div>` +
     `<div class="mu-tete"><select data-mu="typ" aria-label="Type de séance">${typs.map(t => `<option value="${esc(t.title)}"${t.title === b.typ ? ' selected' : ''}>${esc(t.label)}</option>`).join('')}</select>` +
     `<input type="date" data-mu="date" value="${esc(b.date)}" aria-label="Date"></div>` +
-    `<input type="text" class="mu-titre" data-mu="title" value="${esc(b.title)}" aria-label="Titre de la séance">` +
+    `<input type="text" class="mu-titre" data-mu="title" value="${esc(b.title === b.typ ? '' : b.title)}" placeholder="Titre (facultatif) · ${esc(libTyp(snap, b.typ))}" aria-label="Titre de la séance">` +
     b.ex.map((e, i) => {
       const d = derniere(snap, e.k, b.date);
       return `<section class="mu-ex"><div class="mu-exh"><b>${esc(libelle(snap, e.k))}</b>` +
@@ -117,6 +153,7 @@ export function editeur(b, snap, ctx) {
     `<option value="__libre">Autre exercice…</option></select>` +
     (ctx.libre ? `<div class="mu-libre"><input type="text" data-mu="libre" placeholder="Nom de l’exercice" aria-label="Nom du nouvel exercice"><button type="button" class="bt2 pri" data-act="mu-libre-ok">Ajouter</button></div>` : '') +
     `</div><textarea data-mu="note" rows="2" placeholder="Note de séance" aria-label="Note de séance">${esc(b.note || '')}</textarea>` +
+    (sansSerie(b) && !vide(b) ? `<div class="m mu-ign" role="status">${sansSerie(b)} exercice${sansSerie(b) > 1 ? 's' : ''} sans série ${sansSerie(b) > 1 ? 'seront ignorés' : 'sera ignoré'} à l’envoi</div>` : '') +
     `<div class="act mu-act"><button type="button" class="bt2 pri mu-gros" data-act="mu-env"${vide(b) ? ' disabled' : ''}>${b.etat === 'envoye' ? 'Renvoyer au PC' : 'Envoyer au PC'}</button>` +
     `<button type="button" class="bt2 rouge" data-act="mu-suppr">${ctx.confirmer ? 'Confirmer' : 'Supprimer le brouillon'}</button></div></div>`;
 }
@@ -131,10 +168,13 @@ export function accueil(snap, brouillons, ctx) {
   const uids = new Set(brouillons.map(b => b.uid)), ids = new Set(brouillons.map(b => b.session_id).filter(x => x != null));
   const pc = (B.sessions || []).filter(s => !ids.has(s.id) && !(s.uid && uids.has(s.uid))).sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : b.id - a.id));
   const nex = s => { const n = (s.exercises || s.ex || []).length; return n + ' exercice' + (n > 1 ? 's' : ''); };
-  return `<div class="act"><button type="button" class="bt2 pri mu-gros" data-act="mu-nouveau">+ Nouvelle séance muscu</button></div>` +
+  const titre = x => (x.title && x.title !== (x.typ || x.title) ? x.title : libTyp(snap, x.typ || x.title));
+  const pv = ctx.prevu;
+  return (pv ? `<div class="mu-prevu"><span>Prévu aujourd’hui : <b>${esc(pv.label)}</b></span><button type="button" class="bt2 pri" data-act="mu-commencer" data-i="${pv.i}">Commencer</button></div>` : '') +
+    `<div class="act"><button type="button" class="bt2${pv ? '' : ' pri'} mu-gros" data-act="mu-nouveau">+ Nouvelle séance muscu</button></div>` +
     (brouillons.length ? '<h2 class="mu-h">Sur ce téléphone</h2><div class="lst">' + brouillons.map(b =>
-      `<button type="button" class="bt2" data-act="mu-ouvrir" data-u="${esc(b.uid)}">${jl(b.date)} · ${esc(b.title || b.typ)} <small>· ${nex(b)} · ${b.etat === 'envoye' ? 'envoyée, en attente du PC' : b.erreur ? 'refusée' : 'pas encore envoyée'}</small></button>`).join('') + '</div>' : '') +
+      `<button type="button" class="bt2" data-act="mu-ouvrir" data-u="${esc(b.uid)}">${jl(b.date)} · ${esc(titre(b))} <small>· ${nex(b)} · ${b.etat === 'envoye' ? 'envoyée, en attente du PC' : b.erreur ? 'refusée' : 'pas encore envoyée'}</small></button>`).join('') + '</div>' : '') +
     '<h2 class="mu-h">Séances récentes</h2>' +
-    (pc.length ? '<div class="lst">' + pc.map(s => `<button type="button" class="bt2" data-act="mu-editer" data-id="${s.id}">${jl(s.date)} · ${esc(s.title || 'Muscu')} <small>· ${nex(s)}</small></button>`).join('') + '</div>'
+    (pc.length ? '<div class="lst">' + pc.map(s => `<button type="button" class="bt2" data-act="mu-editer" data-id="${s.id}">${jl(s.date)} · ${esc(libTyp(snap, s.title))} <small>· ${nex(s)}</small></button>`).join('') + '</div>'
       : '<p class="m">Aucune séance muscu ces trois dernières semaines.</p>');
 }

@@ -18,8 +18,9 @@ export const aujourdhui = () => iso(new Date());
 // ---------- formats ----------
 export const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
 export const fk = x => String(Math.round(x || 0));
-export const f1 = x => String(Math.round((x || 0) * 10) / 10).replace('.', ',');
-export const fh = h => { const m = Math.round((h || 0) * 60); return Math.floor(m / 60) + ' h ' + String(m % 60).padStart(2, '0'); };
+export const f1 = x => (Math.round((x || 0) * 10) / 10).toFixed(1).replace('.', ',');
+// Durée : « 59 min » sous l'heure, « 1 h 05 » au-delà (jamais « 0 h 59 »).
+export const fh = h => { const m = Math.round((h || 0) * 60); return m < 60 ? m + ' min' : Math.floor(m / 60) + ' h ' + String(m % 60).padStart(2, '0'); };
 export const dd = s => { const d = jour(s); return d.getDate() + '/' + (d.getMonth() + 1); };
 export const JL = ['dim.', 'lun.', 'mar.', 'mer.', 'jeu.', 'ven.', 'sam.'];
 export const jl = d => JL[jour(d).getDay()] + ' ' + dd(d);
@@ -113,9 +114,9 @@ export function muKind(t, ty) {
   if (/pec/.test(s)) return ['pecs', 'Pecs'];
   if (/epaule/.test(s)) return ['epaules', 'Épaules'];
   if (/bras|biceps|triceps/.test(s)) return ['bras', 'Bras'];
-  if (/\bleg|jambe|cuisse|fessier|squat/.test(s)) return ['leg', 'Leg'];
+  if (/\bleg|jambe|cuisse|fessier|squat/.test(s)) return ['leg', 'Jambes'];
   if (/abdo|gainage|core/.test(s)) return ['abdos', 'Abdos'];
-  if (ty === 'strength_legs') return ['leg', 'Leg'];
+  if (ty === 'strength_legs') return ['leg', 'Jambes'];
   if (ty === 'mobility') return ['abdos', 'Gainage'];
   if (ty === 'strength_upper') return ['pecs', 'Haut'];
   return ['', 'Muscu'];
@@ -167,9 +168,10 @@ export function construire(snap, pend = [], opts = {}) {
   reglerBornes(snap.athlete && snap.athlete.reference_paces);
   const T = opts.T || aujourdhui();
   const S = (snap.sessions || []).filter(r => r && r.date).map(seance);
-  const conflitsLocaux = [];
+  const conflitsLocaux = [], muLoc = [];
   for (const a of pend) {
     const p = a.payload || {};
+    if (a.type === 'strength_session') { if (p.date && p.session_id == null) muLoc.push(a); continue; }
     if (a.type === 'move_session') {
       const s = S.find(x => x.id === p.session_id);
       if (!s || s.d !== p.from_date) { if (s && s.d === p.to_date) continue; conflitsLocaux.push(a.id); continue; }
@@ -202,8 +204,17 @@ export function construire(snap, pend = [], opts = {}) {
     s.passe = s.d < T;
   });
   // réalisé hors plan : activités ni appariées ni cumulées à une séance
-  const H = A.filter(a => a.session_id == null && !absorbees.has(a.id) && a.date).map(horsPlan)
-    .sort((a, b) => (a.d < b.d ? -1 : a.d > b.d ? 1 : (a.start || '') < (b.start || '') ? -1 : 1));
+  const H = A.filter(a => a.session_id == null && !absorbees.has(a.id) && a.date).map(horsPlan);
+  // muscu saisie sur le téléphone, pas encore accusée : sur la séance muscu prévue ce jour-là, sinon à part
+  const typs = (snap.strength && snap.strength.typologies) || [];
+  for (const a of muLoc) {
+    const p = a.payload, lab = (typs.find(t => t.title === p.title) || {}).label || muKind(p.title, '')[1];
+    const cand = S.filter(s => s.d === p.date && s.sp === 'm' && !s.done && !s.saisie);
+    const s = cand.find(x => muKind(x.t, x.ty)[0] === muKind(p.title, '')[0]) || cand[0];
+    if (s) { s.saisie = a.id; s.attente = s.attente || a.id; continue; }
+    H.push({ id: 'loc-' + a.id, d: p.date, start: '', sp: 'm', type: 'strength', t: lab, km: 0, mn: 0, local: true, attente: a.id, nex: (p.exercises || []).length, raw: {} });
+  }
+  H.sort((a, b) => (a.d < b.d ? -1 : a.d > b.d ? 1 : (a.start || '') < (b.start || '') ? -1 : 1));
   // muscu placée avant la course du même jour
   S.forEach(s => { if (s.sp === 'm') { const r = S.filter(x => x.d === s.d && x.sp === 'r'); s.av = r.length > 0 && r.every(x => x.o > s.o); } });
 
@@ -264,12 +275,26 @@ export function versus(s) {
   const rows = [];
   if (s.sp === 'r' || km >= 0.5) rows.push(['Distance', s.km ? f1(s.km) + ' km' : '—', km ? f1(km) + ' km' : '—', ecartPc(s.km, km)]);
   rows.push(['Durée', s.mn ? Math.round(s.mn) + ' min' : '—', mn ? Math.round(mn) + ' min' : '—', ecartPc(s.mn, mn)]);
-  if (s.sp === 'r') {
+  const rp = s.sp === 'r' ? allureReps(s) : null;
+  if (rp) rows.push(['Allure des répétitions', 'cible ' + pc(rp.lo) + '-' + pc(rp.hi), pc(rp.p) + ' /km', null, rp.st]);
+  else if (s.sp === 'r') {
     const pp = s.km && s.mn ? s.mn * 60 / s.km : null;
     rows.push(['Allure', pp ? pc(pp) + ' /km' : '—', r.pace_s_km ? pc(r.pace_s_km) + ' /km' : '—', null]);
   }
   if (r.avg_hr) rows.push(['FC moyenne', '—', r.avg_hr + ' bpm', null]);
   return { rows, km, mn, n: (r.activity_ids || []).length };
+}
+// Fractionné analysé (D69) : allure moyenne des répétitions faites face à la cible, au lieu de la moyenne globale
+// (échauffement et récupérations compris) qui ne dit rien de la séance.
+export function allureReps(s) {
+  const an = s.an; if (!an || an.mode !== 'intervals') return null;
+  const R = (an.reps || []).filter(x => x.done && x.pace_s_km);
+  const lo = Math.min(...R.filter(x => x.pace_lo != null).map(x => x.pace_lo)), hi = Math.max(...R.filter(x => x.pace_hi != null).map(x => x.pace_hi));
+  if (!R.length || !isFinite(lo) || !isFinite(hi)) return null;
+  const d = R.reduce((a, x) => a + (x.distance_m || 0), 0), t = R.reduce((a, x) => a + (x.duration_s || 0), 0);
+  const p = d > 0 && t > 0 ? t / d * 1000 : R.reduce((a, x) => a + x.pace_s_km, 0) / R.length;
+  const tol = R[0].tol_s || 0;
+  return { p, lo, hi, n: R.length, st: p < lo - tol ? 'fast' : p > hi + tol ? 'slow' : 'in' };
 }
 // Résumé d'une ligne : « 8,5 → 12,9 km » (course) ou « 45 → 34 min ».
 export function versusCourt(s) {
@@ -346,12 +371,17 @@ export function ecartPrevu(s) {
   const a = s.sp === 'r' ? s.km : s.mn, b = s.sp === 'r' ? (r.distance_m || 0) / 1000 : (r.duration_s || 0) / 60;
   return a && b ? Math.round((b / a - 1) * 100) : null;
 }
-// Ligne courte d'une séance : « 9,8 → 12,9 km » (faite), « 9,8 km · 49 min » (prévue), muscu en minutes.
+// Écart affiché : masqué sous 5 % (bruit de mesure), sinon la valeur.
+export const ecartAffiche = e => (e == null || Math.abs(e) < 5 ? null : e);
+// La durée est déjà dans le titre (« Footing 36 min… ») : ne pas la répéter dans la ligne de chiffres.
+export const dureeDansTitre = s => /\d\s*(min|h)\b/i.test(s.t || '');
+// Ligne courte d'une séance : « 9,8 → 12,9 km » (faite), « 9,8 km · 49 min » (prévue, km seuls si la durée est
+// dans le titre), muscu en minutes.
 export function chiffresSeance(s) {
   const r = s.done ? s.real : null;
   if (s.sp === 'r') {
     if (r && r.distance_m) return (s.km ? f1(s.km) + ' → ' : '') + f1(r.distance_m / 1000) + ' km';
-    return [s.km ? f1(s.km) + ' km' : '', s.mn ? Math.round(s.mn) + ' min' : ''].filter(Boolean).join(' · ');
+    return [s.km ? f1(s.km) + ' km' : '', s.mn && !dureeDansTitre(s) ? Math.round(s.mn) + ' min' : ''].filter(Boolean).join(' · ');
   }
   if (r && r.duration_s) return (s.mn ? Math.round(s.mn) + ' → ' : '') + Math.round(r.duration_s / 60) + ' min';
   return s.mn ? Math.round(s.mn) + ' min' : '';
@@ -386,4 +416,34 @@ export function opDeplacement(M, s, d) {
 export function opInterversion(M, a, b) {
   if (!deplacable(M, a) || !deplacable(M, b) || a.id === b.id) return null;
   return { type: 'swap_sessions', payload: { a_id: a.id, b_id: b.id } };
+}
+// Annulation d'un déplacement déjà parti : le mouvement inverse (une interversion s'annule par elle-même).
+export function opInverse(op) {
+  if (!op) return null;
+  if (op.type === 'swap_sessions') return { type: 'swap_sessions', payload: { ...op.payload } };
+  const p = op.payload;
+  return { type: 'move_session', payload: { session_id: p.session_id, from_date: p.to_date, to_date: p.from_date } };
+}
+
+// Garde-fous simples recalculés sur le téléphone (le PC refait les siens) : deux qualités de suite, muscu jambes la
+// veille d'une séance clé. Sert à décider si un déplacement mérite une fenêtre d'aperçu.
+export function alertes(M) {
+  const out = [], by = {};
+  M.S.forEach(s => (by[s.d] = by[s.d] || []).push(s));
+  const q = s => s.sp === 'r' && (QUAL.has(s.ty) || (/^long/.test(s.ty) && s.key >= 3)), cle = s => s.sp === 'r' && (QUAL.has(s.ty) || /^long/.test(s.ty));
+  Object.keys(by).sort().forEach(d => {
+    if (d < M.T) return;
+    const n = by[addD(d, 1)] || [];
+    if (by[d].some(q) && n.some(q)) out.push(`Deux séances de qualité de suite : ${jl(d)} et ${jl(addD(d, 1))}`);
+    if (by[d].some(s => s.sp === 'm' && muKind(s.t, s.ty)[0] === 'leg') && n.some(cle)) out.push(`Muscu jambes la veille d'une séance clé (${jl(addD(d, 1))})`);
+  });
+  return out;
+}
+export const nouvellesAlertes = (M0, M1) => { const a0 = alertes(M0); return alertes(M1).filter(x => !a0.includes(x)); };
+
+// Titre court d'une séance (« Footing », « 30/30 », « Pecs ») pour un bouton.
+export function titreCourt(s) {
+  if (s.sp !== 'r') return s.lab || s.t;
+  const m = (s.t || '').split(/\s+/), k = m.findIndex(w => /\d/.test(w));
+  return k === 0 ? m[0] : k > 0 ? m.slice(0, k).join(' ') : s.t;
 }

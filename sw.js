@@ -1,16 +1,18 @@
-// Service worker : met l'application en cache pour l'ouvrir hors ligne.
-// Les appels à api.github.com ne passent jamais par le cache (données chiffrées, toujours fraîches).
-// Changer VERSION à chaque publication pour renouveler le cache.
-const VERSION = 'coach-mobile-v6';
+// Service worker : ouvre l'application hors ligne sans jamais figer une ancienne interface.
+// Coquille (index.html, js, css…) : réseau d'abord, copie mise en cache à chaque réponse ; repli sur le cache si le
+// réseau manque ou tarde (hors ligne garanti). Les appels à api.github.com ne passent jamais par ici (autre origine).
+// Changer VERSION à chaque publication : les anciens caches sont purgés à l'activation.
+const VERSION = 'coach-mobile-v7';
 const COQUILLE = [
   './', 'index.html', 'manifest.webmanifest', 'css/app.css',
   'js/app.js', 'js/crypto.js', 'js/store.js', 'js/github.js', 'js/plan.js', 'js/vues.js', 'js/muscu.js', 'js/analyse.js',
   'fonts/exo2-700.woff2', 'fonts/texte-400.woff2', 'fonts/texte-700.woff2',
   'icons/icone-192.png', 'icons/icone-512.png', 'icons/icone-180.png', 'icons/icone-maskable-512.png',
 ];
+const DELAI = 4000; // au-delà, le cache répond (réseau lent) ; la réponse du réseau met quand même le cache à jour
 
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(VERSION).then(c => c.addAll(COQUILLE)).then(() => self.skipWaiting()));
+  e.waitUntil(caches.open(VERSION).then(c => c.addAll(COQUILLE.map(u => new Request(u, { cache: 'reload' })))).then(() => self.skipWaiting()));
 });
 
 self.addEventListener('activate', e => {
@@ -21,21 +23,22 @@ self.addEventListener('fetch', e => {
   const req = e.request;
   const url = new URL(req.url);
   if (req.method !== 'GET' || url.origin !== self.location.origin) return;
-  // Démo : l'instantané factice reste en réseau d'abord, avec repli sur le cache.
-  if (url.pathname.endsWith('/demo/instantane.json')) {
-    e.respondWith(fetch(req).then(r => { const k = r.clone(); caches.open(VERSION).then(c => c.put(req, k)); return r; }).catch(() => caches.match(req)));
-    return;
-  }
-  // Coquille : cache d'abord (navigation : index.html quels que soient les paramètres).
+  const nav = req.mode === 'navigate';
+  // navigation : une seule entrée « index.html », quels que soient les paramètres (?demo=1…)
+  const cle = nav ? new URL('index.html', self.registration.scope).href : req;
+  const reseau = fetch(req, { cache: 'no-cache' });
+  e.waitUntil(reseau.then(async r => {
+    if (r.ok && r.type === 'basic') await (await caches.open(VERSION)).put(cle, r.clone());
+  }).catch(() => {}));
   e.respondWith((async () => {
-    const c = await caches.open(VERSION);
-    const hit = req.mode === 'navigate' ? (await c.match('index.html')) : await c.match(req, { ignoreSearch: true });
-    if (hit) return hit;
+    const enCache = async () => { const c = await caches.open(VERSION); return nav ? c.match(cle) : c.match(req, { ignoreSearch: true }); };
     try {
-      const r = await fetch(req);
-      if (r.ok && r.type === 'basic') c.put(req, r.clone());
-      return r;
+      const r = await Promise.race([reseau, new Promise((_, ko) => setTimeout(() => ko(new Error('délai')), DELAI))]);
+      if (r.ok) return r.clone();
+      return (await enCache()) || r;
     } catch (err) {
+      const hit = await enCache();
+      if (hit) return hit;
       return new Response('Hors ligne', { status: 503, headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
     }
   })());

@@ -2,10 +2,10 @@
 import * as C from './crypto.js';
 import * as ST from './store.js';
 import * as GH from './github.js';
-import { construire, semaineCourante, esc, fk, jl, jlong, addD, QUAL, muKind, opDeplacement, opInterversion } from './plan.js';
+import { construire, semaineCourante, esc, fk, jl, jlong, addD, opDeplacement, opInterversion, opInverse, nouvellesAlertes, muKind } from './plan.js';
 import * as MU from './muscu.js';
 import { agirAnalyse, lire as lireCourbe } from './analyse.js';
-import { vPlanning, vAujourdhui, detail, detailHors, formRessenti, ressentiSeance, carteRessenti, niv3, statutEnvoi } from './vues.js';
+import { vPlanning, vAujourdhui, detail, detailHors, nomSeance, formRessenti, ressentiSeance, carteRessenti, niv3, statutEnvoi } from './vues.js';
 
 const Q = new URLSearchParams(location.search);
 const DEMO = Q.get('demo') === '1';
@@ -37,13 +37,13 @@ function client(cfg) {
 
 function modele() {
   if (!E.snap) { E.M = null; return; }
-  const pend = E.actions.filter(a => a.type === 'move_session' || a.type === 'swap_sessions');
+  const pend = E.actions.filter(a => a.type === 'move_session' || a.type === 'swap_sessions' || a.type === 'strength_session');
   E.M = construire(E.snap, pend, DEMO && E.snap.today ? { T: E.snap.today.date } : {});
 }
 
 // ---------- libellés ----------
 function libAction(a) {
-  const S = E.M ? E.M.S : [], t = id => { const s = S.find(x => x.id === id); return s ? s.t : 'séance ' + id; };
+  const S = E.M ? E.M.S : [], t = id => { const s = S.find(x => x.id === id); return s ? (s.sp === 'r' ? s.t : s.lab || s.t) : 'séance ' + id; };
   const p = a.payload || {};
   switch (a.type) {
     case 'move_session': return `${t(p.session_id)} → ${jl(p.to_date)}`;
@@ -78,7 +78,7 @@ async function synchroniser(manuel) {
   E.occupe = true; entete();
   try {
     // 1. envoi des actions en file
-    for (const a of E.actions.filter(x => x.etat === 'a_envoyer')) {
+    for (const a of E.actions.filter(x => x.etat === 'a_envoyer' && !(x.retenu > Date.now()))) {
       const env = await C.chiffrerJSON({ id: a.id, created_at: a.created_at, type: a.type, payload: a.payload }, E.cfg.phrase);
       await E.gh.deposerAction(a.id, JSON.stringify(env));
       a.etat = 'envoyee';
@@ -102,7 +102,7 @@ async function synchroniser(manuel) {
   } catch (e) {
     const horsLigne = e.code === 0;
     const gardees = E.actions.filter(a => a.type !== 'sync_request' && a.etat === 'a_envoyer').length;
-    message(horsLigne ? 'Hors ligne' + (gardees ? ' · saisies gardées sur le téléphone' : '') : (e.message || 'Erreur de synchronisation'), !horsLigne);
+    message(horsLigne ? 'Hors ligne · la synchro partira au retour du réseau' + (gardees ? ' · saisies gardées sur le téléphone' : '') : (e.message || 'Erreur de synchronisation'), !horsLigne);
     if (e.code === 404 && !E.snap) message('Aucun instantané publié par le PC pour l’instant', true);
   } finally {
     E.occupe = false;
@@ -209,11 +209,11 @@ function rendre(defiler) {
   if (!M) { vue.innerHTML = `<p class="m">${E.occupe ? 'Chargement…' : 'Pas encore de données. Touchez « Synchroniser ».'}</p>`; return; }
   if (E.vue === 'plan') {
     if (!M.W.length) { vue.innerHTML = '<p class="m">Aucune séance dans l’instantané.</p>'; return; }
-    vue.innerHTML = vPlanning(M);
+    vue.innerHTML = vPlanning(M, ctxDetail());
     if (defiler) versSemaineCourante();
     return;
   }
-  vue.innerHTML = vAujourdhui(M);
+  vue.innerHTML = vAujourdhui(M, ctxDetail());
 }
 
 // ---------- fenêtres ----------
@@ -240,31 +240,21 @@ fond.addEventListener('pointerdown', e => { bas = e.target === fond ? [e.clientX
 fond.addEventListener('pointerup', e => { if (bas && e.target === fond && Math.hypot(e.clientX - bas[0], e.clientY - bas[1]) < 5) fermer(); bas = null; });
 addEventListener('popstate', () => { if (ouverte) fermer(true); });
 
-function montrer(i) {
+function montrer(i, versRessenti) {
   const M = E.M; if (!M || i < 0 || i >= M.S.length) return;
   const meme = E.cur === i && E.ecran === 'detail';
   if (E.cur !== i) { E.saisie = {}; E.edition = false; E.onglet = null; }
   E.cur = i;
-  ouvrir(detail(M, M.S[i], ctxDetail()), meme);
+  if (versRessenti) E.onglet = 'real';
+  ouvrir(detail(M, M.S[i], ctxDetail()), meme && !versRessenti);
   E.ecran = 'detail';
+  // « ressenti ? » : la fiche s'ouvre défilée sur le formulaire
+  if (versRessenti) { const f = $('ressenti'); if (f) c.parentNode.scrollTop = f.offsetTop - 8; }
 }
 const ctxDetail = () => ({ saisie: E.saisie, envoyes: E.actions, debriefs: E.debriefs, ressentis: E.ressentis, edition: E.edition, onglet: E.onglet });
 const seanceCourante = () => (E.M && E.cur >= 0 ? E.M.S[E.cur] : null);
 
 // ---------- déplacer / intervertir ----------
-function alertes(M) {
-  const out = [], by = {};
-  M.S.forEach(s => (by[s.d] = by[s.d] || []).push(s));
-  const q = s => s.sp === 'r' && (QUAL.has(s.ty) || (/^long/.test(s.ty) && s.key >= 3)), cle = s => s.sp === 'r' && (QUAL.has(s.ty) || /^long/.test(s.ty));
-  Object.keys(by).sort().forEach(d => {
-    if (d < M.T) return;
-    const n = by[addD(d, 1)] || [];
-    if (by[d].some(q) && n.some(q)) out.push(`Deux séances de qualité de suite : ${jl(d)} et ${jl(addD(d, 1))}`);
-    if (by[d].some(s => s.sp === 'm' && muKind(s.t, s.ty)[0] === 'leg') && n.some(cle)) out.push(`Muscu leg la veille d'une séance clé (${jl(addD(d, 1))})`);
-  });
-  return out;
-}
-
 function apercu(op) {
   const M0 = E.M;
   const pend = E.actions.filter(a => a.type === 'move_session' || a.type === 'swap_sessions').concat([{ id: 'apercu', ...op }]);
@@ -272,7 +262,7 @@ function apercu(op) {
   const sem = new Set();
   const ids = op.type === 'move_session' ? [op.payload.session_id] : [op.payload.a_id, op.payload.b_id];
   ids.forEach(id => { const a = M0.S.find(x => x.id === id), b = M1.S.find(x => x.id === id); if (a) sem.add(a.w); if (b) sem.add(b.w); });
-  const a0 = alertes(M0), nouv = alertes(M1).filter(x => !a0.includes(x));
+  const nouv = nouvellesAlertes(M0, M1);
   E.pend = op;
   const lib = libAction({ ...op });
   ouvrir(`<h3 id="fen-titre">Aperçu</h3><div class="m">${esc(lib)}</div><div class="ap"><table>` +
@@ -282,9 +272,43 @@ function apercu(op) {
     '<div class="act"><button class="bt2 pri" data-act="valider">Valider</button><button class="bt2" data-act="annuler">Annuler</button></div>');
 }
 
+// Déplacement sans nouvelle alerte : appliqué tout de suite, bandeau « Déplacé · Annuler » quelques secondes (l'envoi
+// au PC attend la fin du bandeau) ; avec une alerte : la fenêtre d'aperçu, qui demande de valider.
+const RETENUE = 6000;
+function simuler(op) {
+  const pend = E.actions.filter(a => a.type === 'move_session' || a.type === 'swap_sessions').concat([{ id: 'apercu', ...op }]);
+  return construire(E.snap, pend, DEMO && E.snap.today ? { T: E.snap.today.date } : {});
+}
+async function deplacerOuApercu(op) {
+  if (nouvellesAlertes(E.M, simuler(op)).length) return apercu(op);
+  fermer();
+  const a = { id: C.uuid(), created_at: isoLocal(new Date()), type: op.type, payload: op.payload, etat: 'a_envoyer', retenu: Date.now() + RETENUE };
+  E.actions.push(a);
+  await sauverActions();
+  modele(); rendre();
+  bandeau(op.type === 'swap_sessions' ? 'Interverti' : 'Déplacé', libAction(a), a);
+  setTimeout(async () => { if (E.actions.includes(a) && a.retenu) { delete a.retenu; await sauverActions(); synchroniser(); } }, RETENUE);
+}
+let bandeauTm = null;
+function bandeau(titre, lib, a) {
+  let b = $('bandeau');
+  if (!b) { b = document.createElement('div'); b.id = 'bandeau'; b.className = 'bandeau'; b.setAttribute('role', 'status'); document.body.appendChild(b); }
+  b.innerHTML = `<span><b>${esc(titre)}</b> · ${esc(lib)}</span><button type="button" data-act="dep-annuler" data-id="${a.id}">Annuler</button>`;
+  b.hidden = false;
+  clearTimeout(bandeauTm); bandeauTm = setTimeout(() => { b.hidden = true; }, RETENUE);
+}
+async function annulerDeplacement(id) {
+  const b = $('bandeau'); if (b) b.hidden = true;
+  const a = E.actions.find(x => x.id === id);
+  if (a && a.etat === 'a_envoyer') E.actions = E.actions.filter(x => x !== a);
+  else if (a) { const inv = opInverse(a); E.actions.push({ id: C.uuid(), created_at: isoLocal(new Date()), type: inv.type, payload: inv.payload, etat: 'a_envoyer' }); }
+  await sauverActions(); modele(); rendre();
+  if (a && a.etat !== 'a_envoyer') synchroniser();
+}
+
 function dlgDeplacer(s, n) {
   const M = E.M; n = Math.max(0, Math.min(M.W.length - 1, n)); const w = M.W[n];
-  ouvrir(`<h3 id="fen-titre">Déplacer · ${esc(s.t)}</h3><div class="m">Actuellement ${jl(s.d)}</div>` +
+  ouvrir(`<h3 id="fen-titre">Déplacer · ${esc(nomSeance(s))}</h3><div class="m">Actuellement ${jl(s.d)}</div>` +
     `<div class="titre-vue" style="margin-top:10px"><span class="fl2"><button data-act="dep-w" data-n="${n - 1}" aria-label="Semaine précédente"${n <= 0 ? ' disabled' : ''}>‹</button><button data-act="dep-w" data-n="${n + 1}" aria-label="Semaine suivante"${n >= M.W.length - 1 ? ' disabled' : ''}>›</button></span><div><b>Semaine ${w.n}</b></div></div><div class="lst">` +
     [0, 1, 2, 3, 4, 5, 6].map(j => {
       const d = addD(w.ws, j), o = M.S.filter(x => x.d === d && x.id !== s.id);
@@ -295,9 +319,9 @@ function dlgDeplacer(s, n) {
 function dlgIntervertir(s, n) {
   const M = E.M; n = Math.max(0, Math.min(M.W.length - 1, n)); const w = M.W[n];
   const o = M.S.filter(x => x.w === n && opInterversion(M, s, x));
-  ouvrir(`<h3 id="fen-titre">Intervertir · ${esc(s.t)}</h3>` +
+  ouvrir(`<h3 id="fen-titre">Intervertir · ${esc(nomSeance(s))}</h3>` +
     `<div class="titre-vue" style="margin-top:10px"><span class="fl2"><button data-act="int-w" data-n="${n - 1}" aria-label="Semaine précédente"${n <= 0 ? ' disabled' : ''}>‹</button><button data-act="int-w" data-n="${n + 1}" aria-label="Semaine suivante"${n >= M.W.length - 1 ? ' disabled' : ''}>›</button></span><div><b>Semaine ${w.n}</b></div></div><div class="lst">` +
-    (o.length ? o.map(x => `<button class="bt2" data-act="int-ok" data-b="${x.id}">${jl(x.d)} · ${esc(x.t)}</button>`).join('') : '<p class="m">Aucune séance à venir cette semaine.</p>') +
+    (o.length ? o.map(x => `<button class="bt2" data-act="int-ok" data-b="${x.id}">${jl(x.d)} · ${esc(nomSeance(x))}</button>`).join('') : '<p class="m">Aucune séance à venir cette semaine.</p>') +
     '</div><div class="act"><button class="bt2" data-act="retour">Retour</button></div>');
 }
 
@@ -308,7 +332,7 @@ async function envoyerRessenti(s) {
   if (r.rpe || r.legs || r.breath || (com && r.douleur !== 'oui')) {
     await ajouterAction('feeling', { date, rpe: r.rpe ? +r.rpe : null, legs: r.legs ? +r.legs : null, breath: r.breath ? +r.breath : null, comment: com, session_id: sid });
   }
-  if (r.douleur === 'oui') await ajouterAction('pain', { date, zone: r.zone || 'autre', intensity: +(r.int || 0), comment: com, session_id: sid });
+  if (r.douleur === 'oui') await ajouterAction('pain', { date, zone: r.zone || 'autre', intensity: +(r.int ?? 3), comment: com, session_id: sid });
   if (s) { E.saisie = {}; E.edition = false; montrer(E.cur); } else { E.saisieJour = null; E.editionJour = false; dlgJour(true); }
 }
 function ressentiJour() {
@@ -328,9 +352,25 @@ const versSaisie = r => ({ rpe: r.rpe != null ? String(r.rpe) : undefined, legs:
 // ---------- muscu ----------
 const brouillon = () => E.mu.brouillons.find(b => b.uid === E.mu.cur) || null;
 const aujourdhui = () => (E.M && E.M.T) || isoLocal(new Date()).slice(0, 10);
+// Séance muscu prévue aujourd'hui, pas encore faite ni saisie : proposée en tête de l'onglet Muscu.
+function muscuDuJour() {
+  const s = E.M && E.M.S.find(x => x.d === E.M.T && x.sp === 'm' && x.sport === 'strength' && !x.done && !x.saisie);
+  return s ? { label: s.lab, i: s.i } : null;
+}
 function vMuscu() {
   const b = brouillon();
-  return b ? MU.editeur(b, E.snap, E.mu) : MU.accueil(E.snap, E.mu.brouillons, E.mu);
+  return b ? MU.editeur(b, E.snap, E.mu) : MU.accueil(E.snap, E.mu.brouillons, { ...E.mu, prevu: muscuDuJour() });
+}
+// Typologie d'une séance muscu du plan : même titre, sinon même partie du corps (« Muscu pecs et épaules » → Pecs).
+function typologiePour(s) {
+  const T = (MU.bloc(E.snap) || {}).typologies || [];
+  return T.find(x => x.title === s.t) || T.find(x => muKind(x.title, '')[0] === muKind(s.t, s.ty)[0]) || null;
+}
+function saisirSeance(s) {
+  const typ = s && typologiePour(s); if (!typ) return;
+  fermer();
+  E.vue = 'muscu';
+  ouvrirBrouillon(MU.nouveau(C.uuid(), s.d <= aujourdhui() ? s.d : aujourdhui(), typ, E.snap));
 }
 function retouche(b) { b.touche = true; b.modifie = Date.now(); if (b.etat === 'envoye') b.etat = 'local'; b.erreur = null; }
 function muRendre(haut) { E.mu.confirmer = false; rendre(true); if (haut) scrollTo({ top: 0 }); }
@@ -361,9 +401,10 @@ function agirMuscu(a, t) {
   const b = brouillon(), i = +t.dataset.e, j = +t.dataset.s, B = MU.bloc(E.snap) || {};
   switch (a) {
     case 'mu-nouveau': E.mu.choix = true; return muRendre(true);
+    case 'mu-commencer': case 'mu-saisir': return saisirSeance(a === 'mu-saisir' ? seanceCourante() : E.M && E.M.S[+t.dataset.i]);
     case 'mu-typ': {
       const typ = (B.typologies || []).find(x => x.title === t.dataset.t); if (!typ) return;
-      return ouvrirBrouillon(MU.nouveau(C.uuid(), aujourdhui(), typ));
+      return ouvrirBrouillon(MU.nouveau(C.uuid(), aujourdhui(), typ, E.snap));
     }
     case 'mu-ouvrir': { const x = E.mu.brouillons.find(y => y.uid === t.dataset.u); return x && ouvrirBrouillon(x); }
     case 'mu-editer': {
@@ -377,7 +418,7 @@ function agirMuscu(a, t) {
     case 'mu-pm': {
       if (!b) return;
       const x = b.ex[i].sets[j], f = t.dataset.f;
-      x[f] = Math.max(0, Math.round(((+x[f] || 0) + +t.dataset.d) * 100) / 100);
+      x[f] = MU.pas(b, i, j, f, +t.dataset.d);
       retouche(b); sauverMuscu();
       const inp = t.parentNode.querySelector('input'); if (inp) inp.value = x[f];
       return majEnvoi(b);
@@ -416,6 +457,15 @@ function saisieMuscu(t, change) {
   else if (f === 'exnote') b.ex[i].note = t.value;
   else if (f === 'title' || f === 'note' || f === 'date') { if (f === 'date' && !t.value) return; b[f] = t.value; }
   retouche(b); sauverMuscu(); majEnvoi(b);
+  if (change && (f === 'reps' || f === 'load_kg')) majIgnores(b);
+}
+// Avertissement « N exercices sans série seront ignorés » tenu à jour sans re-rendu (le clavier reste ouvert).
+function majIgnores(b) {
+  const n = MU.sansSerie(b), el = $('vue').querySelector('.mu-ign');
+  if (!n || MU.vide(b)) { if (el) el.remove(); return; }
+  const t = `${n} exercice${n > 1 ? 's' : ''} sans série ${n > 1 ? 'seront ignorés' : 'sera ignoré'} à l’envoi`;
+  if (el) el.textContent = t;
+  else { const act = $('vue').querySelector('.mu-act'); if (act) act.insertAdjacentHTML('beforebegin', `<div class="m mu-ign" role="status">${t}</div>`); }
 }
 
 // ---------- réglages / premier lancement ----------
@@ -487,10 +537,13 @@ async function agir(t) {
     case 'retour': return s ? montrer(E.cur) : fermer();
     case 'dep': return s && dlgDeplacer(s, s.w);
     case 'dep-w': return s && dlgDeplacer(s, +t.dataset.n);
-    case 'dep-ok': { const op = s && opDeplacement(E.M, s, t.dataset.d); return op && apercu(op); }
+    case 'dep-ok': { const op = s && opDeplacement(E.M, s, t.dataset.d); return op && deplacerOuApercu(op); }
+    case 'dep-annuler': return annulerDeplacement(t.dataset.id);
     case 'int': return s && dlgIntervertir(s, s.w);
     case 'int-w': return s && dlgIntervertir(s, +t.dataset.n);
-    case 'int-ok': { const b = E.M.S.find(x => x.id === +t.dataset.b), op = s && b && opInterversion(E.M, s, b); return op && apercu(op); }
+    case 'int-ok': { const b = E.M.S.find(x => x.id === +t.dataset.b), op = s && b && opInterversion(E.M, s, b); return op && deplacerOuApercu(op); }
+    case 'res-direct': return montrer(+t.dataset.i, true);
+    case 'leg-sem': { const tt = t.closest('.ptete'); if (tt) tt.classList.toggle('leg'); return; }
     case 'ong': E.onglet = t.dataset.o; return montrer(E.cur);
     case 'valider': { const op = E.pend; E.pend = null; if (!op) return; const id = s ? s.id : null; fermer(); await ajouterAction(op.type, op.payload); if (id != null) { /* la fenêtre est fermée : la vue montre la séance « en attente » */ } return; }
     case 'annuler': E.pend = null; return s ? montrer(E.cur) : fermer();
@@ -499,7 +552,7 @@ async function agir(t) {
       const r = s ? E.saisie : E.saisieJour; if (!r) return;
       r[t.dataset.f] = String(r[t.dataset.f]) === t.dataset.val ? undefined : t.dataset.val;
       // mise à jour en place (pas de re-rendu, pas de retour en haut) ; la douleur ajoute des champs : re-rendu gardé
-      if (t.dataset.f === 'douleur') return s ? montrer(E.cur) : dlgJour(true);
+      if (t.dataset.f === 'douleur') { if (r.douleur === 'oui' && r.int == null) r.int = '3'; return s ? montrer(E.cur) : dlgJour(true); }
       t.parentNode.querySelectorAll('button').forEach(b => b.classList.toggle('on', String(r[t.dataset.f]) === b.dataset.val));
       const ok = c.querySelector('[data-act="res-ok"]');
       if (ok) ok.disabled = !(r.rpe || r.legs || r.breath || r.douleur === 'oui' || (r.com || '').trim());
@@ -512,7 +565,7 @@ async function agir(t) {
     case 'ressenti-jour': E.editionJour = false; return dlgJour();
     case 'cfl-x': E.conflits = E.conflits.filter(x => x.id !== t.dataset.id); await sauverConflits(); return rendre();
     case 'cfg-test': return testerEtEnregistrer();
-    case 'cfg-retour': E.reglages = false; return rendre();
+    case 'cfg-retour': return basculerReglages(false);
     case 'effacer': return effacer(t);
   }
 }
@@ -531,7 +584,15 @@ c.addEventListener('pointermove', e => { const sv = e.target.closest && e.target
 c.addEventListener('pointerdown', e => { const sv = e.target.closest && e.target.closest('#an-cv svg'); if (sv) lireCourbe(sv, e.clientX); });
 $('sync').addEventListener('click', () => synchroniser(true));
 document.addEventListener('submit', e => { e.preventDefault(); if (e.target.id === 'f-cfg') testerEtEnregistrer(); });
-$('reglages').addEventListener('click', () => { fermer(); E.reglages = !E.reglages || !E.cfg; rendre(); scrollTo({ top: 0 }); });
+// Réglages : au retour, la vue reprend là où on l'avait laissée.
+let defilAvantReglages = 0;
+function basculerReglages(ouvrirR) {
+  if (ouvrirR && !E.reglages) defilAvantReglages = scrollY;
+  E.reglages = ouvrirR || !E.cfg;
+  rendre();
+  scrollTo({ top: E.reglages ? 0 : defilAvantReglages });
+}
+$('reglages').addEventListener('click', () => { fermer(); basculerReglages(!E.reglages); });
 document.addEventListener('input', e => { const t = e.target.closest('[data-mu]'); if (t) saisieMuscu(t, false); });
 document.addEventListener('change', e => { const t = e.target.closest('[data-mu]'); if (t) saisieMuscu(t, true); });
 document.addEventListener('keydown', e => {
@@ -628,7 +689,7 @@ document.addEventListener('pointermove', e => {
 document.addEventListener('pointerup', () => {
   if (!drag) return; const on = drag.on, op = drag.op; finir();
   if (!on) return; stopClic = true; setTimeout(() => { stopClic = false; }, 80);
-  if (op) { E.cur = -1; apercu(op); }
+  if (op) { E.cur = -1; deplacerOuApercu(op); }
 });
 document.addEventListener('pointercancel', () => finir());
 document.addEventListener('touchmove', e => { if (drag && drag.on) e.preventDefault(); }, { passive: false });

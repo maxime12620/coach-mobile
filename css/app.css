@@ -4,12 +4,12 @@
 :root{color-scheme:light dark;
  --fond:#ffffff;--surface:#ffffff;--teinte:#f3f4f8;--sel:#e9eaf3;--filet:#e3e4ec;--gb:#d6d7df;--reel:#d9dbe4;--trait:#b9bac4;
  --texte:#3a3b47;--gris:#3a3b47;--clair:#6e7084;--bleu:#2E3464;--accent:#2E3464;--accent-t:#ffffff;--accent-doux:#e9eaf3;
- --mu:#6F6FA7;--jaune:#FFC000;--rouge:#C30A1D;--orange:#F08100;--bleu2:#739DF1;--ok:#3f7a1c;--ok-doux:#e8f0e2;
+ --mu:#6F6FA7;--sil:#c3c5d3;--band-act:#FFC000;--jaune:#FFC000;--rouge:#C30A1D;--orange:#F08100;--bleu2:#739DF1;--ok:#3f7a1c;--ok-doux:#e8f0e2;
  --z1:#c9d6f5;--z2:#739DF1;--z3:#2E3464;--z4:#F08100;--z5:#C30A1D;--ombre:0 10px 40px rgba(0,0,0,.2);--voile:rgba(30,32,50,.35)}
 @media (prefers-color-scheme:dark){:root{
  --fond:#14161d;--surface:#1b1e27;--teinte:#1d2029;--sel:#262a40;--filet:#2c3040;--gb:#3a3f55;--reel:#3a3f55;--trait:#5a5f78;
  --texte:#e3e4ec;--gris:#e3e4ec;--clair:#9a9cbc;--bleu:#c9ccf0;--accent:#9ea4e0;--accent-t:#14161d;--accent-doux:#262a40;
- --mu:#9a9ad0;--rouge:#ff7b86;--orange:#ffa64d;--bleu2:#8fb2f5;--ok:#8fcb5a;--ok-doux:#1f2a18;
+ --mu:#b2b2ea;--sil:#666c8c;--band-act:#2E3464;--rouge:#ff7b86;--orange:#ffa64d;--bleu2:#8fb2f5;--ok:#77a95a;--ok-doux:#1f2a18;
  --z1:#3b4870;--z2:#739DF1;--z3:#c9ccf0;--z4:#F08100;--z5:#e0404f;--ombre:0 10px 40px rgba(0,0,0,.6);--voile:rgba(0,0,0,.55)}}
 *{box-sizing:border-box}
 html,body{background:var(--fond)}
@@ -71,7 +71,7 @@ svg text{font-family:"PT Sans",sans-serif;font-size:11px;fill:var(--clair)}svg .
 .fen h3{color:var(--bleu);margin:0 0 2px;font-size:20px}
 .fen h4{font:700 15px "Exo 2";color:var(--bleu);margin:18px 0 4px;padding-top:10px;border-top:1px solid var(--filet)}
 .fen .mt{margin:6px 0}.fen .mt .bi{width:28px;height:28px}.fen .mt span{font-size:14px}
-.nav{display:flex;gap:6px;margin-top:10px}
+.nav{display:flex;gap:8px;margin-top:14px}.nav .bt2{flex:1;min-height:44px}
 .et{list-style:none;padding:0;margin:8px 0}.et li{display:grid;grid-template-columns:170px 92px minmax(0,1fr);gap:4px 14px;align-items:center;padding:8px 0;border-top:1px solid var(--filet)}
 .et .q{font:700 15px "Exo 2";color:var(--gris);line-height:1.2}.et .al{display:block;font-weight:700;color:var(--gris);font-size:14px}
 .et .rc{display:block;font-size:12px;color:var(--gris)}.et .nm{display:block;font-size:12px;color:var(--clair)}
@@ -86,13 +86,15 @@ svg text{font-family:"PT Sans",sans-serif;font-size:11px;fill:var(--clair)}svg .
 .ev{padding-left:18px;margin:6px 0}.ev li{margin:5px 0}
 .fm label{display:block;font-size:12px;color:var(--clair);margin:10px 0 4px}
 .seg{display:flex;flex-wrap:wrap;gap:4px}.seg button{border:1px solid var(--filet);background:var(--surface);border-radius:5px;min-width:34px;height:34px;padding:0 8px;cursor:pointer;color:var(--gris)}.seg .on{background:var(--accent);color:var(--accent-t);border-color:var(--accent)}
-.seg.mots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}.seg.mots button{height:38px}
+.seg.mots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
 .ress-c b.mot{font:700 16px "Exo 2"}
-.seg.n10{display:grid;grid-template-columns:repeat(10,minmax(0,1fr))}.seg.n10 button{min-width:0;padding:0}
+.seg.n10{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}.seg.n10 button{min-width:0;padding:0;height:44px;font-size:16px;font-weight:700}
+.seg.mots button{height:44px}.seg.deux{grid-template-columns:repeat(2,minmax(0,1fr))}
 .fm textarea,.fm input[type=text],.fm input[type=password],.fm input[type=number]{width:100%;font:inherit;font-size:16px;border:1px solid var(--filet);border-radius:6px;padding:8px;background:var(--surface);color:var(--texte)}
 .fm .ln{display:flex;gap:10px}.fm .ln>*{flex:1;min-width:0}
 .fm input[type=range]{width:100%}
-.act{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.act{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}.act.col{flex-direction:column}
+.bt2.large{width:100%;min-height:48px;font-size:15px;font-weight:700}
 .bt2{border:1px solid var(--filet);background:var(--surface);border-radius:8px;padding:0 12px;min-height:36px;cursor:pointer;color:var(--accent);font-size:14px}
 .bt2.pri{background:var(--accent);color:var(--accent-t);border-color:var(--accent)}.bt2.rouge{color:var(--rouge)}.bt2:disabled{opacity:.45;cursor:default}
 .pa{display:inline-block;min-width:20px;padding:0 6px;border-radius:10px;background:var(--orange);color:#fff;font-size:12px;font-weight:700;text-align:center;line-height:20px}
@@ -120,6 +122,7 @@ svg text{font-family:"PT Sans",sans-serif;font-size:11px;fill:var(--clair)}svg .
 /* glisser-déposer */
 #vue [data-i]{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 .glisse,.glisse *{cursor:grabbing!important;user-select:none}
+body.glisse,html:has(body.glisse){overflow-x:hidden}
 .cible{outline:2px dashed var(--accent);outline-offset:1px}
 .orig{outline:2px dashed var(--clair);outline-offset:-2px;opacity:.45}
 .fant2{position:fixed;z-index:20;pointer-events:none;opacity:.85;box-shadow:0 8px 24px rgba(0,0,0,.18);background:var(--surface);margin:0}
@@ -171,8 +174,8 @@ svg text{font-family:"PT Sans",sans-serif;font-size:11px;fill:var(--clair)}svg .
 .an-det{font-size:12px;margin-top:5px;min-height:16px}
 .an-set{margin-top:12px}.an-set>b{font:700 13px "Exo 2";color:var(--accent)}
 .an-c.fast{color:var(--an-fast);font-weight:700}.an-c.slow{color:var(--an-slow);font-weight:700}.an-c.in{color:var(--an-in)}
-.an-chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
-.an-chip{border:1px solid var(--filet);background:var(--surface);border-radius:6px;padding:3px 4px;font-size:12px;line-height:1.15;text-align:center;min-width:44px;color:var(--gris);cursor:pointer;touch-action:manipulation}
+.an-chips{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;margin-top:5px}
+.an-chip{border:1px solid var(--filet);background:var(--surface);border-radius:6px;padding:4px 4px;font-size:12px;line-height:1.15;text-align:center;min-width:0;min-height:44px;color:var(--gris);cursor:pointer;touch-action:manipulation}
 .an-chip i{display:block;font-style:normal;font-size:10px;color:var(--clair)}.an-chip b{display:block;font-size:13px}.an-chip span{display:block;font-size:11px;font-weight:700}
 .an-chip.in{border-color:var(--an-in)}.an-chip.in span{color:var(--an-in)}.an-chip.fast{border-color:var(--an-fast);background:var(--an-fast-f)}.an-chip.fast span{color:var(--an-fast)}
 .an-chip.slow{border-color:var(--an-slow);background:var(--an-slow-f)}.an-chip.slow span{color:var(--an-slow)}.an-chip.on{outline:2px solid var(--accent)}.an-chip.miss{border-style:dashed;color:var(--clair)}
@@ -202,8 +205,10 @@ svg text{font-family:"PT Sans",sans-serif;font-size:11px;fill:var(--clair)}svg .
 .pt1 .enc{margin-left:auto;color:var(--accent);font-weight:700}
 .pt2{display:flex;gap:14px;margin-top:4px;font-size:12px;color:var(--clair);flex-wrap:wrap}
 .pt2>span{display:flex;align-items:center;gap:4px;white-space:nowrap}.pt2 b{font:700 15px "Exo 2";color:var(--gris)}.pt2 .ico{width:15px;height:15px}
-.pbar{margin-top:6px}.pz{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--teinte)}.pz i{display:block;height:100%}
-.pbr{height:3px;margin-top:2px;border-radius:2px;background:var(--teinte);overflow:hidden}.pbr i{display:block;height:100%;background:var(--texte);opacity:.55}
+.pbar{position:relative;margin-top:6px}.pz{display:flex;height:7px;border-radius:3px;overflow:hidden;background:var(--teinte)}.pz i{display:block;height:100%}
+.pz.pale i{opacity:.32}.pzr{position:absolute;left:0;top:0;height:7px;border-radius:3px;overflow:hidden;background:var(--trait)}.pzr .pz{border-radius:0;background:none}
+.ptete{cursor:pointer}.pleg{display:none;font-size:12px;color:var(--clair);margin-top:6px;padding:6px 8px;background:var(--teinte);border-radius:6px}.ptete.leg .pleg{display:block}
+.pleg p{margin:0 0 4px}.pleg .ico{width:13px;height:13px;vertical-align:-2px}.pleg .zl{margin:2px 0 0}
 .psem.encours .ptete{border-bottom-color:var(--accent)}
 .pj{display:flex;gap:10px;border-bottom:1px solid var(--filet);min-height:44px}
 .pjd{width:38px;flex:none;font-size:11px;color:var(--clair);text-align:center;line-height:1.05;padding-top:7px}.pjd b{display:block;font:700 17px "Exo 2";color:var(--gris)}
@@ -220,7 +225,11 @@ svg text{font-family:"PT Sans",sans-serif;font-size:11px;fill:var(--clair)}svg .
 .okc{flex:none;width:20px;height:20px;border-radius:50%;background:var(--ok);color:var(--fond);font:700 12px/20px "PT Sans";text-align:center}
 .ec{font-weight:700;font-style:normal}.ec-in{color:var(--ok)}.ec-plus{color:var(--orange)}.ec-moins{color:var(--bleu2)}
 .ps.manque .pst b{color:var(--clair);font-weight:400}.ps.manque .psi{opacity:.45}
-.ps.hors{border:1px dashed var(--filet);border-radius:6px;margin:3px 0;min-height:38px;padding-left:4px}.ps.hors .pst b{font-size:13px;color:var(--clair);font-weight:400}.ps.hors .psi{opacity:.6}
+.nfc{flex:none;width:20px;height:20px;border-radius:50%;border:1.5px solid var(--clair);color:var(--clair);font:700 10px/17px "PT Sans";text-align:center}
+.ps.hors{border:1px dashed var(--filet);border-radius:6px;margin:3px 0;padding-left:4px}
+.ps.local{cursor:default}.enatt{color:var(--orange);font-weight:700}
+.rq{flex:none;border:1px solid var(--accent);color:var(--accent);border-radius:12px;font-size:11px;font-weight:700;padding:3px 8px;margin:-6px 0;line-height:1.3;background:var(--surface);position:relative}
+.rq::before{content:"";position:absolute;inset:-10px -4px}
 .hp{font:400 11px "PT Sans";color:var(--clair);border:1px solid var(--filet);border-radius:4px;padding:0 4px;white-space:nowrap;flex:none}
 
 /* Aujourd'hui */
@@ -242,8 +251,18 @@ svg text{font-family:"PT Sans",sans-serif;font-size:11px;fill:var(--clair)}svg .
 .rl>div{border:1px solid var(--filet);border-radius:8px;padding:8px 10px;background:var(--surface)}
 .rl span{display:block;font-size:12px;color:var(--clair)}.rl b{display:block;font:700 21px "Exo 2";color:var(--texte)}.rl small{font-size:12px;color:var(--clair)}
 .acts{list-style:none;padding:0;margin:6px 0}.acts li{display:flex;gap:8px;align-items:baseline;padding:6px 0;border-top:1px solid var(--filet);font-size:14px}
-.acts li>b{flex:none;color:var(--accent);font-size:12px}.acts li>span:first-of-type{flex:1;min-width:0}.acts small{color:var(--clair)}.acts .n{flex:none;color:var(--gris);font-weight:700;font-size:13px;text-align:right}
+.acts li>b{flex:none;color:var(--accent);font-size:12px}.acts li>span:first-of-type{flex:1;min-width:0}.acts small{color:var(--clair);white-space:nowrap}.acts .n{flex:none;color:var(--gris);font-weight:700;font-size:13px;text-align:right}
 .nx{display:block;width:100%;text-align:left;border:0;border-left:3px solid var(--accent);background:var(--teinte);padding:12px 14px;border-radius:0 10px 10px 0;color:inherit;position:relative;cursor:pointer}
 .nx h2{font-size:19px;margin:0}.nx .chf{display:flex;gap:18px;margin-top:6px}.nx .chf b{font:700 22px "Exo 2";color:var(--gris)}.nx .chf span{font-size:12px;color:var(--clair)}
 .prof{width:100%;height:60px;display:block;margin:10px 0 4px}.axe{display:flex;justify-content:space-between;font-size:11px;color:var(--clair);margin-bottom:6px}
 .ps .att,.nx .att{position:absolute;top:4px;right:2px;width:9px;height:9px}
+
+/* bandeau « Déplacé · Annuler » */
+.bandeau{position:fixed;left:12px;right:12px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:8;max-width:520px;margin:0 auto;display:flex;align-items:center;gap:10px;background:var(--texte);color:var(--fond);border-radius:10px;padding:8px 8px 8px 14px;box-shadow:var(--ombre);font-size:14px}
+.bandeau span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bandeau button{flex:none;border:0;background:none;color:var(--band-act);font-weight:700;min-height:44px;padding:0 12px;cursor:pointer}
+/* muscu prévue du jour, avertissement avant envoi */
+.mu-prevu{display:flex;align-items:center;gap:10px;border-left:3px solid var(--mu);background:var(--teinte);border-radius:0 10px 10px 0;padding:10px 12px;margin-bottom:6px}
+.mu-prevu span{flex:1}.mu-prevu b{font-family:"Exo 2";color:var(--bleu)}.mu-prevu .bt2{min-height:44px;font-weight:700}
+.mu-ign{color:var(--orange);margin-top:10px}
+.rl b.ec-in{color:var(--ok)}.rl b.ec-plus{color:var(--orange)}.rl b.ec-moins{color:var(--bleu2)}
