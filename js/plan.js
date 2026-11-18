@@ -332,3 +332,58 @@ export function evaluation(s, pr) {
   }
   return e.slice(0, 3);
 }
+
+// ---------- planning (D70) : semaine par semaine, tous les jours, état et écart de chaque séance ----------
+// État d'une séance prévue : faite, manquée (passée sans activité, ou sautée), du jour, à venir.
+export function etat(s, T) {
+  if (s.done) return 'fait';
+  if (s.status === 'skipped' || s.d < T) return 'manque';
+  return s.d === T ? 'jour' : 'avenir';
+}
+// Écart du réalisé au prévu en % : km pour la course, minutes sinon ; null si l'un des deux manque.
+export function ecartPrevu(s) {
+  const r = s.real; if (!r) return null;
+  const a = s.sp === 'r' ? s.km : s.mn, b = s.sp === 'r' ? (r.distance_m || 0) / 1000 : (r.duration_s || 0) / 60;
+  return a && b ? Math.round((b / a - 1) * 100) : null;
+}
+// Ligne courte d'une séance : « 9,8 → 12,9 km » (faite), « 9,8 km · 49 min » (prévue), muscu en minutes.
+export function chiffresSeance(s) {
+  const r = s.done ? s.real : null;
+  if (s.sp === 'r') {
+    if (r && r.distance_m) return (s.km ? f1(s.km) + ' → ' : '') + f1(r.distance_m / 1000) + ' km';
+    return [s.km ? f1(s.km) + ' km' : '', s.mn ? Math.round(s.mn) + ' min' : ''].filter(Boolean).join(' · ');
+  }
+  if (r && r.duration_s) return (s.mn ? Math.round(s.mn) + ' → ' : '') + Math.round(r.duration_s / 60) + ' min';
+  return s.mn ? Math.round(s.mn) + ' min' : '';
+}
+// Une semaine du planning : les 7 jours (vides compris) et le volume prévu / réalisé.
+// Réalisé : séances faites (cumul des activités rattachées) plus activités hors plan de la semaine.
+export function semainePlanning(M, n) {
+  const w = M.W[n], H = M.H || [];
+  const jours = [0, 1, 2, 3, 4, 5, 6].map(j => {
+    const d = addD(w.ws, j);
+    return { d, j, auj: d === M.T, passe: d < M.T, S: M.S.filter(s => s.d === d), H: H.filter(h => h.d === d) };
+  });
+  const S = M.S.filter(s => s.w === n), Hw = H.filter(h => h.w === n);
+  const run = S.filter(s => s.sp === 'r'), mus = S.filter(s => s.sp === 'm');
+  const somme = (xs, f) => xs.reduce((a, x) => a + (f(x) || 0), 0);
+  const fr = xs => xs.filter(s => s.done && s.real);
+  const prevu = { km: somme(run, s => s.km), hr: somme(run, s => s.mn) / 60, hm: somme(mus, s => s.mn) / 60 };
+  const reel = {
+    km: somme(fr(run), s => s.real.distance_m) / 1000 + somme(Hw.filter(h => h.sp === 'r'), h => h.km),
+    hr: (somme(fr(run), s => s.real.duration_s) / 60 + somme(Hw.filter(h => h.sp === 'r'), h => h.mn)) / 60,
+    hm: (somme(fr(mus), s => s.real.duration_s) / 60 + somme(Hw.filter(h => h.sp === 'm'), h => h.mn)) / 60,
+  };
+  return { w, n, jours, prevu, reel, zk: w.zk, nPrevu: S.length, nFait: S.filter(s => s.done).length, passee: w.passee, encours: w.encours };
+}
+// Déplacement d'une séance : seulement une séance à venir non faite, vers un autre jour à venir (vide ou non).
+export const deplacable = (M, s) => !!s && !s.done && s.d >= M.T;
+export function opDeplacement(M, s, d) {
+  if (!deplacable(M, s) || !d || d < M.T || d === s.d) return null;
+  const autres = M.S.filter(x => x.d === d && x.id !== s.id);
+  return { type: 'move_session', payload: { session_id: s.id, from_date: s.d, to_date: d, position: autres.length + 1 } };
+}
+export function opInterversion(M, a, b) {
+  if (!deplacable(M, a) || !deplacable(M, b) || a.id === b.id) return null;
+  return { type: 'swap_sessions', payload: { a_id: a.id, b_id: b.id } };
+}

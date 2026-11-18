@@ -49,55 +49,13 @@ svg text{font-family:"PT Sans",sans-serif;font-size:11px;fill:var(--clair)}svg .
 .mt{display:inline-flex;align-items:center;gap:4px;color:var(--mu);font-size:12px;font-weight:700;min-width:0}.mt span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .zl{display:flex;gap:6px 14px;flex-wrap:wrap;font-size:12px;color:var(--clair);margin:6px 0 4px}.zl i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
 .mini{display:block;width:100%}
-.sw{background:var(--teinte)}
-.tot{margin-left:auto;display:flex;gap:12px;font-size:13px;color:var(--clair)}.tot>span{display:flex;align-items:center;gap:4px;white-space:nowrap}.tot b{color:var(--gris);font-size:14px}
-.ok{position:absolute;top:2px;left:2px;width:15px;height:15px;border-radius:50%;background:var(--ok);color:var(--fond);font:700 10px/15px "PT Sans";text-align:center}
 .att{position:absolute;top:2px;right:2px;width:9px;height:9px;border-radius:50%;background:var(--orange);box-shadow:0 0 0 2px var(--fond)}
-.av{position:absolute;bottom:2px;right:3px;font-size:10px;color:var(--mu);font-weight:700}
-.dr,.dm,.fi{position:relative}
-.dm .ok{position:static;display:inline-block;vertical-align:middle;margin-right:4px}
+.av{font-size:10px;color:var(--mu);font-weight:700;margin-left:4px}
 .titre-vue{display:flex;align-items:center;gap:12px;margin-bottom:6px}
 .titre-vue>div{min-width:0}
 .fl2{display:flex;gap:6px;flex:none}
 .fl2 button{flex:none;border:1px solid var(--filet);background:var(--surface);border-radius:6px;width:36px;height:36px;padding:0;font-size:20px;line-height:1;cursor:pointer;color:var(--accent)}
 .fl2 button:disabled{opacity:.35;cursor:default}
-
-/* graphique de volume */
-.vol{margin:4px 0 14px}
-.vol .zl{margin-top:0}
-
-/* à venir */
-.fil{max-width:680px;margin:0 auto}
-.nx{display:block;width:100%;text-align:left;border:0;border-left:3px solid var(--accent);background:var(--teinte);padding:14px 16px;border-radius:0 10px 10px 0;color:inherit;margin-bottom:8px;position:relative}
-.nx h2{font-size:21px;margin:2px 0}.nx .chf{display:flex;gap:18px;margin-top:4px}.nx .chf b{font:700 22px "Exo 2";color:var(--gris)}.nx .chf span{font-size:12px;color:var(--clair)}
-.prof{width:100%;height:70px;display:block;margin:12px 0 4px}.axe{display:flex;justify-content:space-between;font-size:11px;color:var(--clair);margin-bottom:6px}
-.fw{display:flex;align-items:center;gap:10px;margin-top:22px;padding:4px 0 6px;border-bottom:1px solid var(--trait)}.fw h2{font-size:16px;white-space:nowrap}.fw h2 small{margin-left:4px}
-.fr{display:flex;gap:12px;padding:8px 0;border-bottom:1px solid var(--filet)}.fd{width:42px;flex:none;font-size:12px;color:var(--clair);text-align:center;line-height:1.1}.fd b{display:block;font:700 18px "Exo 2";color:var(--gris)}
-.fr.auj .fd b{color:var(--accent)}
-.fl{flex:1;min-width:0}
-.fi{display:flex;align-items:center;gap:10px;width:100%;border:0;background:none;padding:4px 0;text-align:left}.fi:hover{background:var(--teinte)}
-.fi.run{height:48px}.fi.mu{height:34px}.ft{flex:1;min-width:0}.ft b{display:block;font-size:14px;color:var(--gris);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ft small{font-size:12px;color:var(--clair);white-space:nowrap}
-.fi .pv{width:150px;flex:none}.fi .ok{position:static;flex:none}
-.fi .att{top:4px;right:0}
-
-/* agenda */
-.agh,.agr{display:grid;grid-template-columns:104px repeat(7,minmax(0,1fr));gap:10px}
-.agh span{font-size:12px;color:var(--clair);font-weight:700}.agr{padding:10px 4px;border-top:1px solid var(--filet);align-items:start}
-.agt b{font:700 14px "Exo 2";color:var(--bleu);display:block}.kmv{font:700 20px "Exo 2";color:var(--gris)}.kmv small{font:400 12px "PT Sans";color:var(--clair)}
-.agt .u{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--clair)}.agt .ico{width:14px;height:14px}
-.agc .dn{display:none}
-.mxp{font:700 12px "Exo 2";color:var(--bleu);margin:14px 0 6px;padding-top:4px;border-top:2px solid var(--bleu)}
-.dr,.dm{display:block;width:100%;border:0;background:none;padding:2px 0;text-align:left;min-width:0;overflow:hidden}
-.dr:hover,.dm:hover{background:var(--teinte)}.dr .k,.dm .k{display:block;font-size:11px;color:var(--clair);white-space:nowrap}
-.dr .t{display:block;font-size:12px;font-weight:700;color:var(--gris);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:3px}
-.dm{height:38px}
-.vide{display:block}
-
-/* semaine en grand */
-.st3{display:flex;gap:28px;margin:12px 0}.st3>div{display:flex;align-items:center;gap:7px;color:var(--clair);font-size:13px;white-space:nowrap}.st3 b{font:700 24px "Exo 2";color:var(--gris)}.st3 .ico{width:22px;height:22px}
-.rep{display:flex;height:22px;border-radius:4px;overflow:hidden;gap:1px}.rep i{display:flex;align-items:center;justify-content:center;font:700 11px "PT Sans";font-style:normal;color:#fff;min-width:0}
-.bt{font-weight:700;color:var(--bleu);font-size:14px;margin-bottom:8px}.bt small{font-weight:400;color:var(--clair)}
-.wr{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px;margin-top:12px}.dc{min-width:0}.dn{font-size:12px;font-weight:700;color:var(--clair);margin-bottom:4px}
 
 /* aujourd'hui */
 .tuiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-top:8px}
@@ -105,7 +63,6 @@ svg text{font-family:"PT Sans",sans-serif;font-size:11px;fill:var(--clair)}svg .
 .tu .n{font-size:12px;color:var(--clair)}.tu b{display:block;font:700 26px/1.15 "Exo 2";color:var(--gris)}.tu b small{font:400 13px "PT Sans";color:var(--clair);margin-left:3px}
 .tu .s{font-size:12px;color:var(--clair)}
 .jauge{position:relative;height:8px;background:var(--teinte);border-radius:4px;margin-top:6px}.jauge i{position:absolute;left:0;top:0;bottom:0;border-radius:4px}.jauge u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--texte)}
-.seances-jour{margin-top:16px}
 
 /* fenêtre */
 .fond{position:fixed;inset:0;background:var(--voile);display:none;align-items:center;justify-content:center;padding:16px;z-index:9}.fond.on{display:flex}
@@ -145,22 +102,9 @@ svg text{font-family:"PT Sans",sans-serif;font-size:11px;fill:var(--clair)}svg .
 .dejafait{background:var(--teinte);border-radius:6px;padding:6px 10px;font-size:13px;margin:6px 0}
 
 /* réalisé, hors plan, ressenti (D66) */
-.vs{color:var(--texte);font-weight:700}
-.dr .k .vs,.dm .k .vs{font-weight:700}
-.dh{display:block;width:100%;border:1px dashed var(--filet);border-radius:6px;background:none;padding:3px 6px;text-align:left;min-width:0;overflow:hidden;height:34px;margin-top:2px;color:inherit}
-.dh .t{display:block;font-size:11px;color:var(--clair);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dh .k{display:block;font-size:11px;color:var(--texte);white-space:nowrap}
-.hp{font:400 11px "PT Sans";color:var(--clair);border:1px solid var(--filet);border-radius:4px;padding:0 4px;margin-left:4px;white-space:nowrap}
-.fi.hpi{height:40px}
-.der{display:flex;align-items:baseline;gap:8px;width:100%;text-align:left;border:1px solid var(--filet);background:var(--surface);border-radius:10px;padding:9px 12px;margin-bottom:8px;color:inherit;flex-wrap:wrap}
-.der b{color:var(--texte);font-size:14px;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.der .vs{font:700 15px "Exo 2";color:var(--accent)}
-.sous-titre{font-size:15px;margin:22px 0 2px}
-.vsx{border-collapse:collapse;width:100%;max-width:420px;margin:6px 0 4px;font-size:14px}
-.vsx th{font:400 11px "PT Sans";color:var(--clair);text-align:left;padding:2px 6px}.vsx td{padding:6px;border-top:1px solid var(--filet);white-space:nowrap}
-.vsx td:first-child{color:var(--clair);font-size:12px;padding-left:0}.vsx td:nth-child(2){color:var(--clair)}.vsx td b{font:700 17px "Exo 2";color:var(--texte)}
-.vsx small{font-size:11px;margin-left:6px;font-weight:700}.vsx .plus{color:var(--orange)}.vsx .moins{color:var(--bleu2)}
 .ress{border:1px solid var(--filet);border-radius:10px;padding:10px 12px;margin:6px 0;background:var(--surface)}
 .ress-c{display:flex;align-items:center;gap:20px}.ress-c>div{display:flex;flex-direction:column}.ress-c span{font-size:11px;color:var(--clair)}
-.ress-c b{font:700 20px "Exo 2";color:var(--texte)}.ress-c b small{font:400 12px "PT Sans";color:var(--clair)}
+.ress-c b{font:700 20px "Exo 2";color:var(--texte);white-space:nowrap}.ress-c b small{font:400 12px "PT Sans";color:var(--clair)}
 .ress-com{margin:6px 0 0;font-size:14px}
 .crayon{margin-left:auto;border:1px solid var(--filet);background:none;border-radius:8px;width:36px;height:36px;padding:8px;cursor:pointer;color:var(--accent)}
 .crayon svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linejoin:round}
@@ -186,12 +130,6 @@ svg text{font-family:"PT Sans",sans-serif;font-size:11px;fill:var(--clair)}svg .
 @media(max-width:340px){#sync span{display:none}#sync{padding:0 10px}}
 @media(max-width:760px){
  .et li{grid-template-columns:minmax(84px,auto) 96px;justify-content:start;gap:4px 16px}.et .dt{grid-column:1/-1}
- .agh{display:none}.agr{grid-template-columns:1fr;gap:0}.agt{display:flex;align-items:baseline;gap:10px;padding-bottom:4px}.agt .u{display:none}
- .agc{display:flex;gap:10px;padding:5px 0;border-top:1px solid var(--teinte)}.agc .dn{display:block;width:58px;flex:none;margin:0}.agc>div{flex:1;min-width:0}
- .wr{grid-template-columns:1fr;gap:0}.wr .dc{display:flex;gap:10px;padding:6px 0;border-top:1px solid var(--filet)}.wr .dn{width:58px;flex:none}.wr .dc>div:last-child{flex:1;min-width:0}
- .st3{gap:16px}.st3 b{font-size:19px}
- .vide{display:none}
- .tot{gap:10px}.fi .pv{width:96px}
  .fen{max-height:100%;height:100%;border-radius:0;padding:14px 16px calc(22px + env(safe-area-inset-bottom))}.fond{padding:0}
  .tuiles{grid-template-columns:1fr 1fr}
 }
@@ -253,3 +191,59 @@ svg text{font-family:"PT Sans",sans-serif;font-size:11px;fill:var(--clair)}svg .
 .an-leg{display:flex;flex-wrap:wrap;gap:3px 12px;font-size:11px;color:var(--clair);margin-top:4px}.an-leg i{display:inline-block;width:12px;height:8px;border-radius:2px;margin-right:4px}
 .an-leg i.in{background:var(--an-in)}.an-leg i.fast{background:var(--an-fast)}.an-leg i.slow{background:var(--an-slow)}.an-leg i.hr{height:2px;vertical-align:3px;background:var(--mu)}
 .an-laps{margin-top:12px}.an-laps summary{cursor:pointer;color:var(--accent);font-size:13px;font-weight:700}.an tr.an-stub td{color:var(--trait)}
+
+/* Planning (D70) : semaine par semaine, tous les jours, séances prévues avec fait / écart, hors plan discret */
+.planning{max-width:680px;margin:0 auto}
+.psem{margin-bottom:18px}
+.ptete{padding:8px 0 6px;border-bottom:1px solid var(--trait)}
+.pt1{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;font-size:12px;color:var(--clair)}
+.pt1>b{font:700 17px "Exo 2";color:var(--bleu)}
+.pt1 .ph{border:1px solid var(--filet);border-radius:4px;padding:0 5px}
+.pt1 .enc{margin-left:auto;color:var(--accent);font-weight:700}
+.pt2{display:flex;gap:14px;margin-top:4px;font-size:12px;color:var(--clair);flex-wrap:wrap}
+.pt2>span{display:flex;align-items:center;gap:4px;white-space:nowrap}.pt2 b{font:700 15px "Exo 2";color:var(--gris)}.pt2 .ico{width:15px;height:15px}
+.pbar{margin-top:6px}.pz{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--teinte)}.pz i{display:block;height:100%}
+.pbr{height:3px;margin-top:2px;border-radius:2px;background:var(--teinte);overflow:hidden}.pbr i{display:block;height:100%;background:var(--texte);opacity:.55}
+.psem.encours .ptete{border-bottom-color:var(--accent)}
+.pj{display:flex;gap:10px;border-bottom:1px solid var(--filet);min-height:44px}
+.pjd{width:38px;flex:none;font-size:11px;color:var(--clair);text-align:center;line-height:1.05;padding-top:7px}.pjd b{display:block;font:700 17px "Exo 2";color:var(--gris)}
+.pj.passe .pjd b{color:var(--clair)}
+.pj.auj{background:var(--accent-doux);border-radius:6px}.pj.auj .pjd b,.pj.auj .pjd{color:var(--accent)}
+.pjl{flex:1;min-width:0;padding:3px 0}
+.pvide{display:block;height:36px}
+.ps{position:relative;display:flex;align-items:center;gap:10px;width:100%;border:0;background:none;padding:5px 4px 5px 0;text-align:left;color:inherit;min-height:44px;cursor:pointer}
+.ps:hover{background:var(--teinte)}
+.psi{flex:none;width:22px;display:flex;justify-content:center}.psi .ico{width:19px;height:19px}.psi .bi{width:22px;height:22px}
+.pst{flex:1;min-width:0}.pst b{display:block;font-size:14px;color:var(--gris);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pst small{display:block;font-size:12px;color:var(--clair);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.pst small b{display:inline;font-size:13px;color:var(--texte)}
+.ps .pv{width:64px;flex:none}
+.okc{flex:none;width:20px;height:20px;border-radius:50%;background:var(--ok);color:var(--fond);font:700 12px/20px "PT Sans";text-align:center}
+.ec{font-weight:700;font-style:normal}.ec-in{color:var(--ok)}.ec-plus{color:var(--orange)}.ec-moins{color:var(--bleu2)}
+.ps.manque .pst b{color:var(--clair);font-weight:400}.ps.manque .psi{opacity:.45}
+.ps.hors{border:1px dashed var(--filet);border-radius:6px;margin:3px 0;min-height:38px;padding-left:4px}.ps.hors .pst b{font-size:13px;color:var(--clair);font-weight:400}.ps.hors .psi{opacity:.6}
+.hp{font:400 11px "PT Sans";color:var(--clair);border:1px solid var(--filet);border-radius:4px;padding:0 4px;white-space:nowrap;flex:none}
+
+/* Aujourd'hui */
+.auj-s{margin-top:8px}.auj-s .nx{margin-bottom:8px}
+.nxh{display:flex;align-items:center;gap:10px}.nxh h2{flex:1;min-width:0}.nxh .psi{width:26px}.nxh .psi .ico,.nxh .psi .bi{width:24px;height:24px}
+.nx .ec{font:700 22px "Exo 2"}
+.repos{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;padding:10px 0 4px}.repos b{font:700 20px "Exo 2";color:var(--bleu)}
+.auj-l{margin-top:4px}
+
+/* Fiche de séance : Prévu / Réalisé / Analyse */
+.fen h3 .psi{display:inline-flex;vertical-align:-4px;margin-right:6px}
+.ong{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:4px;margin:12px 0 4px;background:var(--teinte);border-radius:8px;padding:3px}
+.ong button{border:0;background:none;border-radius:6px;min-height:36px;font-weight:700;font-size:14px;color:var(--clair);cursor:pointer}
+.ong button.on{background:var(--surface);color:var(--accent);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.ong-c{min-height:120px}
+.h-prevu{border-top:0!important;padding-top:0!important}
+.it{margin:8px 0}
+.rl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:10px 0}
+.rl>div{border:1px solid var(--filet);border-radius:8px;padding:8px 10px;background:var(--surface)}
+.rl span{display:block;font-size:12px;color:var(--clair)}.rl b{display:block;font:700 21px "Exo 2";color:var(--texte)}.rl small{font-size:12px;color:var(--clair)}
+.acts{list-style:none;padding:0;margin:6px 0}.acts li{display:flex;gap:8px;align-items:baseline;padding:6px 0;border-top:1px solid var(--filet);font-size:14px}
+.acts li>b{flex:none;color:var(--accent);font-size:12px}.acts li>span:first-of-type{flex:1;min-width:0}.acts small{color:var(--clair)}.acts .n{flex:none;color:var(--gris);font-weight:700;font-size:13px;text-align:right}
+.nx{display:block;width:100%;text-align:left;border:0;border-left:3px solid var(--accent);background:var(--teinte);padding:12px 14px;border-radius:0 10px 10px 0;color:inherit;position:relative;cursor:pointer}
+.nx h2{font-size:19px;margin:0}.nx .chf{display:flex;gap:18px;margin-top:6px}.nx .chf b{font:700 22px "Exo 2";color:var(--gris)}.nx .chf span{font-size:12px;color:var(--clair)}
+.prof{width:100%;height:60px;display:block;margin:10px 0 4px}.axe{display:flex;justify-content:space-between;font-size:11px;color:var(--clair);margin-bottom:6px}
+.ps .att,.nx .att{position:absolute;top:4px;right:2px;width:9px;height:9px}

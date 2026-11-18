@@ -1229,8 +1229,8 @@
    "est_duration_s": 1740,
    "est_distance_m": 5370,
    "intent": null,
-   "status": "done",
-   "activity_id": 5024,
+   "status": "planned",
+   "activity_id": null,
    "structure": {
     "steps": [
      {
@@ -1275,15 +1275,7 @@
      }
     ]
    },
-   "realized": {
-    "activity_ids": [
-     5024
-    ],
-    "distance_m": 5724,
-    "duration_s": 1811,
-    "pace_s_km": 316,
-    "avg_hr": 142
-   },
+   "realized": null,
    "feedback": null,
    "analysis": null
   },
@@ -7042,20 +7034,6 @@
    "laps": []
   },
   {
-   "id": 5024,
-   "date": "2026-11-14",
-   "start": "2026-11-14T07:15:00+01:00",
-   "type": "running",
-   "display_name": "Footing 24 min + lignes droites",
-   "distance_m": 5724,
-   "duration_s": 1811,
-   "pace_s_km": 316,
-   "avg_hr": 142,
-   "elevation_gain_m": 40,
-   "session_id": 124,
-   "laps": []
-  },
-  {
    "id": 5032,
    "date": "2026-11-14",
    "start": "2026-11-14T10:00:00+01:00",
@@ -7496,10 +7474,10 @@
   {
    "week_start": "2026-11-09",
    "future": false,
-   "km": 75.6,
+   "km": 69.9,
    "zone_minutes": {
     "z1": 15,
-    "z2": 378,
+    "z2": 350,
     "z3": 12,
     "z4": 14,
     "z5": 6

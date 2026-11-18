@@ -1,6 +1,7 @@
 // Rendu HTML des vues, repris de la maquette plan-integre (version téléphone d'abord).
-import { ZC, ZN, JC, JL, esc, fk, f1, fh, dd, addD, jour, ecart, muKind, prevuRealise, evaluation, pc, semaineCourante, versus, versusCourt } from './plan.js';
+import { ZC, ZN, JC, JL, esc, f1, fh, dd, jlong, addD, jour, ecart, muKind, prevuRealise, evaluation, pc, versus, etat, ecartPrevu, chiffresSeance, semainePlanning, deplacable } from './plan.js';
 import { vAnalyse } from './analyse.js';
+import * as MUS from './muscu.js';
 
 const MU = 'var(--mu)', GB = 'var(--gb)';
 export const ICO = {
@@ -24,15 +25,10 @@ const HALT = `<svg class="bi" viewBox="0 0 24 24" aria-hidden="true" fill="none"
 const AUTRE = `<svg class="bi" viewBox="0 0 24 24" aria-hidden="true" fill="none" style="stroke:${MU}" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2" stroke-linecap="round"/></svg>`;
 export const muIco = s => { if (s.sp === 'x') return AUTRE; const k = muKind(s.t, s.ty)[0]; return k === 'hyrox' ? HYROX : k ? corps(k) : HALT; };
 export const muTag = s => `<span class="mt">${muIco(s)}<span>${esc(s.lab)}</span></span>`;
-const OK = s => s.done ? '<span class="ok" title="Faite">✓</span>' : '';
-// Sous-titre d'une séance : réalisé face au prévu quand elle est faite, estimation sinon.
-const SOUS = s => s.done && s.real ? `<span class="vs">${esc(versusCourt(s))}</span>` : esc(s.est);
-const HP = '<span class="hp" title="Hors plan">hors plan</span>';
 const actCourt = h => h.sp === 'r' && h.km >= 0.5 ? `${f1(h.km)} km · ${Math.round(h.mn)} min` : h.km >= 1 ? `${f1(h.km)} km` : `${Math.round(h.mn)} min`;
 const ATT = s => s.attente ? '<span class="att" title="En attente du PC"></span>' : '';
 const AV = s => s.av ? '<span class="av" title="Avant la course">1<sup>re</sup></span>' : '';
 
-export function leg(extra) { return '<div class="zl">' + [1, 2, 3, 4, 5].map(l => `<span><i style="background:${ZC[l]}"></i>${ZN[l]}</span>`).join('') + (extra || '') + '</div>'; }
 export function mini(p, tref, h) {
   if (!p || !p.length) return '';
   let x = 0, r = '';
@@ -48,145 +44,82 @@ export function prof(p) {
   return `<svg class="prof" viewBox="0 0 ${T} 100" preserveAspectRatio="none" aria-hidden="true">${r}</svg><div class="axe"><span>0</span><span>${Math.round(T / 60)} min</span></div>` +
     `<div class="zl">${used.map(l => `<span><i style="background:${ZC[l]}"></i>${ZN[l]}</span>`).join('')}</div>`;
 }
-function tot(w) {
-  return `<span class="tot"><span title="Km de course">${ICO.route}<b>${fk(w.km)}</b> km</span><span title="${w.nr} sorties">${ICO.run}<b>${fh(w.hr)}</b></span><span title="${w.nm} séances de muscu">${ICO.mus}<b>${fh(w.hm)}</b></span></span>`;
+// ---------- ligne de séance (planning, aujourd'hui) : icône, titre, chiffres, état ----------
+const ECL = e => (e == null ? '' : Math.abs(e) <= 10 ? 'ec-in' : e > 0 ? 'ec-plus' : 'ec-moins');
+export const fEcart = e => (e == null ? '' : (e > 0 ? '+' : e < 0 ? '−' : '') + Math.abs(e) + ' %');
+const icone = s => (s.sp === 'r' ? ICO.run : muIco(s));
+export function ligneSeance(M, s) {
+  const et = etat(s, M.T), e = et === 'fait' ? ecartPrevu(s) : null;
+  const ch = esc(chiffresSeance(s));
+  const sous = et === 'fait'
+    ? `<b>${ch}</b>${e != null ? ` <span class="ec ${ECL(e)}">${fEcart(e)}</span>` : ''}`
+    : ch + (et === 'manque' ? ' · non faite' : '');
+  const droite = et === 'fait' ? '<span class="okc" title="Faite">✓</span>'
+    : s.sp === 'r' && et !== 'manque' ? `<span class="pv">${mini(s.p, M.tref, 22)}</span>` : '';
+  return `<button class="ps ${et}${s.sp === 'r' ? ' run' : ' mu'}" data-i="${s.i}" title="${esc(s.t)}">${ATT(s)}` +
+    `<span class="psi">${icone(s)}</span><span class="pst"><b>${esc(s.sp === 'r' ? s.t : s.lab || s.t)}${AV(s)}</b><small>${sous}</small></span>${droite}</button>`;
+}
+export function ligneHors(x) {
+  return `<button class="ps hors" data-h="${x.k}" title="${esc(x.t)} · hors plan"><span class="psi">${x.sp === 'r' ? ICO.run : x.sp === 'm' ? muIco({ sp: 'm', t: x.t, ty: '' }) : AUTRE}</span>` +
+    `<span class="pst"><b>${esc(x.t)}</b><small>${actCourt(x)}</small></span><span class="hp">hors plan</span></button>`;
 }
 
-// ---------- rangées alignées : dans une semaine, autant de cases course puis muscu chaque jour ----------
-function slots(M, n) {
-  const a = M.S.filter(s => s.w === n), hh = (M.H || []).filter(x => x.w === n); let r = 0, m = 0, x = 0;
-  for (let j = 0; j < 7; j++) {
-    const d = a.filter(s => s.j === j);
-    r = Math.max(r, d.filter(s => s.sp === 'r').length); m = Math.max(m, d.filter(s => s.sp !== 'r').length);
-    x = Math.max(x, hh.filter(y => y.j === j).length);
-  }
-  return [r, m, x];
+// ---------- planning : semaine par semaine, tous les jours (vides compris) ----------
+function barreSemaine(P) {
+  const top = Math.max(P.prevu.km, P.reel.km, 1), pc0 = x => (x / top * 100).toFixed(1);
+  const z = P.zk.map((k, i) => (k > 0 ? `<i style="width:${pc0(k)}%;background:${ZC[i + 1]}"></i>` : '')).join('');
+  return `<div class="pbar" aria-hidden="true"><div class="pz">${z}</div><div class="pbr"><i style="width:${pc0(P.reel.km)}%"></i></div></div>`;
 }
-function dayCell(M, n, j, h) {
-  const ss = M.S.filter(s => s.w === n && s.j === j), [nr, nm, nx] = slots(M, n), Rr = ss.filter(s => s.sp === 'r'), Mm = ss.filter(s => s.sp !== 'r');
-  const Hh = (M.H || []).filter(x => x.w === n && x.j === j);
-  let o = '';
-  for (let k = 0; k < nr; k++) {
-    const s = Rr[k];
-    o += s ? `<button class="dr" style="height:${h + 38}px" data-i="${s.i}" title="${esc(s.t)}">${OK(s)}${ATT(s)}${mini(s.p, M.tref, h)}<span class="t">${esc(s.t)}</span><span class="k">${s.done && s.real ? SOUS(s) : `${f1(s.km)} km · ${Math.round(s.mn)} min`}</span></button>` : `<span class="vide" style="height:${h + 38}px"></span>`;
-  }
-  for (let k = 0; k < nm; k++) {
-    const s = Mm[k];
-    o += s ? `<button class="dm" data-i="${s.i}" title="${esc(s.t)}">${OK(s)}${ATT(s)}${AV(s)}${muTag(s)}<span class="k">${s.done && s.real ? SOUS(s) : Math.round(s.mn) + ' min'}</span></button>` : '<span class="vide" style="height:38px"></span>';
-  }
-  for (let k = 0; k < nx; k++) {
-    const x = Hh[k];
-    o += x ? `<button class="dh" data-h="${x.k}" title="${esc(x.t)} · hors plan"><span class="t">${esc(x.t)}</span><span class="k">${actCourt(x)}</span></button>` : '<span class="vide" style="height:34px"></span>';
-  }
-  return o;
+function teteSemaine(P) {
+  const w = P.w, montre = P.passee || P.encours;
+  const v = (r, p, f, u) => (montre ? `<b>${f(r)}</b><small> / ${f(p)}${u}</small>` : `<b>${f(p)}</b><small>${u}</small>`);
+  return `<div class="ptete"><div class="pt1"><b>S${w.n}</b><span>${dd(w.ws)} → ${dd(w.we)}</span>${w.ph ? `<span class="ph">${esc(w.ph)}</span>` : ''}${w.rec ? '<span class="ph">allégée</span>' : ''}${P.encours ? '<span class="enc">cette semaine</span>' : ''}</div>` +
+    `<div class="pt2"><span title="Km de course${montre ? ' réalisés / prévus' : ' prévus'}">${ICO.route}${v(P.reel.km, P.prevu.km, f1, ' km')}</span>` +
+    `<span title="Heures de course">${ICO.run}${v(P.reel.hr, P.prevu.hr, fh, '')}</span>` +
+    `<span title="Heures de muscu">${ICO.mus}${v(P.reel.hm, P.prevu.hm, fh, '')}</span></div>${barreSemaine(P)}</div>`;
 }
-
-// ---------- graphique : volume décomposé par zone, km toujours écrits ----------
-export function vVolume(M, selW, etroit) {
-  const P = M.avant, W = M.W, N = P.length + W.length;
-  if (!N) return '';
-  const bw = etroit ? 34 : 46, L = 30, T = 24, H = etroit ? 140 : 190;
-  const kmW = w => w.reel ? w.reel.km : w.km;
-  const maxKm = Math.max(10, ...W.map(kmW), ...P.map(p => p.km));
-  const top = Math.ceil(maxKm / 20) * 20, y = k => T + H - k / top * H, y0 = T + H;
-  const mh = Math.max(0.1, ...W.map(w => w.hm), ...P.map(p => p.hm)), my = y0 + 40, mH = 28;
-  const Wd = L + N * bw + 8, Ht = my + mH + 18;
-  const pad = etroit ? 6 : 9;
-  let g = '', hit = '';
-  for (let k = 20; k <= top; k += 20) g += `<line x1="${L}" x2="${Wd - 6}" y1="${y(k)}" y2="${y(k)}" class="gr"/><text x="${L - 5}" y="${y(k) + 4}" text-anchor="end">${k}</text>`;
-  const xs = L + P.length * bw;
-  if (selW != null) g += `<rect x="${xs + selW * bw + 1}" y="16" width="${bw - 2}" height="${my + mH - 14}" style="fill:var(--sel)" rx="4"/>`;
-  const barreReelle = (x, km, hm, lab) => {
-    g += `<rect x="${x + pad}" y="${y(km)}" width="${bw - 2 * pad}" height="${y0 - y(km)}" style="fill:var(--reel)"/><text x="${x + bw / 2}" y="${y(km) - 4}" text-anchor="middle" class="b">${fk(km)}</text><text x="${x + bw / 2}" y="${y0 + 14}" text-anchor="middle">${lab}</text>`;
-    if (hm) g += `<rect x="${x + pad}" y="${my}" width="${bw - 2 * pad}" height="${hm / mh * mH}" style="fill:${MU}" opacity=".35"/>`;
-  };
-  P.forEach((p, k) => barreReelle(L + k * bw, p.km, p.hm, dd(p.ws)));
-  W.forEach((w, n) => {
-    const x = xs + n * bw;
-    if (w.reel) barreReelle(x, w.reel.km, w.reel.hm || w.hm, 'S' + w.n);
-    else {
-      let b = 0;
-      w.zk.forEach((k, z) => { if (!k) return; g += `<rect x="${x + pad}" y="${y(b + k).toFixed(1)}" width="${bw - 2 * pad}" height="${(k / top * H).toFixed(1)}" style="fill:${ZC[z + 1]}"/>`; b += k; });
-      g += `<text x="${x + bw / 2}" y="${y(w.km) - 4}" text-anchor="middle" class="b">${fk(w.km)}</text><text x="${x + bw / 2}" y="${y0 + 14}" text-anchor="middle"${n === selW ? ' class="b"' : ''}>S${w.n}</text>`;
-      if (w.hm) g += `<rect x="${x + pad}" y="${my}" width="${bw - 2 * pad}" height="${w.hm / mh * mH}" style="fill:${MU}"/>`;
-    }
-    if (w.sl) g += `<text x="${x + bw / 2}" y="${y0 + 28}" text-anchor="middle" class="sl">${fk(w.sl)}</text>`;
-    hit += `<rect data-w="${n}" x="${x}" y="0" width="${bw}" height="${Ht}" fill="transparent"><title>Semaine ${w.n}</title></rect>`;
-  });
-  const T0 = W.findIndex(w => !w.passee);
-  if (T0 > 0) g += `<line x1="${xs + T0 * bw}" x2="${xs + T0 * bw}" y1="6" y2="${my + mH + 4}" style="stroke:var(--trait)" stroke-dasharray="3 3"/>`;
-  else if (P.length) g += `<line x1="${xs}" x2="${xs}" y1="6" y2="${my + mH + 4}" style="stroke:var(--trait)" stroke-dasharray="3 3"/>`;
-  g += `<text x="${L - 5}" y="${y0 + 28}" text-anchor="end" class="sl">SL</text><text x="${L - 5}" y="${my + 12}" text-anchor="end">h</text>`;
-  return `<div class="vol">${leg(`<span><i style="background:var(--reel)"></i>réel</span><span><i style="background:${MU}"></i>muscu</span>`)}<div class="sc" id="sc-vol"><svg width="${Wd}" height="${Ht}" viewBox="0 0 ${Wd} ${Ht}" role="img" aria-label="Volume par semaine">${g}${hit}</svg></div></div>`;
-}
-
-// ---------- 1. à venir ----------
-export function vFil(M, selW) {
-  const up = M.S.filter(s => s.d >= M.T), L = up.length ? up : M.S;
-  if (!L.length) return '<p class="m">Aucune séance dans l’instantané.</p>';
-  const nx = L.find(s => s.sp === 'r' && !s.done) || L.find(s => !s.done) || L[0];
-  const rel = d => { const k = ecart(M.T, d); return k === 0 ? 'aujourd’hui' : k === 1 ? 'demain' : JL[jour(d).getDay()] + ' ' + dd(d); };
-  const recents = M.S.filter(s => s.done && s.real && s.d <= M.T && ecart(s.d, M.T) <= 2), der = recents.filter(s => s.sp === 'r').pop() || recents.pop();
-  let h = '<div class="fil">' + (der ? `<button class="der" data-i="${der.i}"><span class="m">${ecart(der.d, M.T) === 0 ? 'Aujourd’hui' : ecart(der.d, M.T) === 1 ? 'Hier' : jl2(der.d)}</span><b>${esc(der.t)}</b>${SOUS(der)}</button>` : '') +
-    `<button class="nx" data-i="${nx.i}">${ATT(nx)}<div class="m">Prochaine sortie · ${rel(nx.d)}</div><h2>${esc(nx.t)}</h2>` +
-    `<div class="chf">${nx.km ? `<div><b>${f1(nx.km)}</b> <span>km</span></div>` : ''}<div><b>${Math.round(nx.mn)}</b> <span>min</span></div></div>${prof(nx.p)}</button>`;
-  let cw = -1, cd = '';
-  for (const s of L) {
-    if (s.w !== cw) {
-      h += cd ? '</div></div>' : ''; cw = s.w; cd = '';
-      const w = M.W[cw];
-      h += `<div class="fw${cw === selW ? ' sw' : ''}" id="v-w${cw}"><h2>S${w.n}${w.rec ? '<small>allégée</small>' : ''}</h2>${tot(w)}</div>`;
-    }
-    if (s.d !== cd) {
-      h += (cd ? '</div></div>' : '') + `<div class="fr${s.d === M.T ? ' auj' : ''}" data-day="${s.d}"><div class="fd">${JC[s.j]}<b>${jour(s.d).getDate()}</b></div><div class="fl">`;
-      cd = s.d;
-    }
-    h += s.sp === 'r'
-      ? `<button class="fi run" data-i="${s.i}" title="${esc(s.t)}">${OK(s)}${ATT(s)}<span class="ft"><b>${esc(s.t)}</b><small>${SOUS(s)}</small></span><span class="pv">${mini(s.p, M.tref, 26)}</span></button>`
-      : `<button class="fi mu" data-i="${s.i}" title="${esc(s.t)}">${OK(s)}${ATT(s)}${AV(s)}${muTag(s)}<span class="ft"><small>${SOUS(s)}</small></span></button>`;
-  }
-  return h + (cd ? '</div></div>' : '') + '</div>';
-}
-
-function titreVue(M, n, sous) {
-  const w = M.W[n];
-  return `<div class="titre-vue"><span class="fl2"><button data-nav="-1" aria-label="Semaine précédente"${n <= 0 ? ' disabled' : ''}>‹</button><button data-nav="1" aria-label="Semaine suivante"${n >= M.W.length - 1 ? ' disabled' : ''}>›</button></span>` +
-    `<div><h2>Semaine ${w.n}<small>${dd(w.ws)} → ${dd(w.we)}</small></h2>${sous ? `<div class="m">${sous}</div>` : ''}</div></div>`;
-}
-
-// ---------- 2. agenda ----------
-export function vAgenda(M, selW) {
-  const n0 = selW != null ? selW : semaineCourante(M);
-  let h = titreVue(M, n0, '') + `<div class="agh"><span></span>${JC.map(j => `<span>${j}</span>`).join('')}</div>`;
+export function vPlanning(M) {
+  let h = '<div class="planning">';
   M.W.forEach((w, n) => {
-    if (!n || M.W[n - 1].ph !== w.ph) h += `<div class="mxp">${esc(w.ph || 'Plan')}</div>`;
-    h += `<div class="agr${n === selW ? ' sw' : ''}" id="v-w${n}"><div class="agt"><b>S${w.n}</b><span class="kmv">${fk(w.km)}<small> km</small></span><span class="u">${ICO.run}${fh(w.hr)}</span><span class="u">${ICO.mus}${fh(w.hm)}</span></div>`;
-    for (let j = 0; j < 7; j++) { const d = addD(w.ws, j); h += `<div class="agc" data-day="${d}"><div class="dn">${JC[j]} ${dd(d)}</div><div>${dayCell(M, n, j, 30)}</div></div>`; }
-    h += '</div>';
+    const P = semainePlanning(M, n);
+    h += `<section class="psem${P.encours ? ' encours' : ''}${P.passee ? ' passee' : ''}" id="pw-${n}">${teteSemaine(P)}`;
+    for (const J of P.jours) {
+      const items = J.S.map(s => ligneSeance(M, s)).join('') + J.H.map(ligneHors).join('');
+      h += `<div class="pj${J.auj ? ' auj' : ''}${J.passe ? ' passe' : ''}" data-day="${J.d}"><div class="pjd">${JC[J.j]}<b>${jour(J.d).getDate()}</b></div>` +
+        `<div class="pjl">${items || '<span class="pvide"></span>'}</div></div>`;
+    }
+    h += '</section>';
   });
-  return h;
-}
-
-// ---------- 3. semaine en grand ----------
-export function vFocus(M, n) {
-  const w = M.W[n];
-  let h = titreVue(M, n, esc(w.ph) + (w.rec ? ' · semaine allégée' : ''));
-  h += `<div class="st3"><div>${ICO.route}<b>${fk(w.km)}</b>km</div><div>${ICO.run}<b>${fh(w.hr)}</b>${w.nr}</div><div>${ICO.mus}<b>${fh(w.hm)}</b>${w.nm}</div></div>`;
-  const t = w.zm.reduce((a, b) => a + b, 0);
-  if (t) {
-    h += `<div class="bt">Intensités <small>${fh(t / 60)} de course</small></div><div class="rep">` +
-      w.zm.map((m, z) => m ? `<i style="flex:${m};background:${ZC[z + 1]};${z ? '' : 'color:var(--texte)'}" title="${ZN[z + 1]} · ${m} min">${m / t >= 0.08 ? Math.round(m / t * 100) + ' %' : ''}</i>` : '').join('') +
-      '</div><div class="zl">' + w.zm.map((m, z) => m ? `<span><i style="background:${ZC[z + 1]}"></i>${ZN[z + 1]} ${m} min</span>` : '').join('') + '</div>';
-  }
-  h += '<div class="wr">';
-  for (let j = 0; j < 7; j++) { const d = addD(w.ws, j); h += `<div class="dc" data-day="${d}"><div class="dn">${JC[j]} ${dd(d)}</div><div>${dayCell(M, n, j, 64)}</div></div>`; }
   return h + '</div>';
 }
 
-// ---------- 4. aujourd'hui : indicateurs du jour ----------
+// ---------- aujourd'hui : séances du jour, hier, prochaine séance si repos ; indicateurs en pied ----------
+function carteJour(M, s) {
+  const et = etat(s, M.T), e = et === 'fait' ? ecartPrevu(s) : null;
+  return `<button class="nx" data-i="${s.i}">${ATT(s)}<div class="nxh"><span class="psi">${icone(s)}</span><h2>${esc(s.sp === 'r' ? s.t : s.t || s.lab)}</h2>${et === 'fait' ? '<span class="okc">✓</span>' : ''}</div>` +
+    (et === 'fait'
+      ? `<div class="chf"><div><b>${esc(chiffresSeance(s))}</b></div>${e != null ? `<div><b class="ec ${ECL(e)}">${fEcart(e)}</b></div>` : ''}</div>`
+      : `<div class="chf">${s.km ? `<div><b>${f1(s.km)}</b> <span>km</span></div>` : ''}${s.mn ? `<div><b>${Math.round(s.mn)}</b> <span>min</span></div>` : ''}</div>${s.sp === 'r' ? prof(s.p) : ''}`) + '</button>';
+}
 export function vAujourdhui(M) {
+  const ss = M.S.filter(s => s.d === M.T), hs = (M.H || []).filter(x => x.d === M.T);
+  let h = `<h2>Aujourd’hui<small>${jlong(M.T)}</small></h2><div class="auj-s">`;
+  if (ss.length) h += ss.map(s => carteJour(M, s)).join('');
+  else {
+    const nx = M.S.find(s => s.d > M.T);
+    h += `<div class="repos"><b>Repos</b>${nx ? `<span class="m">Prochaine séance · ${ecart(M.T, nx.d) === 1 ? 'demain' : jlong(nx.d)}</span>` : ''}</div>`;
+    if (nx) h += ligneSeance(M, nx);
+  }
+  h += hs.map(ligneHors).join('') + '</div>';
+  const hier = addD(M.T, -1), sh = M.S.filter(s => s.d === hier), hh = (M.H || []).filter(x => x.d === hier);
+  h += `<h2 class="sous-titre">Hier<small>${jlong(hier)}</small></h2><div class="auj-l">` +
+    (sh.length || hh.length ? sh.map(s => ligneSeance(M, s)).join('') + hh.map(ligneHors).join('') : '<p class="m">Repos</p>') + '</div>';
+  h += '<div class="act"><button class="bt2" data-act="ressenti-jour">Ressenti du jour</button></div>';
+  return h + tuilesJour(M);
+}
+function tuilesJour(M) {
   const t = M.today;
-  if (!t) return '<p class="m">Pas d’indicateurs dans l’instantané.</p>';
+  if (!t) return '';
   const tu = (n, val, unite, sous, extra) => `<div class="tu"><div class="n">${n}</div><b>${val ?? '—'}${val != null && unite ? `<small>${unite}</small>` : ''}</b>${sous ? `<div class="s">${sous}</div>` : ''}${extra || ''}</div>`;
   const jauge = (v, lo, hi, max) => {
     if (v == null || !max) return '';
@@ -195,28 +128,14 @@ export function vAujourdhui(M) {
     return `<div class="jauge"><i style="width:${p(v)}%;background:${col}"></i>${hi != null ? `<u style="left:${p(hi)}%"></u>` : ''}</div>`;
   };
   const HRV = { balanced: 'équilibrée', unbalanced: 'déséquilibrée', low: 'basse', poor: 'faible' };
-  let h = `<h2>${t.date === M.T ? 'Aujourd’hui' : jl2(t.date)}<small>${dd(t.date)}</small></h2><div class="tuiles">`;
+  let h = `<h2 class="sous-titre">Forme${t.date !== M.T ? `<small>${jlong(t.date)}</small>` : ''}</h2><div class="tuiles">`;
   if (t.hrv) h += tu('VFC nocturne', t.hrv.value, 'ms', [HRV[t.hrv.status] || t.hrv.status, t.hrv.baseline_low != null ? `réf. ${t.hrv.baseline_low}-${t.hrv.baseline_high}` : ''].filter(Boolean).join(' · '));
   if (t.resting_hr != null) h += tu('FC repos', t.resting_hr, 'bpm');
   if (t.sleep) h += tu('Sommeil', t.sleep.duration_s ? fh(t.sleep.duration_s / 3600) : null, '', t.sleep.score != null ? `score ${t.sleep.score}` : '');
   if (t.body_battery != null) h += tu('Body Battery', t.body_battery, '/100', '', jauge(t.body_battery, null, null, 100));
   if (t.acute_load) h += tu('Charge aiguë', Math.round(t.acute_load.value), '', t.acute_load.range_low != null ? `cible ${Math.round(t.acute_load.range_low)}-${Math.round(t.acute_load.range_high)}` : '', jauge(t.acute_load.value, t.acute_load.range_low, t.acute_load.range_high, Math.max(t.acute_load.value, t.acute_load.range_high || 0) * 1.15));
   if (t.mechanical_load) { const m = t.mechanical_load; h += tu('Charge os 7 j', Math.round(m.load_7d), m.max_tolerated ? '/ ' + Math.round(m.max_tolerated) : '', m.max_tolerated ? Math.round(m.load_7d / m.max_tolerated * 100) + ' % du max' : '', jauge(m.load_7d, null, m.max_tolerated, Math.max(m.load_7d, m.max_tolerated || 0) * 1.15)); }
-  h += '</div>';
-  const ligneS = s => s.sp === 'r'
-    ? `<button class="fi run" data-i="${s.i}">${OK(s)}${ATT(s)}<span class="ft"><b>${esc(s.t)}</b><small>${SOUS(s)}</small></span><span class="pv">${mini(s.p, M.tref, 26)}</span></button>`
-    : `<button class="fi mu" data-i="${s.i}">${OK(s)}${ATT(s)}${muTag(s)}<span class="ft"><small>${SOUS(s)}</small></span></button>`;
-  const ligneH = x => `<button class="fi hpi" data-h="${x.k}"><span class="ft"><b>${esc(x.t)} ${HP}</b><small>${actCourt(x)}${x.pace && x.sp === 'r' ? ' · ' + pc(x.pace) + ' /km' : ''}</small></span></button>`;
-  const ss = M.S.filter(s => s.d === M.T), hs = (M.H || []).filter(x => x.d === M.T);
-  h += '<div class="seances-jour fil">' + (ss.length || hs.length ? ss.map(ligneS).join('') + hs.map(ligneH).join('') : '<p class="m">Repos</p>') + '</div>';
-  h += '<div class="act"><button class="bt2" data-act="ressenti-jour">Ressenti du jour</button></div>';
-  let dj = '';
-  for (let k = 1; k <= 3; k++) {
-    const d = addD(M.T, -k), a = M.S.filter(s => s.d === d && (s.done || s.passe)), b = (M.H || []).filter(x => x.d === d);
-    if (a.length || b.length) dj += `<div class="fr"><div class="fd">${JC[(jour(d).getDay() + 6) % 7]}<b>${jour(d).getDate()}</b></div><div class="fl">${a.map(ligneS).join('')}${b.map(ligneH).join('')}</div></div>`;
-  }
-  if (dj) h += `<h2 class="sous-titre">Derniers jours</h2><div class="fil">${dj}</div>`;
-  return h;
+  return h + '</div>';
 }
 const jl2 = d => JL[jour(d).getDay()];
 
@@ -229,59 +148,94 @@ function profAt(p, T) {
   return `<svg viewBox="0 0 ${T} 100" preserveAspectRatio="none" aria-hidden="true">${r}</svg>`;
 }
 
-export function detail(M, s, ctx) {
-  const d = jour(s.d);
-  let h = `<h3 id="fen-titre">${esc(s.t)}${s.attente ? '<span class="badge att2">en attente du PC</span>' : ''}${s.done ? '<span class="badge fait">faite</span>' : ''}</h3>` +
-    `<div class="m">${JL[d.getDay()]} ${dd(s.d)} · S${M.W[s.w] ? M.W[s.w].n : ''}${s.est ? ' · ' + esc(s.est) : ''}</div>` +
-    (s.sp !== 'r' ? `<div>${muTag(s)}</div>` : '') + (s.it ? `<p>${esc(s.it)}</p>` : '') + prof(s.p) +
-    (s.sx.length ? `<ul class="et">${s.sx.map(([q, l, al, nm, no, rc, zl]) => `<li><div class="q">${esc(q)}</div><div>${gauge(l, zl)}</div><div class="dt">${al ? `<span class="al">${esc(al)}</span>` : ''}${rc ? `<span class="rc">${esc(rc)}</span>` : ''}<span class="nm">${esc(nm)}${no ? ' · ' + esc(no) : ''}</span></div></li>`).join('')}</ul>` : '');
+// ---------- fiche de séance : Prévu / Réalisé / Analyse, puis ressenti et actions ----------
+const ORD = k => (k === 0 ? '1re' : k + 1 + 'e');
+const heureDe = iso => { const m = /T(\d\d):(\d\d)/.exec(iso || ''); return m ? m[1] + ' h ' + m[2] : ''; };
+// Onglets disponibles : une séance faite a les trois (la muscu n'a pas d'analyse), les autres le prévu seul.
+export function onglets(s) {
+  if (!s.done) return ['prevu'];
+  return s.sp === 'r' ? ['prevu', 'real', 'an'] : ['prevu', 'real'];
+}
+const MOIS = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+const NOMS = { prevu: 'Prévu', real: 'Réalisé', an: 'Analyse' };
 
-  const vs = s.done ? versus(s) : null;
-  if (vs) {
-    h += '<h4>Prévu vs réalisé</h4><table class="vsx"><tr><th></th><th>Prévu</th><th>Réalisé</th></tr>' +
-      vs.rows.map(([l, a, b, e]) => `<tr><td>${l}</td><td>${a}</td><td><b>${b}</b>${e != null && Math.abs(e) >= 5 ? `<small class="${e > 0 ? 'plus' : 'moins'}">${e > 0 ? '+' : ''}${e} %</small>` : ''}</td></tr>`).join('') + '</table>';
-    if (s.parts.length > 1) h += `<div class="m">${s.parts.length} activités cumulées : ${s.parts.map(a => a.distance_m ? f1(a.distance_m / 1000) + ' km' : Math.round((a.duration_s || 0) / 60) + ' min').join(' + ')}</div>`;
+function partiePrevu(M, s) {
+  let h = s.it ? `<p class="it">${esc(s.it)}</p>` : '';
+  const pp = s.sp === 'r' && s.km && s.mn ? s.mn * 60 / s.km : null;
+  h += `<div class="cf">${s.km ? `<div><b>${f1(s.km)} km</b>distance</div>` : ''}${s.mn ? `<div><b>${Math.round(s.mn)} min</b>durée</div>` : ''}${pp ? `<div><b>${pc(pp)}</b>/km moyen</div>` : ''}</div>`;
+  if (s.sp !== 'r') return h + `<div>${muTag(s)}</div>`;
+  return h + prof(s.p) +
+    (s.sx.length ? `<ul class="et">${s.sx.map(([q, l, al, nm, no, rc, zl]) => `<li><div class="q">${esc(q)}</div><div>${gauge(l, zl)}</div><div class="dt">${al ? `<span class="al">${esc(al)}</span>` : ''}${rc ? `<span class="rc">${esc(rc)}</span>` : ''}<span class="nm">${esc(nm)}${no ? ' · ' + esc(no) : ''}</span></div></li>`).join('')}</ul>` : '');
+}
+
+function muscuFaite(M, s) {
+  const B = MUS.bloc(M.snap); if (!B) return null;
+  const ids = s.real ? s.real.activity_ids || [] : [];
+  const L = B.sessions || [], duJour = L.filter(x => x.date === s.d);
+  return L.find(x => x.activity_id != null && ids.includes(x.activity_id)) || (duJour.length === 1 ? duJour[0] : null);
+}
+function partieRealise(M, s) {
+  const vs = versus(s);
+  if (!vs) return '<p class="m">Pas de chiffres réalisés.</p>';
+  let h = '<div class="rl">' + vs.rows.map(([l, a, b, e]) =>
+    `<div><span>${l}</span><b>${b}</b><small>${a !== '—' ? 'prévu ' + a : ''}${e != null ? ` <em class="ec ${ECL(e)}">${fEcart(e)}</em>` : ''}</small></div>`).join('') + '</div>';
+  if (s.parts.length) {
+    h += `<h4>Activité${s.parts.length > 1 ? 's' : ''} rattachée${s.parts.length > 1 ? 's' : ''}</h4><ul class="acts">` + s.parts.map((a, k) =>
+      `<li>${s.parts.length > 1 ? `<b>${ORD(k)}</b>` : ''}<span>${esc(a.display_name || '')}${heureDe(a.start) ? ` <small>${heureDe(a.start)}</small>` : ''}</span><span class="n">${a.distance_m ? f1(a.distance_m / 1000) + ' km · ' : ''}${Math.round((a.duration_s || 0) / 60)} min${a.avg_hr ? ' · ' + Math.round(a.avg_hr) + ' bpm' : ''}</span></li>`).join('') + '</ul>';
   }
-  // Analyse du PC (D69) quand l'instantané la porte ; sinon la comparaison étape par étape faite ici à partir des tours.
-  if (s.done && s.an) h += vAnalyse(s.an);
-  const pr = s.done && s.act && !s.an ? prevuRealise(s) : null;
-  if (pr) {
-    if (pr.nCible) h += `<div class="cf"><div><b>${pr.nIn}/${pr.nCible}</b>dans la cible</div></div>`;
-    if (pr.rp.length && s.p.length) {
-      const Tp = s.p.reduce((q, y) => q + y[0], 0), Tr = pr.rp.reduce((q, y) => q + y[0], 0), T = Math.max(Tp, Tr);
-      h += `<div class="pr"><span>Prévu</span>${profAt(s.p, T)}<span>Réalisé</span>${profAt(pr.rp, T)}<span></span><div class="axe"><span>0</span><span>${Math.round(T / 60)} min</span></div></div>`;
+  if (s.sp === 'm') {
+    const m = muscuFaite(M, s);
+    if (m && m.exercises && m.exercises.length) {
+      h += '<h4>Exercices</h4><ul class="acts">' + m.exercises.map(e => `<li><span>${esc(MUS.libelle(M.snap, e.exercise))}</span><span class="n">${esc(MUS.resume(e.sets))}</span></li>`).join('') + '</ul>';
     }
-    if (pr.rows.length) {
-      h += '<div class="tbw"><table class="tb"><tr><th>Étape</th><th>Cible</th><th>Réel</th><th>Écart</th><th>Fait</th><th>FC</th></tr>' +
-        pr.rows.map(r => `<tr class="${r.hp ? 'hp' : ''}"><td>${esc(r.lab)}</td><td>${esc(r.tgt)}</td><td class="${r.st}">${esc(r.p)}</td><td class="${r.st}" title="${SC[r.st] || ''}">${r.st ? (r.dl ? (r.dl > 0 ? '+' : '') + r.dl + ' s' : '✓') : ''}</td><td>${esc(r.rq)}</td><td>${r.hr || ''}</td></tr>`).join('') +
-        '</table></div>' + (pr.nCible ? '<div class="leg3"><b class="in">● cible</b><b class="fast">● plus vite</b><b class="slow">● plus lent</b>écart en s/km</div>' : '');
-    }
-    const ev = evaluation(s, pr);
-    h += ev.length ? '<ul class="ev">' + ev.map(t => `<li>${esc(t)}</li>`).join('') + '</ul>' : '<p class="ok2">Séance conforme</p>';
   }
+  return h;
+}
+function partieAnalyse(s) {
+  if (s.an) return vAnalyse(s.an);
+  const pr = s.act ? prevuRealise(s) : null;
+  if (!pr || !pr.rows.length) return '<p class="m">Pas d’analyse pour cette séance (calculée sur le PC pour les 14 derniers jours).</p>';
+  let h = pr.nCible ? `<div class="cf"><div><b>${pr.nIn}/${pr.nCible}</b>dans la cible</div></div>` : '';
+  if (pr.rp.length && s.p.length) {
+    const Tp = s.p.reduce((q, y) => q + y[0], 0), Tr = pr.rp.reduce((q, y) => q + y[0], 0), T = Math.max(Tp, Tr);
+    h += `<div class="pr"><span>Prévu</span>${profAt(s.p, T)}<span>Réalisé</span>${profAt(pr.rp, T)}<span></span><div class="axe"><span>0</span><span>${Math.round(T / 60)} min</span></div></div>`;
+  }
+  h += '<div class="tbw"><table class="tb"><tr><th>Étape</th><th>Cible</th><th>Réel</th><th>Écart</th><th>Fait</th><th>FC</th></tr>' +
+    pr.rows.map(r => `<tr class="${r.hp ? 'hp' : ''}"><td>${esc(r.lab)}</td><td>${esc(r.tgt)}</td><td class="${r.st}">${esc(r.p)}</td><td class="${r.st}" title="${SC[r.st] || ''}">${r.st ? (r.dl ? (r.dl > 0 ? '+' : '') + r.dl + ' s' : '✓') : ''}</td><td>${esc(r.rq)}</td><td>${r.hr || ''}</td></tr>`).join('') +
+    '</table></div>' + (pr.nCible ? '<div class="leg3"><b class="in">● cible</b><b class="fast">● plus vite</b><b class="slow">● plus lent</b>écart en s/km</div>' : '');
+  const ev = evaluation(s, pr);
+  return h + (ev.length ? '<ul class="ev">' + ev.map(t => `<li>${esc(t)}</li>`).join('') + '</ul>' : '<p class="ok2">Séance conforme</p>');
+}
+
+export function detail(M, s, ctx) {
+  const et = etat(s, M.T), O = onglets(s), o = O.includes(ctx.onglet) ? ctx.onglet : O.includes('real') ? 'real' : 'prevu';
+  let h = `<h3 id="fen-titre">${s.sp === 'r' ? '' : `<span class="psi">${muIco(s)}</span>`}${esc(s.t)}${s.attente ? '<span class="badge att2">en attente du PC</span>' : ''}${et === 'fait' ? '<span class="badge fait">✓ faite</span>' : et === 'manque' ? '<span class="badge hp2">non faite</span>' : ''}</h3>` +
+    `<div class="m">${jlong(s.d)} ${MOIS[jour(s.d).getMonth()]} · S${M.W[s.w] ? M.W[s.w].n : ''}</div>`;
+  if (O.length > 1) h += `<div class="ong" role="tablist">${O.map(k => `<button type="button" role="tab" data-act="ong" data-o="${k}" class="${k === o ? 'on' : ''}" aria-selected="${k === o}">${NOMS[k]}</button>`).join('')}</div>`;
+  else h += '<h4 class="h-prevu">Prévu</h4>';
+  h += `<div class="ong-c">${o === 'real' ? partieRealise(M, s) : o === 'an' ? partieAnalyse(s) : partiePrevu(M, s)}</div>`;
 
   // ressenti : une fois envoyé ou enregistré, un résumé et un crayon ; le formulaire seulement s'il n'y a rien
   if (s.d <= M.T) {
     h += '<h4>Ressenti</h4>';
     const r = ressentiSeance(M, s, ctx);
     ctx.envoyes.filter(a => a.payload && a.payload.session_id === s.id && a.type === 'pain').forEach(a => {
-      h += `<div class="dejafait">${resumeRessenti({ kind: 'pain', ...a.payload })}<span class="statut">envoyé, en attente du PC</span></div>`;
+      h += `<div class="dejafait">${resumeRessenti({ kind: 'pain', ...a.payload })}<span class="statut">${statutEnvoi(a)}</span></div>`;
     });
     if (r && !ctx.edition) h += carteRessenti(r);
     else h += formRessenti(ctx.saisie, !!r);
   }
 
-  // actions
-  const futur = s.d >= M.T && !s.done;
   const debriefEnAttente = ctx.envoyes.some(a => a.type === 'debrief_todo' && a.payload.session_id === s.id) || ctx.debriefs.includes(s.id);
   h += '<div class="act">' +
-    (futur ? '<button class="bt2" data-act="dep">Déplacer</button><button class="bt2" data-act="int">Intervertir</button>' : '') +
-    (s.d <= M.T ? `<button class="bt2" data-act="debrief"${debriefEnAttente ? ' disabled' : ''}>${debriefEnAttente ? 'Débrief noté' : 'Débrief à faire'}</button>` : '') +
+    (deplacable(M, s) ? '<button class="bt2" data-act="dep">Déplacer</button><button class="bt2" data-act="int">Intervertir</button>' : '') +
+    (s.d <= M.T ? `<button class="bt2" data-act="debrief"${debriefEnAttente ? ' disabled' : ''}>${debriefEnAttente ? 'À débriefer : noté' : 'À débriefer'}</button>` : '') +
     '</div>';
   h += `<div class="nav"><span class="fl2"><button data-act="prec" aria-label="Séance précédente"${s.i <= 0 ? ' disabled' : ''}>‹</button><button data-act="suiv" aria-label="Séance suivante"${s.i >= M.S.length - 1 ? ' disabled' : ''}>›</button></span></div>`;
   return h;
 }
-
+// Statut d'une action locale : pas encore partie (hors ligne) ou partie, en attente de l'accusé du PC.
+export const statutEnvoi = a => (a && a.etat === 'a_envoyer' ? 'gardé sur le téléphone, envoi au retour du réseau' : 'envoyé, en attente du PC');
 // Libellés du PC (DoneTabs.tsx) : jambes lourdes / normales / légères, souffle court / normal / facile,
 // stockés 1 / 3 / 5 (contrat `feeling`). Une valeur intermédiaire (ancienne échelle 1-5) est ramenée au plus proche.
 export const JAMBES = [['lourdes', 1], ['normales', 3], ['légères', 5]], SOUFFLE = [['court', 1], ['normal', 3], ['facile', 5]];
@@ -291,7 +245,7 @@ const lib3 = (L, v) => { const x = L.find(([, n]) => n === niv3(v)); return x ? 
 // Ressenti connu d'une séance : envoyé (action en file) > enregistré sur le PC (instantané) > accusé localement.
 export function ressentiSeance(M, s, ctx) {
   const env = ctx.envoyes.filter(a => a.type === 'feeling' && a.payload && a.payload.session_id === s.id).pop();
-  if (env) return { ...env.payload, statut: 'envoyé, en attente du PC' };
+  if (env) return { ...env.payload, statut: statutEnvoi(env) };
   const ids = s.real ? s.real.activity_ids || [] : [];
   const w = s.fb || M.wellness.find(x => x.kind === 'session' && (x.session_id === s.id || ids.includes(x.activity_id)));
   if (w) return { rpe: w.rpe, legs: w.legs, breath: w.breath, comment: w.comment, statut: 'enregistré' };

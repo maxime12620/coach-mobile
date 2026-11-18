@@ -2,10 +2,10 @@
 import * as C from './crypto.js';
 import * as ST from './store.js';
 import * as GH from './github.js';
-import { construire, semaineCourante, esc, f1, fk, dd, jl, jlong, addD, ecart, QUAL, muKind } from './plan.js';
+import { construire, semaineCourante, esc, fk, jl, jlong, addD, QUAL, muKind, opDeplacement, opInterversion } from './plan.js';
 import * as MU from './muscu.js';
 import { agirAnalyse, lire as lireCourbe } from './analyse.js';
-import { vVolume, vFil, vAgenda, vFocus, vAujourdhui, detail, detailHors, formRessenti, ressentiSeance, carteRessenti, niv3 } from './vues.js';
+import { vPlanning, vAujourdhui, detail, detailHors, formRessenti, ressentiSeance, carteRessenti, niv3, statutEnvoi } from './vues.js';
 
 const Q = new URLSearchParams(location.search);
 const DEMO = Q.get('demo') === '1';
@@ -19,7 +19,7 @@ const E = {
   debriefs: [],     // séances dont le débrief a été accepté par le PC
   ressentis: {},    // ressentis accusés par le PC : {'s<id>' | 'j<date>': {rpe, legs, breath, comment}}
   edition: false, editionJour: false,
-  vue: 'fil', selW: null, cur: -1, saisie: {}, saisieJour: null,
+  vue: 'jour', onglet: null, cur: -1, saisie: {}, saisieJour: null,
   occupe: false, msg: '', msgErr: false, horsLigneForce: false, reglages: false,
   // saisie muscu (D68) : brouillons gardés sur le téléphone jusqu'à l'accusé du PC, exercices ajoutés à la main
   mu: { brouillons: [], perso: {}, cur: null, choix: false, libre: false, confirmer: false },
@@ -101,7 +101,8 @@ async function synchroniser(manuel) {
     message(reste != null && reste < 500 ? `Quota GitHub restant ${reste}` : '');
   } catch (e) {
     const horsLigne = e.code === 0;
-    message(horsLigne ? 'Hors ligne' + (E.actions.length ? ' · actions gardées sur le téléphone' : '') : (e.message || 'Erreur de synchronisation'), !horsLigne);
+    const gardees = E.actions.filter(a => a.type !== 'sync_request' && a.etat === 'a_envoyer').length;
+    message(horsLigne ? 'Hors ligne' + (gardees ? ' · saisies gardées sur le téléphone' : '') : (e.message || 'Erreur de synchronisation'), !horsLigne);
     if (e.code === 404 && !E.snap) message('Aucun instantané publié par le PC pour l’instant', true);
   } finally {
     E.occupe = false;
@@ -178,8 +179,17 @@ function entete() {
 }
 
 // ---------- vues ----------
-const VUES = [['fil', 'À venir'], ['agenda', 'Agenda'], ['focus', 'Semaine'], ['jour', 'Aujourd’hui'], ['muscu', 'Muscu']];
-const etroit = () => innerWidth < 760;
+// Trois onglets (D70) : Aujourd'hui, Planning (semaine par semaine, tous les jours), Muscu ; réglages en icône.
+const VUES = [['jour', 'Aujourd’hui'], ['plan', 'Planning'], ['muscu', 'Muscu']];
+const ANCIENNES = { fil: 'plan', agenda: 'plan', focus: 'plan' };
+
+// Planning : la semaine en cours en haut de l'écran, le passé au-dessus (en remontant), la suite en dessous.
+function versSemaineCourante() {
+  if (!E.M || !E.M.W.length) return;
+  const el = $('pw-' + semaineCourante(E.M)); if (!el) return;
+  const haut = $('haut').offsetHeight + $('sel').offsetHeight + 4;
+  scrollTo({ top: Math.max(0, el.getBoundingClientRect().top + scrollY - haut) });
+}
 
 function rendre(defiler) {
   entete();
@@ -187,27 +197,23 @@ function rendre(defiler) {
   if (!E.cfg || E.reglages) { sel.innerHTML = ''; $('conflits').innerHTML = ''; vue.innerHTML = ecranReglages(); return; }
   sel.innerHTML = VUES.map(([k, n]) => `<button type="button" data-v="${k}" class="${k === E.vue ? 'on' : ''}">${n}</button>`).join('');
   $('conflits').innerHTML = E.conflits.map(c => `<div class="cfl"><span>⚠ <b>${esc(c.message)}</b> · ${esc(c.lib)}</span><button type="button" data-act="cfl-x" data-id="${c.id}" aria-label="Masquer">×</button></div>`).join('');
+  try { localStorage.setItem('coach-vue', E.vue); } catch (e) { /* stockage indisponible */ }
   const M = E.M;
   if (E.vue === 'muscu' && E.snap) {
     // pas de re-rendu pendant une saisie (synchro en arrière-plan) : le clavier et la valeur tapée restent
     const f = document.activeElement;
     if (vue.contains(f) && /INPUT|TEXTAREA|SELECT/.test(f.tagName) && !defiler) return;
     vue.innerHTML = vMuscu();
-    try { localStorage.setItem('coach-vue', E.vue); } catch (e) { /* stockage indisponible */ }
     return;
   }
   if (!M) { vue.innerHTML = `<p class="m">${E.occupe ? 'Chargement…' : 'Pas encore de données. Touchez « Synchroniser ».'}</p>`; return; }
-  if (!M.W.length && E.vue !== 'jour') { vue.innerHTML = '<p class="m">Aucune séance dans l’instantané.</p>'; return; }
-  const n = E.selW != null ? E.selW : semaineCourante(M);
-  if (E.vue === 'fil') vue.innerHTML = vFil(M, E.selW);
-  else if (E.vue === 'agenda') vue.innerHTML = vVolume(M, n, etroit()) + vAgenda(M, n);
-  else if (E.vue === 'focus') vue.innerHTML = vVolume(M, n, etroit()) + vFocus(M, n);
-  else vue.innerHTML = vAujourdhui(M);
-  const sc = $('sc-vol');
-  if (sc) { const bw = etroit() ? 34 : 46; sc.scrollLeft = Math.max(0, 30 + (M.avant.length + n) * bw - sc.clientWidth / 2); }
-  if (defiler && E.vue === 'agenda') { const el = $('v-w' + n); if (el) scrollTo({ top: Math.max(0, el.getBoundingClientRect().top + scrollY - 100), behavior: 'smooth' }); }
-  if (E.vue !== 'jour' && E.vue !== 'fil' || defiler === 'haut') { /* rien */ }
-  try { localStorage.setItem('coach-vue', E.vue); } catch (e) { /* stockage indisponible */ }
+  if (E.vue === 'plan') {
+    if (!M.W.length) { vue.innerHTML = '<p class="m">Aucune séance dans l’instantané.</p>'; return; }
+    vue.innerHTML = vPlanning(M);
+    if (defiler) versSemaineCourante();
+    return;
+  }
+  vue.innerHTML = vAujourdhui(M);
 }
 
 // ---------- fenêtres ----------
@@ -237,12 +243,12 @@ addEventListener('popstate', () => { if (ouverte) fermer(true); });
 function montrer(i) {
   const M = E.M; if (!M || i < 0 || i >= M.S.length) return;
   const meme = E.cur === i && E.ecran === 'detail';
-  if (E.cur !== i) { E.saisie = {}; E.edition = false; }
+  if (E.cur !== i) { E.saisie = {}; E.edition = false; E.onglet = null; }
   E.cur = i;
   ouvrir(detail(M, M.S[i], ctxDetail()), meme);
   E.ecran = 'detail';
 }
-const ctxDetail = () => ({ saisie: E.saisie, envoyes: E.actions, debriefs: E.debriefs, ressentis: E.ressentis, edition: E.edition });
+const ctxDetail = () => ({ saisie: E.saisie, envoyes: E.actions, debriefs: E.debriefs, ressentis: E.ressentis, edition: E.edition, onglet: E.onglet });
 const seanceCourante = () => (E.M && E.cur >= 0 ? E.M.S[E.cur] : null);
 
 // ---------- déplacer / intervertir ----------
@@ -258,11 +264,6 @@ function alertes(M) {
   });
   return out;
 }
-function opDeplacer(s, d) {
-  const autres = E.M.S.filter(x => x.d === d && x.id !== s.id);
-  return { type: 'move_session', payload: { session_id: s.id, from_date: s.d, to_date: d, position: autres.length + 1 } };
-}
-const opIntervertir = (a, b) => ({ type: 'swap_sessions', payload: { a_id: a.id, b_id: b.id } });
 
 function apercu(op) {
   const M0 = E.M;
@@ -287,13 +288,13 @@ function dlgDeplacer(s, n) {
     `<div class="titre-vue" style="margin-top:10px"><span class="fl2"><button data-act="dep-w" data-n="${n - 1}" aria-label="Semaine précédente"${n <= 0 ? ' disabled' : ''}>‹</button><button data-act="dep-w" data-n="${n + 1}" aria-label="Semaine suivante"${n >= M.W.length - 1 ? ' disabled' : ''}>›</button></span><div><b>Semaine ${w.n}</b></div></div><div class="lst">` +
     [0, 1, 2, 3, 4, 5, 6].map(j => {
       const d = addD(w.ws, j), o = M.S.filter(x => x.d === d && x.id !== s.id);
-      const off = d < M.T || (d === s.d && !o.length);
-      return `<button class="bt2" data-act="dep-ok" data-d="${d}"${off ? ' disabled' : ''}>${jl(d)} <small>· ${o.length ? o.map(x => esc(x.sp === 'r' ? x.t : x.lab)).join(', ') : 'libre'}</small></button>`;
+      const off = !opDeplacement(M, s, d);
+      return `<button class="bt2" data-act="dep-ok" data-d="${d}"${off ? ' disabled' : ''}>${jl(d)} <small>· ${d === s.d ? 'actuellement' : o.length ? o.map(x => esc(x.sp === 'r' ? x.t : x.lab)).join(', ') : 'libre'}</small></button>`;
     }).join('') + '</div><div class="act"><button class="bt2" data-act="retour">Retour</button></div>');
 }
 function dlgIntervertir(s, n) {
   const M = E.M; n = Math.max(0, Math.min(M.W.length - 1, n)); const w = M.W[n];
-  const o = M.S.filter(x => x.w === n && x.id !== s.id && !x.done && x.d >= M.T);
+  const o = M.S.filter(x => x.w === n && opInterversion(M, s, x));
   ouvrir(`<h3 id="fen-titre">Intervertir · ${esc(s.t)}</h3>` +
     `<div class="titre-vue" style="margin-top:10px"><span class="fl2"><button data-act="int-w" data-n="${n - 1}" aria-label="Semaine précédente"${n <= 0 ? ' disabled' : ''}>‹</button><button data-act="int-w" data-n="${n + 1}" aria-label="Semaine suivante"${n >= M.W.length - 1 ? ' disabled' : ''}>›</button></span><div><b>Semaine ${w.n}</b></div></div><div class="lst">` +
     (o.length ? o.map(x => `<button class="bt2" data-act="int-ok" data-b="${x.id}">${jl(x.d)} · ${esc(x.t)}</button>`).join('') : '<p class="m">Aucune séance à venir cette semaine.</p>') +
@@ -312,7 +313,7 @@ async function envoyerRessenti(s) {
 }
 function ressentiJour() {
   const env = E.actions.filter(a => a.type === 'feeling' && a.payload && a.payload.session_id == null && a.payload.date === E.M.T).pop();
-  if (env) return { ...env.payload, statut: 'envoyé, en attente du PC' };
+  if (env) return { ...env.payload, statut: statutEnvoi(env) };
   const loc = E.ressentis['j' + E.M.T];
   return loc ? { ...loc, statut: 'enregistré' } : null;
 }
@@ -486,10 +487,11 @@ async function agir(t) {
     case 'retour': return s ? montrer(E.cur) : fermer();
     case 'dep': return s && dlgDeplacer(s, s.w);
     case 'dep-w': return s && dlgDeplacer(s, +t.dataset.n);
-    case 'dep-ok': return s && apercu(opDeplacer(s, t.dataset.d));
+    case 'dep-ok': { const op = s && opDeplacement(E.M, s, t.dataset.d); return op && apercu(op); }
     case 'int': return s && dlgIntervertir(s, s.w);
     case 'int-w': return s && dlgIntervertir(s, +t.dataset.n);
-    case 'int-ok': { const b = E.M.S.find(x => x.id === +t.dataset.b); return s && b && apercu(opIntervertir(s, b)); }
+    case 'int-ok': { const b = E.M.S.find(x => x.id === +t.dataset.b), op = s && b && opInterversion(E.M, s, b); return op && apercu(op); }
+    case 'ong': E.onglet = t.dataset.o; return montrer(E.cur);
     case 'valider': { const op = E.pend; E.pend = null; if (!op) return; const id = s ? s.id : null; fermer(); await ajouterAction(op.type, op.payload); if (id != null) { /* la fenêtre est fermée : la vue montre la séance « en attente » */ } return; }
     case 'annuler': E.pend = null; return s ? montrer(E.cur) : fermer();
     case 'debrief': if (s) { await ajouterAction('debrief_todo', { session_id: s.id }); montrer(E.cur); } return;
@@ -517,14 +519,12 @@ async function agir(t) {
 
 document.addEventListener('click', e => {
   if (stopClic) { e.preventDefault(); e.stopPropagation(); stopClic = false; return; }
-  const t = e.target.closest('[data-act],[data-v],[data-i],[data-h],[data-w],[data-nav]');
+  const t = e.target.closest('[data-act],[data-v],[data-i],[data-h]');
   if (!t || t.disabled) return;
   if (t.dataset.act) { e.preventDefault(); agir(t); return; }
-  if (t.dataset.v) { E.vue = t.dataset.v; rendre(true); scrollTo({ top: 0 }); return; }
+  if (t.dataset.v) { E.vue = t.dataset.v; scrollTo({ top: 0 }); rendre(true); return; }
   if (t.dataset.i !== undefined) return montrer(+t.dataset.i);
   if (t.dataset.h !== undefined) { const x = E.M && E.M.H[+t.dataset.h]; if (x) { E.cur = -1; ouvrir(detailHors(E.M, x)); } return; }
-  if (t.dataset.w !== undefined) { E.selW = +t.dataset.w; return rendre(true); }
-  if (t.dataset.nav) { const n = E.selW != null ? E.selW : semaineCourante(E.M); E.selW = Math.max(0, Math.min(E.M.W.length - 1, n + +t.dataset.nav)); return rendre(true); }
 });
 // Courbe de l'analyse : lecture au doigt (glisser) ou à la souris.
 c.addEventListener('pointermove', e => { const sv = e.target.closest && e.target.closest('#an-cv svg'); if (sv) lireCourbe(sv, e.clientX); });
@@ -563,15 +563,12 @@ function cibleSous(x, y) {
 }
 function opPour(t) {
   const M = E.M, s = M.S.find(x => x.id === drag.id); if (!s || !t) return null;
-  if (t.dataset.i !== undefined) { const b = M.S[+t.dataset.i]; if (!b || b.id === s.id || b.done || b.d < M.T) return null; return opIntervertir(s, b); }
-  const d = t.dataset.day; if (d && d >= M.T) return opDeplacer(s, d);
-  return null;
+  if (t.dataset.i !== undefined) { const b = M.S[+t.dataset.i]; return b ? opInterversion(M, s, b) : null; }
+  return t.dataset.day ? opDeplacement(M, s, t.dataset.day) : null;
 }
 function bulle(op) {
-  const M = E.M, s = M.S.find(x => x.id === drag.id);
-  if (op.type === 'swap_sessions') { const b = M.S.find(x => x.id === op.payload.b_id); return 'Intervertir avec ' + (b.sp === 'r' ? b.t : b.lab); }
-  const d = op.payload.to_date;
-  return (d === s.d ? 'Placer en dernier le ' : 'Déplacer au ') + jlong(d);
+  if (op.type === 'swap_sessions') { const b = E.M.S.find(x => x.id === op.payload.b_id); return 'Intervertir avec ' + (b.sp === 'r' ? b.t : b.lab); }
+  return 'Déplacer au ' + jlong(op.payload.to_date);
 }
 function nettoyer() {
   if (drag.ph) { drag.ph.remove(); drag.ph = null; }
@@ -597,7 +594,8 @@ function deplacerA(x, y) {
   const d = drag; d.g.style.left = (x - d.dx) + 'px'; d.g.style.top = (y - d.dy) + 'px';
   const bx = Math.min(x + 14, innerWidth - 20); d.b.style.left = Math.max(8, Math.min(bx, innerWidth - d.b.offsetWidth - 8)) + 'px'; d.b.style.top = (y + 22) + 'px';
   viser(cibleSous(x, y));
-  if (y < 70) scrollBy(0, -8); else if (y > innerHeight - 40) scrollBy(0, 8);
+  const haut = $('haut').offsetHeight + $('sel').offsetHeight;
+  if (y < haut + 30) scrollBy(0, -10); else if (y > innerHeight - 50) scrollBy(0, 10);
 }
 function commencer() {
   const d = drag, r = d.el.getBoundingClientRect(); d.on = true; d.r = r; d.dx = d.x - r.left; d.dy = d.y - r.top;
@@ -639,8 +637,9 @@ document.addEventListener('contextmenu', e => { if (drag) e.preventDefault(); })
 
 // ---------- démarrage ----------
 async function demarrer() {
-  try { const v = localStorage.getItem('coach-vue'); if (VUES.some(x => x[0] === v)) E.vue = v; } catch (e) { /* rien */ }
-  if (Q.get('vue') && VUES.some(x => x[0] === Q.get('vue'))) E.vue = Q.get('vue');
+  const vueValide = v => (VUES.some(x => x[0] === v) ? v : ANCIENNES[v] || null);
+  try { E.vue = vueValide(localStorage.getItem('coach-vue')) || E.vue; } catch (e) { /* rien */ }
+  if (Q.get('vue')) E.vue = vueValide(Q.get('vue')) || E.vue;
   if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
   if (DEMO) {
     document.title = 'Coach · démo';
@@ -657,16 +656,19 @@ async function demarrer() {
   E.etag = await store.lire('etag') || null;
   if (E.cfg) E.gh = client(E.cfg);
   if (E.snap) traiterAcks();
-  modele(); rendre();
+  modele(); rendre(true);
   if (E.cfg) synchroniser();
   addEventListener('online', () => synchroniser());
+  // Saisies gardées hors ligne : nouvel essai toutes les minutes tant que l'appli est affichée (l'événement
+  // « online » n'arrive pas toujours dans une PWA installée).
+  setInterval(() => {
+    if (document.visibilityState === 'visible' && E.cfg && !E.occupe && E.actions.some(a => a.etat === 'a_envoyer')) synchroniser();
+  }, 60e3);
   document.addEventListener('visibilitychange', async () => {
     if (document.visibilityState !== 'visible' || !E.cfg) return;
     const d = await store.lire('derniere');
     if (!d || Date.now() - new Date(d) > 60e3 || E.actions.some(a => a.etat === 'a_envoyer')) synchroniser();
   });
-  let l = innerWidth < 760;
-  addEventListener('resize', () => { const n = innerWidth < 760; if (n !== l) { l = n; rendre(); } });
 }
 // Accès de test (démo seulement) : simuler la perte de réseau.
 if (DEMO) globalThis.coachDemo = { horsLigne(v) { E.horsLigneForce = !!v; }, etat: () => E, action: (t, p) => ajouterAction(t, p) };

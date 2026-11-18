@@ -52,7 +52,7 @@ export function vAnalyse(an) {
   zoom = an.mode === 'intervals' && !!core;
   const reps = an.reps || [], sets = an.sets || [], p = an.planned || {};
   const li = f => `<li><span class="an-lv lv-${f.level}" aria-hidden="true">${LV[f.level] || ''}</span><span>${esc(f.text)}</span></li>`;
-  let h = '<h4>Analyse</h4><div class="an">';
+  let h = '<div class="an">';
   h += `<div class="cf"><div><b>${km(an.total && an.total.distance_m)} km</b>${p.distance_m ? 'prévu ' + km(p.distance_m) : 'réalisés'}</div><div><b>${dround(an.total && an.total.duration_s)}</b>${p.duration_s ? 'prévu ' + dround(p.duration_s) : 'durée'}</div><div><b>${hr(an.total && an.total.avg_hr)}</b>FC moy.</div>` +
     (an.mode === 'intervals' ? `<div><b>${reps.filter(x => x.status === 'in').length}/${reps.length}</b>dans la cible</div>` : '') + '</div>';
   h += `<div class="an-vd ${an.state}"><div class="an-et">${esc(an.label)}</div><ul>${an.highlights.length ? an.highlights.map(li).join('') : '<li>Rien à signaler.</li>'}</ul>` +
