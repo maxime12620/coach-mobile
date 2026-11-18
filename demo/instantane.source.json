@@ -237,7 +237,8 @@
     "avg_hr": 142
    },
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 101,
@@ -262,7 +263,8 @@
     "avg_hr": 105
    },
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 102,
@@ -303,7 +305,8 @@
     "avg_hr": 142
    },
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 103,
@@ -328,7 +331,8 @@
     "avg_hr": 105
    },
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 104,
@@ -396,7 +400,8 @@
     "avg_hr": 142
    },
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 105,
@@ -437,7 +442,8 @@
     "avg_hr": 142
    },
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 106,
@@ -462,7 +468,8 @@
     "avg_hr": 105
    },
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 107,
@@ -543,7 +550,8 @@
     "avg_hr": 142
    },
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 108,
@@ -568,7 +576,8 @@
     "avg_hr": 105
    },
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 109,
@@ -609,7 +618,8 @@
     "avg_hr": 142
    },
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 110,
@@ -634,7 +644,8 @@
     "avg_hr": 105
    },
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 111,
@@ -702,7 +713,8 @@
     "avg_hr": 142
    },
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 112,
@@ -743,7 +755,8 @@
     "avg_hr": 142
    },
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 113,
@@ -820,7 +833,8 @@
     "avg_hr": 142
    },
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 114,
@@ -845,7 +859,8 @@
     "avg_hr": 105
    },
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 115,
@@ -886,7 +901,8 @@
     "avg_hr": 142
    },
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 116,
@@ -911,7 +927,8 @@
     "avg_hr": 105
    },
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 117,
@@ -979,7 +996,8 @@
     "avg_hr": 142
    },
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 118,
@@ -1020,7 +1038,8 @@
     "avg_hr": 142
    },
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 119,
@@ -1045,7 +1064,8 @@
     "avg_hr": 105
    },
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 120,
@@ -1126,7 +1146,8 @@
     "avg_hr": 142
    },
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 121,
@@ -1151,7 +1172,8 @@
     "avg_hr": 105
    },
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 122,
@@ -1192,7 +1214,8 @@
     "avg_hr": 142
    },
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 123,
@@ -1217,7 +1240,8 @@
     "avg_hr": 105
    },
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 124,
@@ -1277,7 +1301,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 125,
@@ -1319,7 +1344,8 @@
     "avg_hr": 140
    },
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 126,
@@ -3850,7 +3876,8 @@
       150
      ]
     }
-   }
+   },
+   "strength_session_id": null
   },
   {
    "id": 127,
@@ -3875,7 +3902,8 @@
     "avg_hr": 105
    },
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 128,
@@ -3908,7 +3936,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 129,
@@ -3925,7 +3954,8 @@
    "structure": null,
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 130,
@@ -3985,7 +4015,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 131,
@@ -4018,7 +4049,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 132,
@@ -4043,7 +4075,8 @@
     "avg_hr": 105
    },
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 133,
@@ -4116,7 +4149,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 134,
@@ -4133,7 +4167,8 @@
    "structure": null,
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 135,
@@ -4166,7 +4201,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 136,
@@ -4183,7 +4219,8 @@
    "structure": null,
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 137,
@@ -4243,7 +4280,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 138,
@@ -4276,7 +4314,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 139,
@@ -4345,7 +4384,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 140,
@@ -4362,7 +4402,8 @@
    "structure": null,
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 141,
@@ -4395,7 +4436,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 142,
@@ -4412,7 +4454,8 @@
    "structure": null,
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 143,
@@ -4472,7 +4515,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 144,
@@ -4505,7 +4549,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 145,
@@ -4522,7 +4567,8 @@
    "structure": null,
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 146,
@@ -4595,7 +4641,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 147,
@@ -4612,7 +4659,8 @@
    "structure": null,
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 148,
@@ -4645,7 +4693,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 149,
@@ -4662,7 +4711,8 @@
    "structure": null,
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 150,
@@ -4722,7 +4772,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 151,
@@ -4755,7 +4806,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 152,
@@ -4828,7 +4880,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 153,
@@ -4845,7 +4898,8 @@
    "structure": null,
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 154,
@@ -4878,7 +4932,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 155,
@@ -4895,7 +4950,8 @@
    "structure": null,
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 156,
@@ -4955,7 +5011,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 157,
@@ -4988,7 +5045,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 158,
@@ -5005,7 +5063,8 @@
    "structure": null,
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 159,
@@ -5078,7 +5137,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 160,
@@ -5095,7 +5155,8 @@
    "structure": null,
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 161,
@@ -5128,7 +5189,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 162,
@@ -5145,7 +5207,8 @@
    "structure": null,
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 163,
@@ -5205,7 +5268,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 164,
@@ -5238,7 +5302,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 165,
@@ -5307,7 +5372,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 166,
@@ -5324,7 +5390,8 @@
    "structure": null,
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 167,
@@ -5357,7 +5424,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 168,
@@ -5374,7 +5442,8 @@
    "structure": null,
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 169,
@@ -5434,7 +5503,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 170,
@@ -5467,7 +5537,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 171,
@@ -5484,7 +5555,8 @@
    "structure": null,
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 172,
@@ -5557,7 +5629,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 173,
@@ -5574,7 +5647,8 @@
    "structure": null,
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 174,
@@ -5607,7 +5681,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 175,
@@ -5624,7 +5699,8 @@
    "structure": null,
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 176,
@@ -5684,7 +5760,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 177,
@@ -5717,7 +5794,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 178,
@@ -5790,7 +5868,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 179,
@@ -5807,7 +5886,8 @@
    "structure": null,
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 180,
@@ -5840,7 +5920,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 181,
@@ -5857,7 +5938,8 @@
    "structure": null,
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 182,
@@ -5917,7 +5999,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 183,
@@ -5950,7 +6033,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 184,
@@ -5967,7 +6051,8 @@
    "structure": null,
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 185,
@@ -6040,7 +6125,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 186,
@@ -6057,7 +6143,8 @@
    "structure": null,
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 187,
@@ -6090,7 +6177,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 188,
@@ -6107,7 +6195,8 @@
    "structure": null,
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 189,
@@ -6167,7 +6256,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 190,
@@ -6200,7 +6290,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 191,
@@ -6269,7 +6360,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 192,
@@ -6286,7 +6378,8 @@
    "structure": null,
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 193,
@@ -6319,7 +6412,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 194,
@@ -6336,7 +6430,8 @@
    "structure": null,
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 195,
@@ -6396,7 +6491,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 196,
@@ -6429,7 +6525,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 197,
@@ -6446,7 +6543,8 @@
    "structure": null,
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 198,
@@ -6519,7 +6617,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 199,
@@ -6536,7 +6635,8 @@
    "structure": null,
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 200,
@@ -6569,7 +6669,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 201,
@@ -6586,7 +6687,8 @@
    "structure": null,
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 202,
@@ -6646,7 +6748,8 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
   },
   {
    "id": 203,
@@ -6679,7 +6782,77 @@
    },
    "realized": null,
    "feedback": null,
-   "analysis": null
+   "analysis": null,
+   "strength_session_id": null
+  },
+  {
+   "id": 204,
+   "date": "2026-11-18",
+   "order": 1,
+   "sport": "running",
+   "type": "easy",
+   "title": "Footing 40 min",
+   "est_duration_s": 2400,
+   "est_distance_m": 7180,
+   "intent": "Aisance respiratoire",
+   "status": "planned",
+   "activity_id": 5033,
+   "structure": {
+    "steps": [
+     {
+      "kind": "active",
+      "label": "Footing",
+      "duration": {
+       "type": "time",
+       "seconds": 2400
+      },
+      "target": {
+       "type": "pace",
+       "min_s_per_km": 320,
+       "max_s_per_km": 345
+      }
+     }
+    ]
+   },
+   "realized": {
+    "activity_ids": [
+     5033
+    ],
+    "distance_m": 7360,
+    "duration_s": 2450,
+    "pace_s_km": 333,
+    "avg_hr": 139
+   },
+   "feedback": null,
+   "analysis": null,
+   "strength_session_id": null
+  },
+  {
+   "id": 205,
+   "date": "2026-11-18",
+   "order": 2,
+   "sport": "strength",
+   "type": "strength_upper",
+   "title": "Muscu dos",
+   "est_duration_s": 3000,
+   "est_distance_m": null,
+   "intent": null,
+   "status": "planned",
+   "activity_id": null,
+   "structure": null,
+   "realized": {
+    "activity_ids": [],
+    "distance_m": null,
+    "duration_s": null,
+    "pace_s_km": null,
+    "avg_hr": null,
+    "strength_session_id": 503,
+    "exercises": 5
+   },
+   "feedback": null,
+   "analysis": null,
+   "strength_session_id": 503,
+   "compliance": "done"
   }
  ],
  "activities": [
@@ -7370,6 +7543,20 @@
      "avg_hr": 149
     }
    ]
+  },
+  {
+   "id": 5033,
+   "date": "2026-11-18",
+   "start": "2026-11-18T07:10:00+01:00",
+   "type": "running",
+   "display_name": "Footing 40 min",
+   "distance_m": 7360,
+   "duration_s": 2450,
+   "pace_s_km": 333,
+   "avg_hr": 139,
+   "elevation_gain_m": 22,
+   "session_id": 204,
+   "laps": []
   }
  ],
  "weekly": [
@@ -7488,15 +7675,15 @@
   {
    "week_start": "2026-11-16",
    "future": false,
-   "km": 11.2,
+   "km": 18.6,
    "zone_minutes": {
     "z1": 15,
-    "z2": 56,
+    "z2": 93,
     "z3": 12,
     "z4": 14,
     "z5": 6
    },
-   "strength_hours": 2.4000000000000004,
+   "strength_hours": 3.2,
    "long_run_km": 16.2
   },
   {
@@ -7929,6 +8116,98 @@
        {
         "reps": 7,
         "load_kg": 70
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "id": 503,
+    "uid": "demo-0000-503",
+    "date": "2026-11-18",
+    "title": "Muscu dos",
+    "activity_id": null,
+    "note": null,
+    "exercises": [
+     {
+      "exercise": "pull_up",
+      "note": null,
+      "sets": [
+       {
+        "reps": 10,
+        "load_kg": 0
+       },
+       {
+        "reps": 9,
+        "load_kg": 0
+       },
+       {
+        "reps": 8,
+        "load_kg": 0
+       },
+       {
+        "reps": 7,
+        "load_kg": 0
+       }
+      ]
+     },
+     {
+      "exercise": "row",
+      "note": null,
+      "sets": [
+       {
+        "reps": 10,
+        "load_kg": 62.5
+       },
+       {
+        "reps": 10,
+        "load_kg": 62.5
+       },
+       {
+        "reps": 9,
+        "load_kg": 62.5
+       }
+      ]
+     },
+     {
+      "exercise": "cable_row",
+      "note": null,
+      "sets": [
+       {
+        "reps": 12,
+        "load_kg": 52.5
+       },
+       {
+        "reps": 12,
+        "load_kg": 52.5
+       }
+      ]
+     },
+     {
+      "exercise": "face_pull",
+      "note": null,
+      "sets": [
+       {
+        "reps": 15,
+        "load_kg": 20
+       },
+       {
+        "reps": 15,
+        "load_kg": 20
+       }
+      ]
+     },
+     {
+      "exercise": "lat_pulldown",
+      "note": null,
+      "sets": [
+       {
+        "reps": 10,
+        "load_kg": 55
+       },
+       {
+        "reps": 10,
+        "load_kg": 55
        }
       ]
      }

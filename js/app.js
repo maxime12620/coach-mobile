@@ -2,7 +2,7 @@
 import * as C from './crypto.js';
 import * as ST from './store.js';
 import * as GH from './github.js';
-import { construire, semaineCourante, esc, fk, jl, jlong, addD, opDeplacement, opInterversion, opInverse, nouvellesAlertes, muKind } from './plan.js';
+import { construire, semaineCourante, esc, fk, jl, jlong, addD, opDeplacement, opInterversion, opInverse, nouvellesAlertes, muKind, remplacerOuAjouter } from './plan.js';
 import * as MU from './muscu.js';
 import { agirAnalyse, lire as lireCourbe } from './analyse.js';
 import { vPlanning, vAujourdhui, detail, detailHors, nomSeance, formRessenti, ressentiSeance, carteRessenti, niv3, statutEnvoi } from './vues.js';
@@ -101,8 +101,7 @@ async function synchroniser(manuel) {
     message(reste != null && reste < 500 ? `Quota GitHub restant ${reste}` : '');
   } catch (e) {
     const horsLigne = e.code === 0;
-    const gardees = E.actions.filter(a => a.type !== 'sync_request' && a.etat === 'a_envoyer').length;
-    message(horsLigne ? 'Hors ligne · la synchro partira au retour du réseau' + (gardees ? ' · saisies gardées sur le téléphone' : '') : (e.message || 'Erreur de synchronisation'), !horsLigne);
+    message(horsLigne ? 'Hors ligne · envoi au retour du réseau' : (e.message || 'Erreur de synchronisation'), !horsLigne);
     if (e.code === 404 && !E.snap) message('Aucun instantané publié par le PC pour l’instant', true);
   } finally {
     E.occupe = false;
@@ -139,9 +138,11 @@ function traiterAcks() {
   sauverActions(); sauverConflits(); sauverMuscu(); store.ecrire('debriefs', E.debriefs); store.ecrire('ressentis', E.ressentis);
 }
 
+// Une correction d'une saisie encore en file (même séance, même brouillon) remplace l'action au lieu de s'ajouter.
 async function ajouterAction(type, payload) {
-  const a = { id: C.uuid(), created_at: isoLocal(new Date()), type, payload, etat: 'a_envoyer' };
-  E.actions.push(a);
+  const r = remplacerOuAjouter(E.actions, { id: C.uuid(), created_at: isoLocal(new Date()), type, payload, etat: 'a_envoyer' });
+  E.actions = r.actions;
+  const a = r.action;
   await sauverActions();
   modele(); rendre();
   synchroniser();
@@ -210,7 +211,7 @@ function rendre(defiler) {
   if (E.vue === 'plan') {
     if (!M.W.length) { vue.innerHTML = '<p class="m">Aucune séance dans l’instantané.</p>'; return; }
     vue.innerHTML = vPlanning(M, ctxDetail());
-    if (defiler) versSemaineCourante();
+    if (defiler || !E.planPlace) { versSemaineCourante(); E.planPlace = true; }
     return;
   }
   vue.innerHTML = vAujourdhui(M, ctxDetail());
@@ -220,10 +221,18 @@ function rendre(defiler) {
 const fond = $('fond'), c = $('c');
 let ouverte = false;
 // garder : même fenêtre re-rendue (choix dans un formulaire, envoi) -> la position de défilement est conservée.
+// Barre collante en haut de la fenêtre : le titre de la fenêtre (h3#fen-titre), « ‹ Retour » quand la fenêtre est un
+// sous-écran d'une séance (Déplacer, Intervertir, Aperçu) et la croix, toujours visibles même sur une longue Analyse.
+function barre() {
+  const h = c.querySelector('#fen-titre'), t = $('fen-t');
+  t.replaceChildren(...(h ? [h] : []));
+  $('fen-retour').hidden = !(E.cur >= 0 && c.querySelector('[data-act="retour"],[data-act="annuler"]'));
+}
 function ouvrir(html, garder) {
   E.ecran = 'autre';
   const sc = c.parentNode.scrollTop;
   c.innerHTML = html;
+  barre();
   if (garder && ouverte) { c.parentNode.scrollTop = sc; return; }
   if (!ouverte) { ouverte = true; fond.classList.add('on'); history.pushState({ fen: 1 }, ''); document.body.style.overflow = 'hidden'; }
   c.parentNode.scrollTop = 0;
@@ -235,6 +244,7 @@ function fermer(parHistorique) {
   if (!parHistorique && history.state && history.state.fen) history.back();
 }
 $('x').addEventListener('click', () => fermer());
+$('fen-retour').addEventListener('click', () => { E.pend = null; if (seanceCourante()) montrer(E.cur); else fermer(); });
 let bas = null;
 fond.addEventListener('pointerdown', e => { bas = e.target === fond ? [e.clientX, e.clientY] : null; });
 fond.addEventListener('pointerup', e => { if (bas && e.target === fond && Math.hypot(e.clientX - bas[0], e.clientY - bas[1]) < 5) fermer(); bas = null; });
@@ -249,7 +259,10 @@ function montrer(i, versRessenti) {
   ouvrir(detail(M, M.S[i], ctxDetail()), meme && !versRessenti);
   E.ecran = 'detail';
   // « ressenti ? » : la fiche s'ouvre défilée sur le formulaire
-  if (versRessenti) { const f = $('ressenti'); if (f) c.parentNode.scrollTop = f.offsetTop - 8; }
+  if (versRessenti) {
+    const f = $('ressenti'), fen = c.parentNode;
+    if (f) fen.scrollTop += f.getBoundingClientRect().top - fen.getBoundingClientRect().top - $('fen-barre').offsetHeight - 8;
+  }
 }
 const ctxDetail = () => ({ saisie: E.saisie, envoyes: E.actions, debriefs: E.debriefs, ressentis: E.ressentis, edition: E.edition, onglet: E.onglet });
 const seanceCourante = () => (E.M && E.cur >= 0 ? E.M.S[E.cur] : null);
@@ -313,7 +326,8 @@ function dlgDeplacer(s, n) {
     [0, 1, 2, 3, 4, 5, 6].map(j => {
       const d = addD(w.ws, j), o = M.S.filter(x => x.d === d && x.id !== s.id);
       const off = !opDeplacement(M, s, d);
-      return `<button class="bt2" data-act="dep-ok" data-d="${d}"${off ? ' disabled' : ''}>${jl(d)} <small>· ${d === s.d ? 'actuellement' : o.length ? o.map(x => esc(x.sp === 'r' ? x.t : x.lab)).join(', ') : 'libre'}</small></button>`;
+      const libre = !off && !o.length;
+      return `<button class="bt2${libre ? ' libre' : ''}" data-act="dep-ok" data-d="${d}"${off ? ' disabled' : ''}>${jl(d)} <small>· ${d === s.d ? 'actuellement' : o.length ? o.map(x => esc(x.sp === 'r' ? x.t : x.lab)).join(', ') : '<b>libre</b>'}</small></button>`;
     }).join('') + '</div><div class="act"><button class="bt2" data-act="retour">Retour</button></div>');
 }
 function dlgIntervertir(s, n) {
@@ -359,7 +373,7 @@ function muscuDuJour() {
 }
 function vMuscu() {
   const b = brouillon();
-  return b ? MU.editeur(b, E.snap, E.mu) : MU.accueil(E.snap, E.mu.brouillons, { ...E.mu, prevu: muscuDuJour() });
+  return b ? MU.editeur(b, E.snap, { ...E.mu, actions: E.actions }) : MU.accueil(E.snap, E.mu.brouillons, { ...E.mu, actions: E.actions, prevu: muscuDuJour() });
 }
 // Typologie d'une séance muscu du plan : même titre, sinon même partie du corps (« Muscu pecs et épaules » → Pecs).
 function typologiePour(s) {
@@ -383,9 +397,10 @@ async function envoyerMuscu(b) {
   const p = MU.payload(b);
   if (!p.exercises.length) return;
   b.etat = 'envoye'; b.erreur = null; E.mu.cur = null;
-  const a = { id: C.uuid(), created_at: isoLocal(new Date()), type: 'strength_session', payload: p, etat: 'a_envoyer' };
-  b.action_id = a.id;
-  E.actions.push(a);
+  // renvoi d'un brouillon dont l'envoi précédent n'est pas parti : la même action, mise à jour
+  const r = remplacerOuAjouter(E.actions, { id: C.uuid(), created_at: isoLocal(new Date()), type: 'strength_session', payload: p, etat: 'a_envoyer' });
+  E.actions = r.actions;
+  b.action_id = r.action.id;
   await sauverActions(); await sauverMuscu();
   modele(); muRendre(true);
   synchroniser();
@@ -420,7 +435,7 @@ function agirMuscu(a, t) {
       const x = b.ex[i].sets[j], f = t.dataset.f;
       x[f] = MU.pas(b, i, j, f, +t.dataset.d);
       retouche(b); sauverMuscu();
-      const inp = t.parentNode.querySelector('input'); if (inp) inp.value = x[f];
+      const inp = t.parentNode.querySelector('input'); if (inp) inp.value = f === 'load_kg' ? MU.champKg(x[f]) : x[f];
       return majEnvoi(b);
     }
     case 'mu-s-add': if (b) { MU.ajouterSerie(b, i); retouche(b); sauverMuscu(); muRendre(); } return;
@@ -453,7 +468,7 @@ function saisieMuscu(t, change) {
     if (!b.title || (old && b.title === old.title)) b.title = t.value;
     b.typ = t.value; retouche(b); sauverMuscu(); return muRendre();
   }
-  if (f === 'reps' || f === 'load_kg') b.ex[i].sets[j][f] = t.value === '' ? null : +String(t.value).replace(',', '.');
+  if (f === 'reps' || f === 'load_kg') b.ex[i].sets[j][f] = MU.lireNombre(t.value);
   else if (f === 'exnote') b.ex[i].note = t.value;
   else if (f === 'title' || f === 'note' || f === 'date') { if (f === 'date' && !t.value) return; b[f] = t.value; }
   retouche(b); sauverMuscu(); majEnvoi(b);
@@ -534,7 +549,7 @@ async function agir(t) {
   switch (a) {
     case 'prec': return montrer(E.cur - 1);
     case 'suiv': return montrer(E.cur + 1);
-    case 'retour': return s ? montrer(E.cur) : fermer();
+    case 'retour': E.pend = null; return s ? montrer(E.cur) : fermer();
     case 'dep': return s && dlgDeplacer(s, s.w);
     case 'dep-w': return s && dlgDeplacer(s, +t.dataset.n);
     case 'dep-ok': { const op = s && opDeplacement(E.M, s, t.dataset.d); return op && deplacerOuApercu(op); }
@@ -575,7 +590,7 @@ document.addEventListener('click', e => {
   const t = e.target.closest('[data-act],[data-v],[data-i],[data-h]');
   if (!t || t.disabled) return;
   if (t.dataset.act) { e.preventDefault(); agir(t); return; }
-  if (t.dataset.v) { E.vue = t.dataset.v; scrollTo({ top: 0 }); rendre(true); return; }
+  if (t.dataset.v) { E.vue = t.dataset.v; E.planPlace = false; scrollTo({ top: 0 }); rendre(true); return; }
   if (t.dataset.i !== undefined) return montrer(+t.dataset.i);
   if (t.dataset.h !== undefined) { const x = E.M && E.M.H[+t.dataset.h]; if (x) { E.cur = -1; ouvrir(detailHors(E.M, x)); } return; }
 });
@@ -607,6 +622,7 @@ document.addEventListener('input', e => {
   if (ok) ok.disabled = !(r.rpe || r.legs || r.breath || r.douleur === 'oui' || (r.com || '').trim());
 });
 document.addEventListener('keydown', e => {
+  if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('[role="button"][tabindex]')) { e.preventDefault(); e.target.click(); return; }
   if (e.key === 'Escape' && ouverte && !drag) { fermer(); return; }
   if (ouverte && !/INPUT|TEXTAREA/.test(e.target.tagName)) {
     if (e.key === 'ArrowLeft' && E.cur >= 0) montrer(E.cur - 1);

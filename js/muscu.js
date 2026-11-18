@@ -1,9 +1,23 @@
 // Saisie muscu (D68) : brouillons gardés sur le téléphone, envoyés au PC par l'action `strength_session`.
 // Fonctions pures (testées par tests/muscu.test.mjs) puis rendu HTML ; les clics sont gérés par app.js.
-import { esc, jl } from './plan.js';
+import { esc, jl, statutEnvoi } from './plan.js';
 
 const nb = v => (v == null || v === '' ? null : +v);
 const kg = v => String(Math.round(v * 100) / 100).replace('.', ',');
+/** Nombre tapé au clavier (« 102,5 » ou « 102.5 ») ; null si vide ou illisible. */
+export function lireNombre(v) {
+  const s = String(v ?? '').trim().replace(/\s/g, '').replace(',', '.');
+  if (!s || !/^\d*\.?\d*$/.test(s) || s === '.') return null;
+  return +s;
+}
+/** Charge affichée dans le champ : « 102,5 » ; vide pour le poids du corps (0) ou une case vide. */
+export const champKg = v => (v ? kg(v) : '');
+/** Statut d'un brouillon envoyé : action encore sur le téléphone (hors ligne) ou partie, en attente du PC. */
+export function statutBrouillon(b, actions) {
+  if (b.erreur) return 'refusée par le PC : ' + b.erreur;
+  if (b.etat !== 'envoye') return 'gardée sur ce téléphone · pas encore envoyée';
+  return statutEnvoi((actions || []).find(a => a.id === b.action_id) || { etat: 'envoyee' }, true);
+}
 
 /** « 4 × 10 à 60 kg », « 10, 8, 8 à 60 kg », « 10 à 60 kg, 8 à 65 kg » ; poids du corps : sans « à ». */
 export function resume(sets) {
@@ -117,8 +131,11 @@ export const vide = b => !payload(b).exercises.some(e => e.sets.length);
 const TYPE = { warmup: 'échauff.', rest_pause: 'rest-pause', dropset: 'dégressive', stretch: 'étirement', cardio: 'cardio' };
 
 function serie(x, i, j) {
-  const pm = (f, d, lib) => `<button type="button" class="mu-pm" data-act="mu-pm" data-e="${i}" data-s="${j}" data-f="${f}" data-d="${d}" aria-label="${lib}">${d > 0 ? '+' : '−'}</button>`;
-  const champ = (f, v, mode, lib) => `<input type="number" inputmode="${mode}" step="any" min="0" data-mu="${f}" data-e="${i}" data-s="${j}" value="${v == null ? '' : esc(String(v))}" aria-label="${lib} série ${j + 1}">`;
+  const pm = (f, d, lib) => `<button type="button" class="mu-pm ${d > 0 ? 'pl' : 'mo'}" data-act="mu-pm" data-e="${i}" data-s="${j}" data-f="${f}" data-d="${d}" aria-label="${lib}">${d > 0 ? '+' : '−'}</button>`;
+  // charge : champ texte au clavier décimal (virgule ou point acceptés, « 102,5 » affiché ; vide au poids du corps)
+  const champ = (f, v, mode, lib) => (f === 'load_kg'
+    ? `<input type="text" inputmode="decimal" autocomplete="off" data-mu="${f}" data-e="${i}" data-s="${j}" value="${esc(champKg(v))}" aria-label="${lib} série ${j + 1}">`
+    : `<input type="number" inputmode="${mode}" step="1" min="0" data-mu="${f}" data-e="${i}" data-s="${j}" value="${v == null ? '' : esc(String(v))}" aria-label="${lib} série ${j + 1}">`);
   const extra = [x.set_type && TYPE[x.set_type], x.duration_s ? Math.round(x.duration_s) + ' s' : '', x.distance_m ? Math.round(x.distance_m) + ' m' : ''].filter(Boolean).join(' · ');
   return `<div class="mu-s"><span class="mu-n">${j + 1}</span>` +
     `<div class="mu-st">${pm('reps', -1, 'Une répétition de moins')}${champ('reps', x.reps, 'numeric', 'Répétitions')}${pm('reps', 1, 'Une répétition de plus')}</div>` +
@@ -132,7 +149,7 @@ export function editeur(b, snap, ctx) {
   const typs = B.typologies || [];
   const deja = new Set(b.ex.map(e => e.k));
   const props = liste(snap, b.typ, ctx.perso).filter(k => !deja.has(k));
-  const statut = b.etat === 'envoye' ? 'Envoyée, en attente du PC' : b.erreur ? 'Refusée par le PC : ' + b.erreur : 'Gardée sur ce téléphone · pas encore envoyée';
+  const st = statutBrouillon(b, ctx.actions), statut = st[0].toUpperCase() + st.slice(1);
   return `<div class="mu-ed">` +
     `<div class="titre-vue"><button type="button" class="bt2" data-act="mu-fermer">‹ Séances</button><div class="m mu-etat${b.erreur ? ' err' : ''}">${esc(statut)}</div></div>` +
     `<div class="mu-tete"><select data-mu="typ" aria-label="Type de séance">${typs.map(t => `<option value="${esc(t.title)}"${t.title === b.typ ? ' selected' : ''}>${esc(t.label)}</option>`).join('')}</select>` +
@@ -173,7 +190,7 @@ export function accueil(snap, brouillons, ctx) {
   return (pv ? `<div class="mu-prevu"><span>Prévu aujourd’hui : <b>${esc(pv.label)}</b></span><button type="button" class="bt2 pri" data-act="mu-commencer" data-i="${pv.i}">Commencer</button></div>` : '') +
     `<div class="act"><button type="button" class="bt2${pv ? '' : ' pri'} mu-gros" data-act="mu-nouveau">+ Nouvelle séance muscu</button></div>` +
     (brouillons.length ? '<h2 class="mu-h">Sur ce téléphone</h2><div class="lst">' + brouillons.map(b =>
-      `<button type="button" class="bt2" data-act="mu-ouvrir" data-u="${esc(b.uid)}">${jl(b.date)} · ${esc(titre(b))} <small>· ${nex(b)} · ${b.etat === 'envoye' ? 'envoyée, en attente du PC' : b.erreur ? 'refusée' : 'pas encore envoyée'}</small></button>`).join('') + '</div>' : '') +
+      `<button type="button" class="bt2" data-act="mu-ouvrir" data-u="${esc(b.uid)}">${jl(b.date)} · ${esc(titre(b))} <small>· ${nex(b)} · ${b.erreur ? 'refusée' : b.etat === 'envoye' ? esc(statutBrouillon(b, ctx.actions)) : 'pas encore envoyée'}</small></button>`).join('') + '</div>' : '') +
     '<h2 class="mu-h">Séances récentes</h2>' +
     (pc.length ? '<div class="lst">' + pc.map(s => `<button type="button" class="bt2" data-act="mu-editer" data-id="${s.id}">${jl(s.date)} · ${esc(libTyp(snap, s.title))} <small>· ${nex(s)}</small></button>`).join('') + '</div>'
       : '<p class="m">Aucune séance muscu ces trois dernières semaines.</p>');

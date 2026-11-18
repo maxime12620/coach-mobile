@@ -1,5 +1,5 @@
 // Rendu HTML des vues, repris de la maquette plan-integre (version téléphone d'abord).
-import { ZC, ZN, JC, JL, esc, f1, fh, dd, jlong, addD, jour, ecart, muKind, prevuRealise, evaluation, pc, versus, etat, ecartPrevu, ecartAffiche, chiffresSeance, dureeDansTitre, semainePlanning, deplacable, titreCourt } from './plan.js';
+import { ZC, ZN, JC, JL, esc, f1, fh, dd, jlong, addD, jour, ecart, muKind, prevuRealise, evaluation, pc, versus, etat, ecartPrevu, ecartAffiche, chiffresSeance, dureeDansTitre, semainePlanning, deplacable, titreCourt, allureCible, profilUtile, memeTypologie, statutEnvoi } from './plan.js';
 import { vAnalyse } from './analyse.js';
 import * as MUS from './muscu.js';
 
@@ -27,6 +27,7 @@ export const muIco = s => { if (s.sp === 'x') return AUTRE; const k = muKind(s.t
 export const muTag = s => `<span class="mt">${muIco(s)}<span>${esc(s.lab)}</span></span>`;
 const actCourt = h => (h.km >= 0.5 ? `${f1(h.km)} km · ` : '') + `${Math.round(h.mn)} min`;
 const ATT = s => s.attente ? '<span class="att" title="En attente du PC"></span>' : '';
+export { statutEnvoi };
 const AV = s => s.av ? '<span class="av" title="Avant la course">1<sup>re</sup></span>' : '';
 
 export function mini(p, tref, h) {
@@ -45,7 +46,8 @@ export function prof(p) {
     `<div class="zl">${used.map(l => `<span><i style="background:${ZC[l]}"></i>${ZN[l]}</span>`).join('')}</div>`;
 }
 // ---------- ligne de séance (planning, aujourd'hui) : icône, titre, chiffres, état ----------
-const ECL = e => (e == null ? '' : Math.abs(e) <= 10 ? 'ec-in' : e > 0 ? 'ec-plus' : 'ec-moins');
+// Écart de volume : vert dans ± 10 %, gris au-dessus, bleu en dessous (l'orange est réservé à l'allure trop rapide).
+const ECL = e => (e == null ? '' : Math.abs(e) <= 10 ? 'ec-in' : e > 0 ? 'ec-vol' : 'ec-moins');
 export const fEcart = e => (e == null ? '' : (e > 0 ? '+' : e < 0 ? '−' : '') + Math.abs(e) + ' %');
 const icone = s => (s.sp === 'r' ? ICO.run : muIco(s));
 // Nom affiché : le titre pour la course, le libellé du type pour la muscu (« Jambes », jamais « Muscu leg »).
@@ -59,13 +61,14 @@ export function ligneSeance(M, s, ctx) {
     ? `<b>${ch}</b>${e != null ? ` <span class="ec ${ECL(e)}">${fEcart(e)}</span>` : ''}`
     : s.saisie ? `${ch ? ch + ' · ' : ''}<span class="enatt">saisie envoyée · en attente</span>`
     : ch + (et === 'manque' ? ' · non faite' : '');
-  const pastille = sansRessenti(M, s, ctx) ? `<span class="rq" data-act="res-direct" data-i="${s.i}" role="button" aria-label="Donner le ressenti">ressenti ?</span>` : '';
+  const pastille = sansRessenti(M, s, ctx) ? pastilleRessenti(s) : '';
   const droite = et === 'fait' ? '<span class="okc" title="Faite">✓</span>'
     : et === 'manque' ? '<span class="nfc" title="Non faite">✕</span>'
     : s.sp === 'r' ? `<span class="pv">${mini(s.p, M.tref, 22)}</span>` : '';
   return `<button class="ps ${et}${s.sp === 'r' ? ' run' : ' mu'}" data-i="${s.i}" title="${esc(s.t)}">${ATT(s)}` +
     `<span class="psi">${icone(s)}</span><span class="pst"><b>${esc(s.sp === 'r' ? s.t : s.lab || s.t)}${AV(s)}</b><small>${sous}</small></span>${pastille}${droite}</button>`;
 }
+const pastilleRessenti = s => `<span class="rq" data-act="res-direct" data-i="${s.i}" role="button" tabindex="0" aria-label="Donner le ressenti"><span>ressenti ?</span></span>`;
 export function ligneHors(x) {
   if (x.local) {
     return `<div class="ps hors local" title="Saisie muscu envoyée, en attente du PC"><span class="att"></span><span class="psi">${muIco({ sp: 'm', t: x.t, ty: '' })}</span>` +
@@ -114,17 +117,22 @@ export function vPlanning(M, ctx) {
 }
 
 // ---------- aujourd'hui : séances du jour, hier, prochaine séance si repos ; indicateurs en pied ----------
-function carteJour(M, s) {
+// Carte d'une séance du jour : div au rôle de bouton, car elle porte ses propres boutons (ressenti, « Commencer »).
+function carteJour(M, s, ctx) {
   const et = etat(s, M.T), e = et === 'fait' ? ecartAffiche(ecartPrevu(s)) : null;
-  return `<button class="nx" data-i="${s.i}">${ATT(s)}<div class="nxh"><span class="psi">${icone(s)}</span><h2>${esc(nomSeance(s))}</h2>${et === 'fait' ? '<span class="okc">✓</span>' : ''}</div>` +
+  const al = et !== 'fait' ? allureCible(s) : '';
+  const commencer = s.sp === 'm' && s.sport === 'strength' && et === 'jour' && !s.saisie;
+  return `<div class="nx" data-i="${s.i}" role="button" tabindex="0">${ATT(s)}<div class="nxh"><span class="psi">${icone(s)}</span><h2>${esc(nomSeance(s))}</h2>${sansRessenti(M, s, ctx) ? pastilleRessenti(s) : ''}${et === 'fait' ? '<span class="okc">✓</span>' : ''}</div>` +
     (et === 'fait'
       ? `<div class="chf"><div><b>${esc(chiffresSeance(s))}</b></div>${e != null ? `<div><b class="ec ${ECL(e)}">${fEcart(e)}</b></div>` : ''}</div>`
-      : `<div class="chf">${s.km ? `<div><b>${f1(s.km)}</b> <span>km</span></div>` : ''}${s.mn && !dureeDansTitre(s) ? `<div><b>${Math.round(s.mn)}</b> <span>min</span></div>` : ''}</div>${s.saisie ? '<div class="m enatt">Saisie muscu envoyée · en attente du PC</div>' : ''}${s.sp === 'r' ? prof(s.p) : ''}`) + '</button>';
+      : `<div class="chf">${s.km ? `<div><b>${f1(s.km)}</b> <span>km</span></div>` : ''}${s.mn && !dureeDansTitre(s) ? `<div><b>${Math.round(s.mn)}</b> <span>min</span></div>` : ''}${al ? `<div><b>${esc(al.replace(' /km', ''))}</b> <span>/km</span></div>` : ''}</div>` +
+        (s.saisie ? '<div class="m enatt">Saisie muscu envoyée · en attente du PC</div>' : '') + (s.sp === 'r' && profilUtile(s) ? prof(s.p) : '') +
+        (commencer ? `<div class="act"><button type="button" class="bt2 pri large" data-act="mu-commencer" data-i="${s.i}">Commencer</button></div>` : '')) + '</div>';
 }
 export function vAujourdhui(M, ctx) {
   const ss = M.S.filter(s => s.d === M.T), hs = (M.H || []).filter(x => x.d === M.T);
   let h = `<h2>Aujourd’hui<small>${jlong(M.T)}</small></h2><div class="auj-s">`;
-  if (ss.length) h += ss.map(s => carteJour(M, s)).join('');
+  if (ss.length) h += ss.map(s => carteJour(M, s, ctx)).join('');
   else {
     const nx = M.S.find(s => s.d > M.T);
     h += `<div class="repos"><b>Repos</b>${nx ? `<span class="m">Prochaine séance · ${ecart(M.T, nx.d) === 1 ? 'demain' : jlong(nx.d)}</span>` : ''}</div>`;
@@ -134,10 +142,16 @@ export function vAujourdhui(M, ctx) {
   const hier = addD(M.T, -1), sh = M.S.filter(s => s.d === hier), hh = (M.H || []).filter(x => x.d === hier);
   h += `<h2 class="sous-titre">Hier<small>${jlong(hier)}</small></h2><div class="auj-l">` +
     (sh.length || hh.length ? sh.map(s => ligneSeance(M, s, ctx)).join('') + hh.map(ligneHors).join('') : '<p class="m">Repos</p>') + '</div>';
-  // séance d'hier faite sans ressenti : le bouton mène directement à son formulaire
-  const oubli = ctx ? sh.find(s => sansRessenti(M, s, ctx)) : null;
-  h += '<div class="act">' + (oubli ? `<button class="bt2 pri large" data-act="res-direct" data-i="${oubli.i}">Ressenti · ${esc(titreCourt(oubli))} d’hier</button>` : '<button class="bt2 large" data-act="ressenti-jour">Ressenti du jour</button>') + '</div>';
+  // séance faite sans ressenti, d'aujourd'hui d'abord (le soir après la course), sinon d'hier : le bouton mène
+  // directement à son formulaire ; « Ressenti du jour » seulement s'il n'y en a aucune
+  const oubli = ressentiAttendu(M, ctx);
+  h += '<div class="act">' + (oubli ? `<button class="bt2 pri large" data-act="res-direct" data-i="${oubli.i}">Ressenti · ${esc(titreCourt(oubli))}${oubli.d === M.T ? '' : ' d’hier'}</button>` : '<button class="bt2 large" data-act="ressenti-jour">Ressenti du jour</button>') + '</div>';
   return h + tuilesJour(M);
+}
+export function ressentiAttendu(M, ctx) {
+  if (!ctx) return null;
+  const hier = addD(M.T, -1);
+  return M.S.find(s => s.d === M.T && sansRessenti(M, s, ctx)) || M.S.find(s => s.d === hier && sansRessenti(M, s, ctx)) || null;
 }
 function tuilesJour(M) {
   const t = M.today;
@@ -190,16 +204,17 @@ function partiePrevu(M, s) {
     (s.sx.length ? `<ul class="et">${s.sx.map(([q, l, al, nm, no, rc, zl]) => `<li><div class="q">${esc(q)}</div><div>${gauge(l, zl)}</div><div class="dt">${al ? `<span class="al">${esc(al)}</span>` : ''}${rc ? `<span class="rc">${esc(rc)}</span>` : ''}<span class="nm">${esc(nm)}${no ? ' · ' + esc(no) : ''}</span></div></li>`).join('')}</ul>` : '');
 }
 
-function muscuFaite(M, s) {
+export function muscuFaite(M, s) {
   const B = MUS.bloc(M.snap); if (!B) return null;
   const ids = s.real ? s.real.activity_ids || [] : [];
-  const L = B.sessions || [], duJour = L.filter(x => x.date === s.d);
-  return L.find(x => x.activity_id != null && ids.includes(x.activity_id)) || (duJour.length === 1 ? duJour[0] : null);
+  const L = B.sessions || [], sid = s.real && s.real.strength_session_id;
+  const duJour = L.filter(x => x.date === s.d && memeTypologie(x.title, s));
+  return (sid != null && L.find(x => x.id === sid)) || L.find(x => x.activity_id != null && ids.includes(x.activity_id)) || (duJour.length === 1 ? duJour[0] : null);
 }
 function partieRealise(M, s) {
   const vs = versus(s);
   if (!vs) return '<p class="m">Pas de chiffres réalisés.</p>';
-  const RST = { in: 'ec-in', fast: 'ec-plus', slow: 'ec-moins' };
+  const RST = { in: 'ec-in', fast: 'ec-plus', slow: 'ec-moins' }; // allure : orange = trop rapide
   let h = '<div class="rl">' + vs.rows.map(([l, a, b, e, st]) => {
     e = ecartAffiche(e);
     return `<div><span>${l}</span><b${st ? ` class="ec ${RST[st]}"` : ''}>${b}</b><small>${a === '—' ? '' : /^cible/.test(a) ? a : 'prévu ' + a}${e != null ? ` <em class="ec ${ECL(e)}">${fEcart(e)}</em>` : ''}</small></div>`;
@@ -261,8 +276,6 @@ export function detail(M, s, ctx) {
   h += `<div class="nav"><button class="bt2" data-act="prec"${s.i <= 0 ? ' disabled' : ''}>‹ Précédente</button><button class="bt2" data-act="suiv"${s.i >= M.S.length - 1 ? ' disabled' : ''}>Suivante ›</button></div>`;
   return h;
 }
-// Statut d'une action locale : pas encore partie (hors ligne) ou partie, en attente de l'accusé du PC.
-export const statutEnvoi = a => (a && a.etat === 'a_envoyer' ? 'gardé sur le téléphone, envoi au retour du réseau' : 'envoyé, en attente du PC');
 // Libellés du PC (DoneTabs.tsx) : jambes lourdes / normales / légères, souffle court / normal / facile,
 // stockés 1 / 3 / 5 (contrat `feeling`). Une valeur intermédiaire (ancienne échelle 1-5) est ramenée au plus proche.
 export const JAMBES = [['lourdes', 1], ['normales', 3], ['légères', 5]], SOUFFLE = [['court', 1], ['normal', 3], ['facile', 5]];

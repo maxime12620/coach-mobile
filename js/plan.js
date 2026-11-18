@@ -274,7 +274,8 @@ export function versus(s) {
   const ecartPc = (a, b) => (a && b ? Math.round((b / a - 1) * 100) : null);
   const rows = [];
   if (s.sp === 'r' || km >= 0.5) rows.push(['Distance', s.km ? f1(s.km) + ' km' : '—', km ? f1(km) + ' km' : '—', ecartPc(s.km, km)]);
-  rows.push(['Durée', s.mn ? Math.round(s.mn) + ' min' : '—', mn ? Math.round(mn) + ' min' : '—', ecartPc(s.mn, mn)]);
+  if (s.sp === 'm' && !mn && r.exercises) rows.push(['Exercices', '—', String(r.exercises), null]);
+  else rows.push(['Durée', s.mn ? Math.round(s.mn) + ' min' : '—', mn ? Math.round(mn) + ' min' : '—', ecartPc(s.mn, mn)]);
   const rp = s.sp === 'r' ? allureReps(s) : null;
   if (rp) rows.push(['Allure des répétitions', 'cible ' + pc(rp.lo) + '-' + pc(rp.hi), pc(rp.p) + ' /km', null, rp.st]);
   else if (s.sp === 'r') {
@@ -375,16 +376,52 @@ export function ecartPrevu(s) {
 export const ecartAffiche = e => (e == null || Math.abs(e) < 5 ? null : e);
 // La durée est déjà dans le titre (« Footing 36 min… ») : ne pas la répéter dans la ligne de chiffres.
 export const dureeDansTitre = s => /\d\s*(min|h)\b/i.test(s.t || '');
-// Ligne courte d'une séance : « 9,8 → 12,9 km » (faite), « 9,8 km · 49 min » (prévue, km seuls si la durée est
-// dans le titre), muscu en minutes.
+// Ligne courte d'une séance : « 9,8 → 12,9 km » (faite, écart visible), « 9,9 km » (faite, écart masqué sous 5 % :
+// le réalisé seul, le ✓ dit le reste), « 9,8 km · 49 min » (prévue, km seuls si la durée est dans le titre), muscu en
+// minutes ; muscu saisie sans activité : « 5 exercices ».
 export function chiffresSeance(s) {
   const r = s.done ? s.real : null;
+  const avant = ecartAffiche(ecartPrevu(s)) != null;
   if (s.sp === 'r') {
-    if (r && r.distance_m) return (s.km ? f1(s.km) + ' → ' : '') + f1(r.distance_m / 1000) + ' km';
+    if (r && r.distance_m) return (s.km && avant ? f1(s.km) + ' → ' : '') + f1(r.distance_m / 1000) + ' km';
     return [s.km ? f1(s.km) + ' km' : '', s.mn && !dureeDansTitre(s) ? Math.round(s.mn) + ' min' : ''].filter(Boolean).join(' · ');
   }
-  if (r && r.duration_s) return (s.mn ? Math.round(s.mn) + ' → ' : '') + Math.round(r.duration_s / 60) + ' min';
+  if (r && r.duration_s) return (s.mn && avant ? Math.round(s.mn) + ' → ' : '') + Math.round(r.duration_s / 60) + ' min';
+  if (r && r.exercises) return r.exercises + ' exercice' + (r.exercises > 1 ? 's' : '');
   return s.mn ? Math.round(s.mn) + ' min' : '';
+}
+// Allure cible principale d'une course : celle de l'effort qui dure le plus (« 5:20-5:45 /km »), '' sinon.
+export function allureCible(s) {
+  if (s.sp !== 'r') return '';
+  let best = null, bt = 0;
+  each(s.x || [], (x, m) => {
+    if (x.kind !== 'active' || !x.target || x.target.type !== 'pace') return;
+    const d = ssec(x) * m;
+    if (d > bt) { bt = d; best = x.target; }
+  });
+  return best ? ptx(best) : '';
+}
+// Le profil d'intensité n'apprend rien quand la séance n'a qu'une zone.
+export const profilUtile = s => new Set((s.p || []).map(x => x[1])).size > 1;
+// Même typologie de muscu : même intitulé, sinon même partie du corps (« Muscu leg » ↔ « Muscu jambes »).
+export const memeTypologie = (titre, s) => titre === s.t || (!!muKind(titre, '')[0] && muKind(titre, '')[0] === muKind(s.t, s.ty)[0]);
+
+// Statut d'une action locale : pas encore partie (hors ligne) ou partie, en attente de l'accusé du PC.
+export const statutEnvoi = (a, fem) => (a && a.etat === 'a_envoyer' ? `gardé${fem ? 'e' : ''} sur le téléphone, envoi au retour du réseau` : `envoyé${fem ? 'e' : ''}, en attente du PC`);
+// Correction d'une saisie encore en file (pas partie) : elle remplace l'action de la même séance au lieu de s'ajouter.
+// Ressenti et douleur : même séance (ou même jour pour le ressenti du jour) ; muscu : même brouillon (uid).
+const cleAction = a => {
+  const p = a.payload || {};
+  if (a.type === 'feeling' || a.type === 'pain') return a.type + ':' + (p.session_id != null ? 's' + p.session_id : 'j' + p.date);
+  if (a.type === 'strength_session') return a.type + ':' + p.uid;
+  return null;
+};
+export function remplacerOuAjouter(actions, a) {
+  const k = cleAction(a);
+  const i = k ? actions.findIndex(x => x.etat === 'a_envoyer' && !x.retenu && cleAction(x) === k) : -1;
+  if (i < 0) return { actions: [...actions, a], action: a };
+  const b = { ...actions[i], payload: a.payload, created_at: a.created_at };
+  return { actions: actions.map((x, j) => (j === i ? b : x)), action: b };
 }
 // Une semaine du planning : les 7 jours (vides compris) et le volume prévu / réalisé.
 // Réalisé : séances faites (cumul des activités rattachées) plus activités hors plan de la semaine.
