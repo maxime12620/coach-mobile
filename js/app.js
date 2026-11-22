@@ -5,7 +5,7 @@ import * as GH from './github.js';
 import { construire, semaineCourante, esc, fk, jl, jlong, addD, opDeplacement, opInterversion, opInverse, nouvellesAlertes, muKind, remplacerOuAjouter } from './plan.js';
 import * as MU from './muscu.js';
 import { agirAnalyse, lire as lireCourbe } from './analyse.js';
-import { vPlanning, vAujourdhui, detail, detailHors, nomSeance, formRessenti, ressentiSeance, carteRessenti, niv3, statutEnvoi } from './vues.js';
+import { vPlanning, vAujourdhui, detail, detailHors, nomSeance, formRessenti, ressentiSeance, carteRessenti, niv3, statutEnvoi, dlgEdition, dlgLien, TYPES_MUSCU } from './vues.js';
 
 const Q = new URLSearchParams(location.search);
 const DEMO = Q.get('demo') === '1';
@@ -23,6 +23,11 @@ const E = {
   occupe: false, msg: '', msgErr: false, horsLigneForce: false, reglages: false,
   // saisie muscu (D68) : brouillons gardés sur le téléphone jusqu'à l'accusé du PC, exercices ajoutés à la main
   mu: { brouillons: [], perso: {}, cur: null, choix: false, libre: false, confirmer: false },
+  confirmSuppr: false,
+  retours: [],      // retours sur l'appli envoyés depuis ce téléphone (D75) : {id, date, screen, text}
+  retourSaisie: { text: '', screen: '' },
+  partage: null,    // dernier moment où tout était parti du téléphone (indicateur de l'en-tête, D75)
+  supprimes: {},    // brouillons muscu supprimés pendant le bandeau « Annuler » : {action_id: brouillon}
 };
 
 // ---------- persistance ----------
@@ -37,7 +42,7 @@ function client(cfg) {
 
 function modele() {
   if (!E.snap) { E.M = null; return; }
-  const pend = E.actions.filter(a => a.type === 'move_session' || a.type === 'swap_sessions' || a.type === 'strength_session');
+  const pend = E.actions.filter(a => ['move_session', 'swap_sessions', 'strength_session', 'delete_session', 'edit_session', 'delete_strength_session'].includes(a.type));
   E.M = construire(E.snap, pend, DEMO && E.snap.today ? { T: E.snap.today.date } : {});
 }
 
@@ -53,6 +58,11 @@ function libAction(a) {
     case 'debrief_todo': return 'Débrief · ' + t(p.session_id);
     case 'sync_request': return 'Demande de synchro';
     case 'strength_session': return 'Muscu · ' + (p.title || '') + ' · ' + jl(p.date);
+    case 'delete_session': return 'Suppression · ' + t(p.session_id);
+    case 'edit_session': return 'Intitulé et type · ' + (p.title || t(p.session_id));
+    case 'delete_strength_session': return 'Suppression d’une muscu';
+    case 'link_activity': return 'Rattachement d’une activité';
+    case 'app_feedback': return 'Retour sur l’appli';
     default: return a.type;
   }
 }
@@ -97,6 +107,7 @@ async function synchroniser(manuel) {
       await store.ecrire('etag', r.etag);
     }
     await store.ecrire('derniere', new Date().toISOString());
+    if (!E.actions.some(x => x.etat === 'a_envoyer')) { E.partage = new Date().toISOString(); await store.ecrire('partage', E.partage); }
     const reste = r.quota && r.quota.reste;
     message(reste != null && reste < 500 ? `Quota GitHub restant ${reste}` : '');
   } catch (e) {
@@ -170,7 +181,11 @@ function entete() {
   $('attente').hidden = !n;
   $('attente').textContent = n;
   $('attente').title = n + ' action' + (n > 1 ? 's' : '') + ' en attente du PC';
-  const info = [dem ? 'synchro demandée au PC' : gs && !isNaN(gs) ? 'Garmin lu ' + quand(gs) : '', n ? `${n} en attente du PC` : ''].filter(Boolean).join(' · ');
+  // D75 : l'état de partage avec le PC est ici, pas sur les boutons (« 1 saisie à partager », « tout est partagé à HH:MM »)
+  const ap = E.actions.filter(a => a.type !== 'sync_request' && a.etat === 'a_envoyer').length;
+  const pt = E.partage ? new Date(E.partage) : null;
+  const part = ap ? `${ap} saisie${ap > 1 ? 's' : ''} à partager` : pt && !isNaN(pt) ? 'tout est partagé ' + quand(pt) : '';
+  const info = [dem ? 'synchro demandée au PC' : gs && !isNaN(gs) ? 'Garmin lu ' + quand(gs) : '', part].filter(Boolean).join(' · ');
   $('msg').textContent = E.occupe ? 'Synchronisation…' : [E.msg, info].filter(Boolean).join(' · ');
   $('msg').classList.toggle('err', E.msgErr && !E.occupe);
   $('sync').disabled = E.occupe || !E.cfg;
@@ -195,7 +210,11 @@ function versSemaineCourante() {
 function rendre(defiler) {
   entete();
   const sel = $('sel'), vue = $('vue');
-  if (!E.cfg || E.reglages) { sel.innerHTML = ''; $('conflits').innerHTML = ''; vue.innerHTML = ecranReglages(); return; }
+  if (!E.cfg || E.reglages) {
+    // pas de re-rendu pendant une saisie dans les réglages (retour sur l'appli) : le clavier reste ouvert
+    if (vue.contains(document.activeElement) && /INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) return;
+    sel.innerHTML = ''; $('conflits').innerHTML = ''; vue.innerHTML = ecranReglages(); return;
+  }
   sel.innerHTML = VUES.map(([k, n]) => `<button type="button" data-v="${k}" class="${k === E.vue ? 'on' : ''}">${n}</button>`).join('');
   $('conflits').innerHTML = E.conflits.map(c => `<div class="cfl"><span>⚠ <b>${esc(c.message)}</b> · ${esc(c.lib)}</span><button type="button" data-act="cfl-x" data-id="${c.id}" aria-label="Masquer">×</button></div>`).join('');
   try { localStorage.setItem('coach-vue', E.vue); } catch (e) { /* stockage indisponible */ }
@@ -253,7 +272,7 @@ addEventListener('popstate', () => { if (ouverte) fermer(true); });
 function montrer(i, versRessenti) {
   const M = E.M; if (!M || i < 0 || i >= M.S.length) return;
   const meme = E.cur === i && E.ecran === 'detail';
-  if (E.cur !== i) { E.saisie = {}; E.edition = false; E.onglet = null; }
+  if (E.cur !== i) { E.saisie = {}; E.edition = false; E.onglet = null; E.confirmSuppr = false; }
   E.cur = i;
   if (versRessenti) E.onglet = 'real';
   ouvrir(detail(M, M.S[i], ctxDetail()), meme && !versRessenti);
@@ -264,7 +283,7 @@ function montrer(i, versRessenti) {
     if (f) fen.scrollTop += f.getBoundingClientRect().top - fen.getBoundingClientRect().top - $('fen-barre').offsetHeight - 8;
   }
 }
-const ctxDetail = () => ({ saisie: E.saisie, envoyes: E.actions, debriefs: E.debriefs, ressentis: E.ressentis, edition: E.edition, onglet: E.onglet });
+const ctxDetail = () => ({ saisie: E.saisie, envoyes: E.actions, debriefs: E.debriefs, ressentis: E.ressentis, edition: E.edition, onglet: E.onglet, confirmSuppr: E.confirmSuppr });
 const seanceCourante = () => (E.M && E.cur >= 0 ? E.M.S[E.cur] : null);
 
 // ---------- déplacer / intervertir ----------
@@ -313,10 +332,62 @@ function bandeau(titre, lib, a) {
 async function annulerDeplacement(id) {
   const b = $('bandeau'); if (b) b.hidden = true;
   const a = E.actions.find(x => x.id === id);
+  if (a && (a.type === 'delete_session' || a.type === 'delete_strength_session')) {
+    // suppression retenue pendant le bandeau : rien n'est parti, on la retire (et le brouillon muscu revient)
+    if (a.etat === 'a_envoyer') E.actions = E.actions.filter(x => x !== a);
+    if (E.supprimes[id]) { E.mu.brouillons.unshift(E.supprimes[id]); delete E.supprimes[id]; await sauverMuscu(); }
+    await sauverActions(); modele(); rendre(); return;
+  }
   if (a && a.etat === 'a_envoyer') E.actions = E.actions.filter(x => x !== a);
   else if (a) { const inv = opInverse(a); E.actions.push({ id: C.uuid(), created_at: isoLocal(new Date()), type: inv.type, payload: inv.payload, etat: 'a_envoyer' }); }
   await sauverActions(); modele(); rendre();
   if (a && a.etat !== 'a_envoyer') synchroniser();
+}
+
+// Action retenue quelques secondes (bandeau « … · Annuler ») avant de partir au PC (D75 : suppressions).
+async function retenir(type, payload, titre, lib) {
+  const a = { id: C.uuid(), created_at: isoLocal(new Date()), type, payload, etat: 'a_envoyer', retenu: Date.now() + RETENUE };
+  E.actions.push(a);
+  await sauverActions(); modele(); rendre();
+  bandeau(titre, lib, a);
+  setTimeout(async () => { if (E.actions.includes(a) && a.retenu) { delete a.retenu; delete E.supprimes[a.id]; await sauverActions(); synchroniser(); } }, RETENUE);
+  return a;
+}
+async function supprimerSeance(s) {
+  E.confirmSuppr = false; fermer();
+  await retenir('delete_session', { session_id: s.id, from_date: s.d }, 'Supprimée', nomSeance(s));
+}
+async function supprimerMuscu(b) {
+  E.mu.brouillons = E.mu.brouillons.filter(x => x !== b); E.mu.cur = null;
+  const envoi = E.actions.find(a => a.id === b.action_id && a.etat === 'a_envoyer' && !a.retenu);
+  if (envoi && b.session_id == null) {
+    // jamais parti du téléphone : rien à demander au PC
+    E.actions = E.actions.filter(a => a !== envoi); await sauverActions(); await sauverMuscu(); modele(); return muRendre(true);
+  }
+  await sauverMuscu();
+  const a = await retenir('delete_strength_session', { session_id: b.session_id, uid: b.uid }, 'Supprimée', 'Muscu · ' + MU.libTyp(E.snap, b.typ));
+  E.supprimes[a.id] = b;
+  muRendre(true);
+}
+function ouvrirEdition(s) { E.cur = s.i; ouvrir(dlgEdition(s)); }
+async function validerEdition(s) {
+  const ty = c.querySelector('[data-ed="ty"]').value, ti = c.querySelector('[data-ed="ti"]').value.trim();
+  const p = { session_id: s.id, title: ti || null };
+  if (s.sp === 'r') p.type = ty;
+  else { p.kind = ty; if (!ti || ti === s.t) p.title = (TYPES_MUSCU.find(x => x[0] === ty) || [])[2] || s.t; }
+  const change = p.title !== s.t || (s.sp === 'r' ? ty !== s.ty : ty !== muKind(s.t, s.ty)[0]);
+  if (!change) return montrer(s.i);
+  await ajouterAction('edit_session', p);
+  montrer(E.M.S.findIndex(x => x.id === s.id));
+}
+const activite = id => ((E.snap && E.snap.activities) || []).find(a => a.id === id);
+function ouvrirLien(aid) {
+  const a = activite(aid); if (!a) return;
+  ouvrir(dlgLien(E.M, a, E.actions.some(x => x.type === 'link_activity' && x.payload.activity_id === aid)));
+}
+async function envoyerLien(aid, sid, reset) {
+  await ajouterAction('link_activity', reset ? { activity_id: aid, session_id: null, reset: true } : { activity_id: aid, session_id: sid });
+  ouvrirLien(aid);
 }
 
 function dlgDeplacer(s, n) {
@@ -424,6 +495,7 @@ function agirMuscu(a, t) {
     case 'mu-ouvrir': { const x = E.mu.brouillons.find(y => y.uid === t.dataset.u); return x && ouvrirBrouillon(x); }
     case 'mu-editer': {
       const s = (B.sessions || []).find(x => x.id === +t.dataset.id); if (!s) return;
+      if (ouverte) { fermer(); E.vue = 'muscu'; }  // depuis la fiche d'une séance : « Modifier la saisie »
       return ouvrirBrouillon(MU.depuisSeance(s, C.uuid(), B.typologies));
     }
     case 'mu-fermer':
@@ -433,10 +505,22 @@ function agirMuscu(a, t) {
     case 'mu-pm': {
       if (!b) return;
       const x = b.ex[i].sets[j], f = t.dataset.f;
-      x[f] = MU.pas(b, i, j, f, +t.dataset.d);
+      x[f] = MU.pas(b, i, j, f, +t.dataset.d, E.snap);
       retouche(b); sauverMuscu();
-      const inp = t.parentNode.querySelector('input'); if (inp) inp.value = f === 'load_kg' ? MU.champKg(x[f]) : x[f];
+      if (f === 'load_kg') return muRendre(); // libellés « charge suivante / précédente » à jour
+      const inp = t.parentNode.querySelector('input'); if (inp) inp.value = x[f];
       return majEnvoi(b);
+    }
+    case 'mu-ok': {
+      if (!b) return;
+      const x = b.ex[i].sets[j]; x.ok = !MU.cochee(x);
+      retouche(b); sauverMuscu(); return muRendre();
+    }
+    case 'mu-kind': {
+      if (!b) return;
+      const typ = (B.typologies || []).find(x => x.title === t.dataset.t);
+      if (typ) b.typ = typ.title;
+      b.title = t.dataset.t; retouche(b); sauverMuscu(); return muRendre();
     }
     case 'mu-s-add': if (b) { MU.ajouterSerie(b, i); retouche(b); sauverMuscu(); muRendre(); } return;
     case 'mu-s-x': if (b) { b.ex[i].sets.splice(j, 1); retouche(b); sauverMuscu(); muRendre(); } return;
@@ -445,7 +529,10 @@ function agirMuscu(a, t) {
     case 'mu-env': return b && envoyerMuscu(b);
     case 'mu-suppr': {
       if (!b) return;
-      if (!E.mu.confirmer) { E.mu.confirmer = true; t.textContent = 'Confirmer la suppression'; setTimeout(() => { E.mu.confirmer = false; if (t.isConnected) t.textContent = 'Supprimer le brouillon'; }, 5000); return; }
+      const lib = MU.enregistree(b) ? 'Supprimer la séance' : 'Supprimer le brouillon';
+      if (!E.mu.confirmer) { E.mu.confirmer = true; t.textContent = 'Oui, supprimer'; setTimeout(() => { E.mu.confirmer = false; if (t.isConnected) t.textContent = lib; }, 5000); return; }
+      E.mu.confirmer = false;
+      if (MU.enregistree(b)) return supprimerMuscu(b);
       E.mu.brouillons = E.mu.brouillons.filter(x => x !== b); E.mu.cur = null; sauverMuscu(); return muRendre(true);
     }
   }
@@ -479,8 +566,39 @@ function majIgnores(b) {
   const n = MU.sansSerie(b), el = $('vue').querySelector('.mu-ign');
   if (!n || MU.vide(b)) { if (el) el.remove(); return; }
   const t = `${n} exercice${n > 1 ? 's' : ''} sans série ${n > 1 ? 'seront ignorés' : 'sera ignoré'} à l’envoi`;
+  majNonCochees(b);
   if (el) el.textContent = t;
   else { const act = $('vue').querySelector('.mu-act'); if (act) act.insertAdjacentHTML('beforebegin', `<div class="m mu-ign" role="status">${t}</div>`); }
+}
+
+function majNonCochees(b) {
+  const el = $('vue').querySelector('.mu-nc'); if (!el) return;
+  const n = MU.nonCochees(b);
+  el.textContent = n ? `${n} série${n > 1 ? 's' : ''} non cochée${n > 1 ? 's' : ''} : ${n > 1 ? 'elles ne seront pas comptées' : 'elle ne sera pas comptée'}` : MU.vide(b) ? 'Coche les séries faites pour les enregistrer' : '';
+}
+
+// ---------- retours sur l'appli (D75) ----------
+const ECRANS = ['Aujourd\'hui', 'Planning', 'Fiche de séance', 'Muscu', 'Réglages', 'Autre'];
+function statutRetour(r) {
+  const a = E.actions.find(x => x.id === r.id);
+  return a ? (a.etat === 'a_envoyer' ? 'à partager' : 'partagé, en attente du PC') : 'enregistré sur le PC';
+}
+function sectionRetours() {
+  const r = E.retourSaisie;
+  return '<section class="retours"><h2>Retours sur l’appli</h2><p class="m">Ce qui gêne, ce qui manque, une idée : ajouté sur le PC à la liste des retours.</p>' +
+    `<div class="fm"><label for="rt-txt">Ton retour</label><textarea id="rt-txt" rows="3" maxlength="4000" data-rt="text">${esc(r.text)}</textarea>` +
+    `<label for="rt-scr">Écran concerné (facultatif)</label><select id="rt-scr" data-rt="screen"><option value="">—</option>${ECRANS.map(x => `<option${x === r.screen ? ' selected' : ''}>${esc(x)}</option>`).join('')}</select>` +
+    `<div class="act col"><button class="bt2 pri large" type="button" data-act="rt-env"${r.text.trim() ? '' : ' disabled'}>Envoyer le retour</button></div></div>` +
+    (E.retours.length ? '<ul class="acts">' + E.retours.slice().reverse().map(x => `<li><span>${esc(x.text)}<small> · ${jl(x.date)}${x.screen ? ' · ' + esc(x.screen) : ''}</small></span><span class="n">${statutRetour(x)}</span></li>`).join('') + '</ul>' : '') +
+    '</section>';
+}
+async function envoyerRetour() {
+  const r = E.retourSaisie, text = r.text.trim(); if (!text) return;
+  const a = await ajouterAction('app_feedback', { text, screen: r.screen || null, date: aujourdhui() });
+  E.retours.push({ id: a.id, date: aujourdhui(), screen: r.screen || null, text });
+  E.retourSaisie = { text: '', screen: '' };
+  await store.ecrire('retours', E.retours);
+  rendre();
 }
 
 // ---------- réglages / premier lancement ----------
@@ -495,6 +613,7 @@ function ecranReglages() {
     `<label for="f-phrase">Phrase secrète</label><input type="password" id="f-phrase" value="${esc(c0.phrase || '')}" autocapitalize="off" spellcheck="false">` +
     '<div class="act"><button class="bt2 pri" type="button" data-act="cfg-test">Tester et enregistrer</button>' + (E.cfg ? '<button class="bt2" type="button" data-act="cfg-retour">Retour</button>' : '') + '</div>' +
     '<div class="res" id="cfg-res" role="status"></div></form>' +
+    (E.cfg ? sectionRetours() : '') +
     '<div class="danger"><button class="bt2 rouge" type="button" data-act="effacer">Tout effacer de ce téléphone</button></div></div>';
 }
 
@@ -562,7 +681,6 @@ async function agir(t) {
     case 'ong': E.onglet = t.dataset.o; return montrer(E.cur);
     case 'valider': { const op = E.pend; E.pend = null; if (!op) return; const id = s ? s.id : null; fermer(); await ajouterAction(op.type, op.payload); if (id != null) { /* la fenêtre est fermée : la vue montre la séance « en attente » */ } return; }
     case 'annuler': E.pend = null; return s ? montrer(E.cur) : fermer();
-    case 'debrief': if (s) { await ajouterAction('debrief_todo', { session_id: s.id }); montrer(E.cur); } return;
     case 'res': {
       const r = s ? E.saisie : E.saisieJour; if (!r) return;
       r[t.dataset.f] = String(r[t.dataset.f]) === t.dataset.val ? undefined : t.dataset.val;
@@ -582,6 +700,15 @@ async function agir(t) {
     case 'cfg-test': return testerEtEnregistrer();
     case 'cfg-retour': return basculerReglages(false);
     case 'effacer': return effacer(t);
+    case 'suppr': E.confirmSuppr = true; return s && montrer(E.cur);
+    case 'suppr-non': E.confirmSuppr = false; return s && montrer(E.cur);
+    case 'suppr-ok': return s && supprimerSeance(s);
+    case 'edit': return s && ouvrirEdition(s);
+    case 'edit-ok': return s && validerEdition(s);
+    case 'lien': return ouvrirLien(+t.dataset.a);
+    case 'lien-ok': return envoyerLien(+t.dataset.a, t.dataset.s ? +t.dataset.s : null, false);
+    case 'lien-auto': return envoyerLien(+t.dataset.a, null, true);
+    case 'rt-env': return envoyerRetour();
   }
 }
 
@@ -609,6 +736,14 @@ function basculerReglages(ouvrirR) {
 }
 $('reglages').addEventListener('click', () => { fermer(); basculerReglages(!E.reglages); });
 document.addEventListener('input', e => { const t = e.target.closest('[data-mu]'); if (t) saisieMuscu(t, false); });
+// retour sur l'appli : saisie gardée sans re-rendu (le clavier reste ouvert)
+const majRetour = e => {
+  const t = e.target.closest('[data-rt]'); if (!t) return;
+  E.retourSaisie[t.dataset.rt] = t.value;
+  const b = $('vue').querySelector('[data-act="rt-env"]'); if (b) b.disabled = !E.retourSaisie.text.trim();
+};
+document.addEventListener('input', majRetour);
+document.addEventListener('change', majRetour);
 document.addEventListener('change', e => { const t = e.target.closest('[data-mu]'); if (t) saisieMuscu(t, true); });
 document.addEventListener('keydown', e => {
   if (e.key === 'Enter' && e.target.dataset && e.target.dataset.mu === 'libre') { e.preventDefault(); ajoutExercice(e.target.value.trim()); }
@@ -727,6 +862,8 @@ async function demarrer() {
   E.conflits = await store.lire('conflits') || [];
   E.debriefs = await store.lire('debriefs') || [];
   E.ressentis = await store.lire('ressentis') || {};
+  E.retours = await store.lire('retours') || [];
+  E.partage = await store.lire('partage') || null;
   const mu = await store.lire('muscu');
   if (mu) { E.mu.brouillons = mu.brouillons || []; E.mu.perso = mu.perso || {}; }
   E.snap = await store.lire('snap') || null;

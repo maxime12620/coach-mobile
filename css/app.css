@@ -280,3 +280,18 @@ body.glisse,html:has(body.glisse){overflow-x:hidden}
 .mu-prevu span{flex:1}.mu-prevu b{font-family:"Exo 2";color:var(--bleu)}.mu-prevu .bt2{min-height:44px;font-weight:700}
 .mu-ign{color:var(--ambre);margin-top:10px}
 .rl b.ec-in{color:var(--ok)}.rl b.ec-plus{color:var(--orange)}.rl b.ec-moins{color:var(--bleu2)}
+/* D75 : coche par série, charge avant répétitions, type déduit des exercices, suppression, rattachement, retours */
+.mu-col{padding-left:37px}.mu-col span{width:136px}.mu-col span+span{width:118px}
+.mu-s .mu-st input{width:30px}.mu-s .mu-st input[inputmode=decimal]{width:48px}.mu-s .mu-x{width:30px}
+.mu-ok{flex:none;width:34px;height:44px;border:2px solid var(--filet);border-radius:10px;background:var(--fond);color:var(--clair);font:700 15px "PT Sans";cursor:pointer;touch-action:manipulation;padding:0}
+.mu-ok.on{background:var(--ok);border-color:var(--ok);color:var(--fond);font-size:20px}
+.mu-s:not(.fait) .mu-st input{color:var(--clair)}
+.mu-kind{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:8px 0;padding:8px 10px;border-radius:10px;background:var(--accent-doux);font-size:14px}
+.mu-kind b{color:var(--accent)}
+.mu-nc{min-height:18px;color:var(--ambre)}
+.confirme{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px;font-weight:700;color:var(--rouge)}
+.bt2.petit{min-height:36px;padding:4px 10px;font-size:13px;margin-left:auto}
+.acts li small.lien{color:var(--accent)}
+.retours{margin-top:24px;border-top:1px solid var(--filet);padding-top:12px}.retours h2{margin:0 0 4px}
+.retours .acts .n{font-size:12px;color:var(--clair);white-space:nowrap}
+.fm select{width:100%;min-height:44px;font:inherit;font-size:16px;border:1px solid var(--filet);border-radius:6px;padding:8px;background:var(--surface);color:var(--texte)}

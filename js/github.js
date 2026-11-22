@@ -174,6 +174,46 @@ function appliquerDemo(snap, a, at) {
     }
     return ack('applied', neuf ? 'Séance de muscu enregistrée' : 'Séance de muscu mise à jour');
   }
+  // D75 : suppression, intitulé et type, muscu supprimée, rattachement, retour sur l'appli (PC de démonstration)
+  if (a.type === 'delete_session') {
+    const k = S.findIndex(x => x.id === p.session_id);
+    if (k < 0) return ack('conflict', 'séance inexistante');
+    if (p.from_date && S[k].date !== p.from_date) return ack('conflict', 'séance déplacée depuis');
+    S.splice(k, 1);
+    return ack('applied', 'Séance supprimée');
+  }
+  if (a.type === 'edit_session') {
+    const s = parId(p.session_id);
+    if (!s) return ack('conflict', 'séance inexistante');
+    if (p.title) s.title = p.title;
+    if (p.type) s.type = p.type;
+    if (p.kind) s.type = { leg: 'strength_legs', abdos: 'mobility', hyrox: 'strength_full' }[p.kind] || 'strength_upper';
+    return ack('applied', 'Séance modifiée');
+  }
+  if (a.type === 'delete_strength_session') {
+    const L = (snap.strength && snap.strength.sessions) || [];
+    const k = L.findIndex(x => (p.session_id != null && x.id === p.session_id) || (p.uid && x.uid === p.uid));
+    if (k < 0) return ack('conflict', 'séance de muscu introuvable (déjà supprimée ?)');
+    L.splice(k, 1);
+    return ack('applied', 'Séance de muscu supprimée');
+  }
+  if (a.type === 'link_activity') {
+    const x = (snap.activities || []).find(y => y.id === p.activity_id);
+    if (!x) return ack('conflict', 'activité introuvable');
+    x.plan_link = p.reset ? null : p.session_id == null ? 'none' : 'manual';
+    if (!p.reset) {
+      for (const s of S) {
+        if (s.activity_id === x.id || (s.realized && (s.realized.activity_ids || []).includes(x.id))) {
+          s.activity_id = null; s.realized = null; s.compliance = s.date < snap.today.date ? 'missed' : 'upcoming';
+        }
+      }
+      x.session_id = p.session_id ?? null;
+      const t = x.session_id != null ? parId(x.session_id) : null;
+      if (t) Object.assign(t, { activity_id: x.id, compliance: 'done', realized: { activity_ids: [x.id], distance_m: x.distance_m, duration_s: x.duration_s, pace_s_km: x.pace_s_km, avg_hr: x.avg_hr } });
+    }
+    return ack('applied', p.reset ? 'Rattachement automatique rétabli' : p.session_id == null ? 'Activité laissée hors plan' : 'Activité rattachée');
+  }
+  if (a.type === 'app_feedback') return p.text ? ack('applied', 'Retour enregistré') : ack('conflict', 'retour vide');
   if (a.type === 'debrief_todo') {
     const s = parId(p.session_id);
     if (!s) return ack('conflict', 'Séance inexistante');

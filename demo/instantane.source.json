@@ -6868,7 +6868,8 @@
    "avg_hr": 105,
    "elevation_gain_m": null,
    "session_id": 106,
-   "laps": []
+   "laps": [],
+   "plan_link": null
   },
   {
    "id": 5000,
@@ -6882,7 +6883,8 @@
    "avg_hr": 142,
    "elevation_gain_m": 40,
    "session_id": 100,
-   "laps": []
+   "laps": [],
+   "plan_link": null
   },
   {
    "id": 5001,
@@ -6896,7 +6898,8 @@
    "avg_hr": 105,
    "elevation_gain_m": null,
    "session_id": 101,
-   "laps": []
+   "laps": [],
+   "plan_link": null
   },
   {
    "id": 5002,
@@ -6910,7 +6913,8 @@
    "avg_hr": 142,
    "elevation_gain_m": 40,
    "session_id": 102,
-   "laps": []
+   "laps": [],
+   "plan_link": null
   },
   {
    "id": 5003,
@@ -6924,7 +6928,8 @@
    "avg_hr": 105,
    "elevation_gain_m": null,
    "session_id": 103,
-   "laps": []
+   "laps": [],
+   "plan_link": null
   },
   {
    "id": 5004,
@@ -6938,7 +6943,8 @@
    "avg_hr": 142,
    "elevation_gain_m": 40,
    "session_id": 104,
-   "laps": []
+   "laps": [],
+   "plan_link": null
   },
   {
    "id": 5005,
@@ -6952,7 +6958,8 @@
    "avg_hr": 142,
    "elevation_gain_m": 40,
    "session_id": 105,
-   "laps": []
+   "laps": [],
+   "plan_link": null
   },
   {
    "id": 5007,
@@ -6966,7 +6973,8 @@
    "avg_hr": 142,
    "elevation_gain_m": 40,
    "session_id": 107,
-   "laps": []
+   "laps": [],
+   "plan_link": null
   },
   {
    "id": 5008,
@@ -6980,7 +6988,8 @@
    "avg_hr": 105,
    "elevation_gain_m": null,
    "session_id": 108,
-   "laps": []
+   "laps": [],
+   "plan_link": null
   },
   {
    "id": 5009,
@@ -6994,7 +7003,8 @@
    "avg_hr": 142,
    "elevation_gain_m": 40,
    "session_id": 109,
-   "laps": []
+   "laps": [],
+   "plan_link": null
   },
   {
    "id": 5010,
@@ -7008,7 +7018,8 @@
    "avg_hr": 105,
    "elevation_gain_m": null,
    "session_id": 110,
-   "laps": []
+   "laps": [],
+   "plan_link": null
   },
   {
    "id": 5011,
@@ -7022,7 +7033,8 @@
    "avg_hr": 142,
    "elevation_gain_m": 40,
    "session_id": 111,
-   "laps": []
+   "laps": [],
+   "plan_link": null
   },
   {
    "id": 5012,
@@ -7036,7 +7048,8 @@
    "avg_hr": 142,
    "elevation_gain_m": 40,
    "session_id": 112,
-   "laps": []
+   "laps": [],
+   "plan_link": null
   },
   {
    "id": 5019,
@@ -7050,7 +7063,8 @@
    "avg_hr": 105,
    "elevation_gain_m": null,
    "session_id": 119,
-   "laps": []
+   "laps": [],
+   "plan_link": null
   },
   {
    "id": 5013,
@@ -7064,7 +7078,8 @@
    "avg_hr": 142,
    "elevation_gain_m": 40,
    "session_id": 113,
-   "laps": []
+   "laps": [],
+   "plan_link": null
   },
   {
    "id": 5014,
@@ -7078,7 +7093,8 @@
    "avg_hr": 105,
    "elevation_gain_m": null,
    "session_id": 114,
-   "laps": []
+   "laps": [],
+   "plan_link": null
   },
   {
    "id": 5015,
@@ -7092,7 +7108,8 @@
    "avg_hr": 142,
    "elevation_gain_m": 40,
    "session_id": 115,
-   "laps": []
+   "laps": [],
+   "plan_link": null
   },
   {
    "id": 5016,
@@ -7106,7 +7123,8 @@
    "avg_hr": 105,
    "elevation_gain_m": null,
    "session_id": 116,
-   "laps": []
+   "laps": [],
+   "plan_link": null
   },
   {
    "id": 5017,
@@ -7120,7 +7138,8 @@
    "avg_hr": 142,
    "elevation_gain_m": 40,
    "session_id": 117,
-   "laps": []
+   "laps": [],
+   "plan_link": null
   },
   {
    "id": 5018,
@@ -7134,7 +7153,8 @@
    "avg_hr": 142,
    "elevation_gain_m": 40,
    "session_id": 118,
-   "laps": []
+   "laps": [],
+   "plan_link": null
   },
   {
    "id": 5020,
@@ -7148,7 +7168,8 @@
    "avg_hr": 142,
    "elevation_gain_m": 40,
    "session_id": 120,
-   "laps": []
+   "laps": [],
+   "plan_link": null
   },
   {
    "id": 5021,
@@ -7162,7 +7183,8 @@
    "avg_hr": 105,
    "elevation_gain_m": null,
    "session_id": 121,
-   "laps": []
+   "laps": [],
+   "plan_link": null
   },
   {
    "id": 5022,
@@ -7176,7 +7198,8 @@
    "avg_hr": 142,
    "elevation_gain_m": 40,
    "session_id": 122,
-   "laps": []
+   "laps": [],
+   "plan_link": null
   },
   {
    "id": 5031,
@@ -7190,7 +7213,8 @@
    "avg_hr": 134,
    "elevation_gain_m": 30,
    "session_id": null,
-   "laps": []
+   "laps": [],
+   "plan_link": null
   },
   {
    "id": 5023,
@@ -7204,7 +7228,8 @@
    "avg_hr": 105,
    "elevation_gain_m": null,
    "session_id": 123,
-   "laps": []
+   "laps": [],
+   "plan_link": null
   },
   {
    "id": 5032,
@@ -7218,7 +7243,8 @@
    "avg_hr": 121,
    "elevation_gain_m": 310,
    "session_id": null,
-   "laps": []
+   "laps": [],
+   "plan_link": "none"
   },
   {
    "id": 5030,
@@ -7232,7 +7258,8 @@
    "avg_hr": 131,
    "elevation_gain_m": 8,
    "session_id": 125,
-   "laps": []
+   "laps": [],
+   "plan_link": null
   },
   {
    "id": 5025,
@@ -7246,7 +7273,8 @@
    "avg_hr": 142,
    "elevation_gain_m": 40,
    "session_id": 125,
-   "laps": []
+   "laps": [],
+   "plan_link": null
   },
   {
    "id": 5028,
@@ -7260,7 +7288,8 @@
    "avg_hr": 105,
    "elevation_gain_m": null,
    "session_id": 132,
-   "laps": []
+   "laps": [],
+   "plan_link": null
   },
   {
    "id": 5027,
@@ -7274,7 +7303,8 @@
    "avg_hr": 105,
    "elevation_gain_m": null,
    "session_id": 127,
-   "laps": []
+   "laps": [],
+   "plan_link": "manual"
   },
   {
    "id": 5029,
@@ -7296,7 +7326,8 @@
      "pace_s_km": 330,
      "avg_hr": 138
     }
-   ]
+   ],
+   "plan_link": null
   },
   {
    "id": 5026,
@@ -7542,7 +7573,8 @@
      "pace_s_km": 335,
      "avg_hr": 149
     }
-   ]
+   ],
+   "plan_link": null
   },
   {
    "id": 5033,
@@ -7556,7 +7588,8 @@
    "avg_hr": 139,
    "elevation_gain_m": 22,
    "session_id": 204,
-   "laps": []
+   "laps": [],
+   "plan_link": null
   }
  ],
  "weekly": [
@@ -7856,15 +7889,39 @@
        60
       ]
      ]
-    }
+    },
+    "loads": [
+     50,
+     55,
+     57.5,
+     60,
+     62.5,
+     65
+    ],
+    "step": 2.5
    },
    "lat_pulldown": {
     "label": "Tirage vertical",
-    "last": null
+    "last": null,
+    "loads": [
+     45,
+     50,
+     55,
+     60
+    ],
+    "step": 5
    },
    "face_pull": {
     "label": "Face pull",
-    "last": null
+    "last": null,
+    "loads": [
+     15,
+     17.5,
+     20,
+     22.5,
+     25
+    ],
+    "step": 2.5
    },
    "cable_row": {
     "label": "Tirage horizontal",
@@ -7884,7 +7941,16 @@
        55
       ]
      ]
-    }
+    },
+    "loads": [
+     40,
+     45,
+     50,
+     52.5,
+     55,
+     60
+    ],
+    "step": 5
    },
    "squat": {
     "label": "Squat",
@@ -7904,7 +7970,16 @@
        85
       ]
      ]
-    }
+    },
+    "loads": [
+     60,
+     70,
+     75,
+     80,
+     85,
+     90
+    ],
+    "step": 5
    },
    "bulgarian_split_squat": {
     "label": "Squat bulgare",
@@ -7924,7 +7999,15 @@
        16
       ]
      ]
-    }
+    },
+    "loads": [
+     12,
+     14,
+     16,
+     18,
+     20
+    ],
+    "step": 2
    },
    "leg_curl": {
     "label": "Leg curl",
@@ -7932,7 +8015,15 @@
    },
    "leg_press": {
     "label": "Presse à cuisses",
-    "last": null
+    "last": null,
+    "loads": [
+     100,
+     120,
+     140,
+     160,
+     180
+    ],
+    "step": 20
    },
    "calf_raise": {
     "label": "Mollets debout",
@@ -7956,11 +8047,28 @@
        70
       ]
      ]
-    }
+    },
+    "loads": [
+     60,
+     65,
+     67.5,
+     70,
+     72.5
+    ],
+    "step": 2.5
    },
    "incline_dumbbell_press": {
     "label": "Développé incliné haltères",
-    "last": null
+    "last": null,
+    "loads": [
+     16,
+     18,
+     20,
+     22,
+     24,
+     26
+    ],
+    "step": 2
    },
    "dips": {
     "label": "Dips",
@@ -7988,7 +8096,16 @@
        36
       ]
      ]
-    }
+    },
+    "loads": [
+     30,
+     32.5,
+     35,
+     36,
+     38,
+     40
+    ],
+    "step": 2.5
    },
    "lateral_raise": {
     "label": "Élévations latérales",
@@ -8008,7 +8125,15 @@
        8
       ]
      ]
-    }
+    },
+    "loads": [
+     6,
+     8,
+     10,
+     12,
+     14
+    ],
+    "step": 2
    },
    "biceps_curl": {
     "label": "Curl biceps",
@@ -8091,7 +8216,8 @@
        }
       ]
      }
-    ]
+    ],
+    "kind_check": null
    },
    {
     "id": 502,
@@ -8119,7 +8245,8 @@
        }
       ]
      }
-    ]
+    ],
+    "kind_check": null
    },
    {
     "id": 503,
@@ -8211,8 +8338,95 @@
        }
       ]
      }
+    ],
+    "kind_check": null
+   },
+   {
+    "id": 504,
+    "uid": null,
+    "date": "2026-11-15",
+    "title": "Muscu leg",
+    "activity_id": null,
+    "note": null,
+    "kind_check": {
+     "title_kinds": [
+      "leg"
+     ],
+     "kind": "epaules",
+     "label": "Épaules",
+     "share": 1,
+     "n_classed": 2,
+     "mismatch": true,
+     "suggested_title": "Muscu épaules"
+    },
+    "exercises": [
+     {
+      "exercise": "overhead_press",
+      "note": null,
+      "sets": [
+       {
+        "reps": 8,
+        "load_kg": 36
+       },
+       {
+        "reps": 8,
+        "load_kg": 36
+       },
+       {
+        "reps": 7,
+        "load_kg": 36
+       }
+      ]
+     },
+     {
+      "exercise": "lateral_raise",
+      "note": null,
+      "sets": [
+       {
+        "reps": 15,
+        "load_kg": 10
+       },
+       {
+        "reps": 14,
+        "load_kg": 10
+       },
+       {
+        "reps": 12,
+        "load_kg": 10
+       }
+      ]
+     }
     ]
    }
-  ]
+  ],
+  "kinds": {
+   "pull_up": "dos",
+   "row": "dos",
+   "cable_row": "dos",
+   "lat_pulldown": "dos",
+   "squat": "leg",
+   "bulgarian_split_squat": "leg",
+   "leg_curl": "leg",
+   "calf_raise": "leg",
+   "leg_press": "leg",
+   "bench_press": "pecs",
+   "incline_dumbbell_press": "pecs",
+   "cable_fly": "pecs",
+   "overhead_press": "epaules",
+   "lateral_raise": "epaules",
+   "biceps_curl": "bras",
+   "triceps_extension": "bras",
+   "crunch": "abdos",
+   "plank": "abdos"
+  },
+  "kind_titles": {
+   "dos": "Muscu dos",
+   "leg": "Muscu leg",
+   "pecs": "Muscu pecs",
+   "epaules": "Muscu épaules",
+   "bras": "Muscu bras",
+   "abdos": "Muscu abdos",
+   "hyrox": "Hyrox"
+  }
  }
 }

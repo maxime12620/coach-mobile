@@ -2,7 +2,7 @@
 // Coquille (index.html, js, css…) : réseau d'abord, copie mise en cache à chaque réponse ; repli sur le cache si le
 // réseau manque ou tarde (hors ligne garanti). Les appels à api.github.com ne passent jamais par ici (autre origine).
 // Changer VERSION à chaque publication : les anciens caches sont purgés à l'activation.
-const VERSION = 'coach-mobile-v10';
+const VERSION = 'coach-mobile-v11';
 const COQUILLE = [
   './', 'index.html', 'manifest.webmanifest', 'css/app.css',
   'js/app.js', 'js/crypto.js', 'js/store.js', 'js/github.js', 'js/plan.js', 'js/vues.js', 'js/muscu.js', 'js/analyse.js',

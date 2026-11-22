@@ -220,7 +220,8 @@ function partieRealise(M, s) {
   }).join('') + '</div>';
   if (s.parts.length) {
     h += `<h4>Activité${s.parts.length > 1 ? 's' : ''} rattachée${s.parts.length > 1 ? 's' : ''}</h4><ul class="acts">` + s.parts.map((a, k) =>
-      `<li>${s.parts.length > 1 ? `<b>${ORD(k)}</b>` : ''}<span>${esc(a.display_name || '')}${heureDe(a.start) ? ` <small>${heureDe(a.start)}</small>` : ''}</span><span class="n">${a.distance_m ? f1(a.distance_m / 1000) + ' km · ' : ''}${Math.round((a.duration_s || 0) / 60)} min${a.avg_hr ? ' · ' + Math.round(a.avg_hr) + ' bpm' : ''}</span></li>`).join('') + '</ul>';
+      `<li>${s.parts.length > 1 ? `<b>${ORD(k)}</b>` : ''}<span>${esc(a.display_name || '')}${heureDe(a.start) ? ` <small>${heureDe(a.start)}</small>` : ''}${a.plan_link === 'manual' ? ' <small class="lien">rattachée à la main</small>' : ''}</span><span class="n">${a.distance_m ? f1(a.distance_m / 1000) + ' km · ' : ''}${Math.round((a.duration_s || 0) / 60)} min${a.avg_hr ? ' · ' + Math.round(a.avg_hr) + ' bpm' : ''}</span>` +
+      `<button type="button" class="bt2 petit" data-act="lien" data-a="${a.id}">Rattachement</button></li>`).join('') + '</ul>';
   }
   if (s.sp === 'm') {
     const m = muscuFaite(M, s);
@@ -266,11 +267,15 @@ export function detail(M, s, ctx) {
     else h += formRessenti(ctx.saisie, !!r);
   }
 
-  const debriefEnAttente = ctx.envoyes.some(a => a.type === 'debrief_todo' && a.payload.session_id === s.id) || ctx.debriefs.includes(s.id);
+  // le coach se sollicite sur le PC (bouton de l'en-tête) : plus de « Demander l'avis du coach » ici (D75)
+  const mf = s.sp === 'm' && s.done ? muscuFaite(M, s) : null;
   h += '<div class="act">' +
     (s.sp === 'm' && !s.done && !s.saisie ? '<button class="bt2 pri" data-act="mu-saisir">Saisir cette séance</button>' : '') +
+    (mf ? `<button class="bt2" data-act="mu-editer" data-id="${mf.id}">Modifier la saisie</button>` : '') +
     (deplacable(M, s) ? '<button class="bt2" data-act="dep">Déplacer</button><button class="bt2" data-act="int">Intervertir</button>' : '') +
-    (s.d <= M.T ? `<button class="bt2" data-act="debrief"${debriefEnAttente ? ' disabled' : ''}>${debriefEnAttente ? 'Avis du coach demandé' : 'Demander l’avis du coach'}</button>` : '') +
+    '<button class="bt2" data-act="edit">Intitulé et type</button>' +
+    (ctx.confirmSuppr ? '<span class="confirme">Supprimer cette séance ?<button class="bt2 rouge" data-act="suppr-ok">Oui, supprimer</button><button class="bt2" data-act="suppr-non">Non</button></span>'
+      : '<button class="bt2 rouge" data-act="suppr">Supprimer</button>') +
     '</div>';
   h += `<div class="nav"><button class="bt2" data-act="prec"${s.i <= 0 ? ' disabled' : ''}>‹ Précédente</button><button class="bt2" data-act="suiv"${s.i >= M.S.length - 1 ? ' disabled' : ''}>Suivante ›</button></div>`;
   return h;
@@ -305,7 +310,36 @@ export function detailHors(M, x) {
     (x.km >= 0.5 ? `<div><b>${f1(x.km)} km</b>distance</div>` : '') + `<div><b>${Math.round(x.mn)} min</b>durée</div>` +
     (x.pace && x.sp === 'r' ? `<div><b>${pc(x.pace)}</b>/km</div>` : '') + (x.hr ? `<div><b>${x.hr}</b>bpm moyen</div>` : '') + '</div>';
   if (a.elevation_gain_m) h += `<div class="m">D+ ${Math.round(a.elevation_gain_m)} m</div>`;
-  return h + '<p class="m">Activité non rattachée à une séance du plan.</p>';
+  return h + `<p class="m">Activité non rattachée à une séance du plan${a.plan_link === 'none' ? ' (laissée hors plan à la main)' : ''}.</p>` +
+    `<div class="act"><button class="bt2" data-act="lien" data-a="${a.id}">Rattacher à une séance</button></div>`;
+}
+
+// ---------- D75 : intitulé et type, rattachement d'une activité ----------
+export const TYPES_COURSE = [['easy', 'Footing'], ['long', 'Sortie longue'], ['recovery', 'Récupération'], ['threshold', 'Seuil'], ['tempo', 'Tempo'],
+  ['intervals_short', 'Fractionné court'], ['intervals_long', 'Fractionné long'], ['hills', 'Côtes'], ['progressive', 'Progressif'], ['fartlek', 'Fartlek'], ['race', 'Course'], ['test', 'Test']];
+export const TYPES_MUSCU = [['dos', 'Dos', 'Muscu dos'], ['leg', 'Jambes', 'Muscu leg'], ['pecs', 'Pecs', 'Muscu pecs'], ['epaules', 'Épaules', 'Muscu épaules'],
+  ['bras', 'Bras', 'Muscu bras'], ['abdos', 'Abdos', 'Muscu abdos'], ['hyrox', 'Hyrox', 'Hyrox']];
+/** Fenêtre « Intitulé et type » : liste des types (course ou partie du corps pour la muscu) et saisie libre. */
+export function dlgEdition(s) {
+  const run = s.sp === 'r', k0 = run ? s.ty : (muKind(s.t, s.ty)[0] || 'dos');
+  const opts = run ? TYPES_COURSE : TYPES_MUSCU;
+  return `<h3 id="fen-titre">Intitulé et type</h3><div class="m">${esc(nomSeance(s))} · ${jl2(s.d)} ${dd(s.d)}</div><div class="fm">` +
+    `<label for="ed-ty">Type</label><select id="ed-ty" data-ed="ty">${opts.map(([v, l]) => `<option value="${v}"${v === k0 ? ' selected' : ''}>${l}</option>`).join('')}${run && !opts.some(([v]) => v === k0) ? `<option value="${esc(k0)}" selected>${esc(k0)}</option>` : ''}</select>` +
+    `<label for="ed-ti">Intitulé</label><input type="text" id="ed-ti" data-ed="ti" maxlength="200" value="${esc(s.t)}">` +
+    '<div class="act col"><button class="bt2 pri large" data-act="edit-ok">Enregistrer</button><button class="bt2 large" data-act="retour">Retour</button></div></div>';
+}
+/** Séances auxquelles rattacher une activité à la main : même jour ou ± 1 jour (règle du PC, D75). */
+export const seancesProches = (M, a) => M.S.filter(s => Math.abs(ecart(a.date, s.d)) <= 1);
+export function dlgLien(M, a, enAttente) {
+  const cur = M.S.find(s => s.parts.some(p => p.id === a.id));
+  const cand = seancesProches(M, a).filter(s => s !== cur);
+  return `<h3 id="fen-titre">Rattachement</h3><div class="m">${esc(a.display_name || 'Activité')} · ${jl2(a.date)} ${dd(a.date)}</div>` +
+    `<p class="m">${cur ? `Compte pour « ${esc(nomSeance(cur))} » (${jl2(cur.d)})` : 'Hors plan'}${a.plan_link === 'manual' ? ' · rattachée à la main' : a.plan_link === 'none' ? ' · laissée hors plan à la main' : ' · rattachement automatique'}</p>` +
+    (enAttente ? '<p class="m enatt">Correction envoyée · en attente du PC</p>' : '') +
+    '<div class="lst">' + cand.map(s => `<button class="bt2" data-act="lien-ok" data-a="${a.id}" data-s="${s.id}">Rattacher à « ${esc(nomSeance(s))} » <small>· ${jl2(s.d)} ${dd(s.d)}</small></button>`).join('') +
+    (cur ? `<button class="bt2" data-act="lien-ok" data-a="${a.id}" data-s="">Détacher : laisser hors plan</button>` : '') +
+    (a.plan_link ? `<button class="bt2" data-act="lien-auto" data-a="${a.id}">Revenir au rattachement automatique</button>` : '') +
+    '</div><p class="m">Ton choix prime sur la règle automatique et reste en place.</p><div class="act"><button class="bt2" data-act="retour">Retour</button></div>';
 }
 
 export function resumeRessenti(x) {

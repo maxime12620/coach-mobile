@@ -107,6 +107,7 @@ function etape(x) {
 }
 
 // ---------- muscu : partie du corps ----------
+const MU_LAB = { dos: 'Dos', leg: 'Jambes', pecs: 'Pecs', epaules: 'Épaules', bras: 'Bras', abdos: 'Abdos', hyrox: 'Hyrox' };
 export function muKind(t, ty) {
   const s = String(t || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
   if (/hyrox/.test(s)) return ['hyrox', 'Hyrox'];
@@ -169,9 +170,21 @@ export function construire(snap, pend = [], opts = {}) {
   const T = opts.T || aujourdhui();
   const S = (snap.sessions || []).filter(r => r && r.date).map(seance);
   const conflitsLocaux = [], muLoc = [];
+  // muscu dont la suppression est en attente (D75) : sa saisie en file n'est plus montrée
+  const muSuppr = new Set(pend.filter(a => a.type === 'delete_strength_session').map(a => a.payload && a.payload.uid).filter(Boolean));
   for (const a of pend) {
     const p = a.payload || {};
-    if (a.type === 'strength_session') { if (p.date && p.session_id == null) muLoc.push(a); continue; }
+    if (a.type === 'strength_session') { if (p.date && p.session_id == null && !muSuppr.has(p.uid)) muLoc.push(a); continue; }
+    // D75 : suppression et intitulé / type d'une séance, appliqués tout de suite en attendant l'accusé du PC
+    if (a.type === 'delete_session') { const k = S.findIndex(x => x.id === p.session_id); if (k >= 0) S.splice(k, 1); continue; }
+    if (a.type === 'edit_session') {
+      const s = S.find(x => x.id === p.session_id); if (!s) continue;
+      if (p.title) s.t = p.title;
+      if (p.type) s.ty = p.type;
+      if (s.sp === 'm') s.lab = p.kind ? (MU_LAB[p.kind] || s.lab) : muKind(s.t, s.ty)[1] || s.lab;
+      s.attente = a.id;
+      continue;
+    }
     if (a.type === 'move_session') {
       const s = S.find(x => x.id === p.session_id);
       if (!s || s.d !== p.from_date) { if (s && s.d === p.to_date) continue; conflitsLocaux.push(a.id); continue; }
